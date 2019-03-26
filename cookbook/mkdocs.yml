@@ -1,0 +1,15 @@
+site_name: Cookbook for managing Kuberenetes clusters with IBM Multicloud Manager
+nav:
+  - Home: index.md
+  - Scenarios for multi-cluster management: chapter1_engagementguide.md
+  - Quick Start: chapter2_quickstart.md
+  - Architecting MCM Solution: chapter3_solutionarchitecture.md
+  - DevOps with MCM: chapter5_devops-mcm.md
+  - Policy and Compliance: chapter6_policy.md
+  - Multicloud management with CAM: chapter7_cam-integration.md
+  - Day 2 operation with MCM: chapter8_day2operation.md
+  - MCM monitoring and event management: chapter9_mcm-monitoring-event-management.md
+  - Manage Red Hat OpenShift platform with MCM: chapter10_mcm-openshift.md
+  - Manage AWS EKS cluster with MCM: chapter10_2_mcm-eks.md
+theme: readthedocs
+extra_css: ["extra.css"]
