@@ -40,13 +40,13 @@ cd kubernetes-multicloud-management/cookbook
 3. Run `mkdocs gh-deploy` from the [cookbook](cookbook/) directory.  Note that the `gh-deploy` command will fail if you do not have the latest commits to the branch pulled locally.
 	* If you have git remote links for both this repository and your fork, you will need to run the command with an extra flag. For example, here is a local clone of the code that has 2 remote repos: `fabio` (fork) and `origin` (main repo):
 	```bash
-	fabio	git@github.com:fabiogomez/kubernetes-multicloud-management.git (fetch)
-	fabio	git@github.com:fabiogomez/kubernetes-multicloud-management.git (push)
+	fabio	git@github.com:fabiogomezdiaz/kubernetes-multicloud-management.git (fetch)
+	fabio	git@github.com:fabiogomezdiaz/kubernetes-multicloud-management.git (push)
 	origin	git@github.com:CASE/kubernetes-multicloud-management.git (fetch)
 	origin	git@github.com:CASE/kubernetes-multicloud-management.git (push)
 	```
 	* To deploy the MkDocs pages to the `fabio` repo, you will need to run the command as `mkdocs gh-deploy -r fabio`
-4. Open `https://pages.github.com/${GITHUB_USERNAME}/kubernetes-multicloud-management/` to see
+4. Open `https://${GITHUB_USERNAME}.github.io/kubernetes-multicloud-management/` to see
 
 ## IMPORTANT: Contributing to this Repository
 If you would like to contribute to this repository, please do the following:
@@ -54,7 +54,7 @@ If you would like to contribute to this repository, please do the following:
 * Commit your updates.
 * Push your updates to `master` branch in your fork.
 * Open a Pull Request (PR) against the `master` branch on this repository.
-* Assign either @gangchen03 or @fabiogomez as reviewers.
+* Assign either @gangchen03 or @fabiogomezdiaz as reviewers.
 
 The PR will only be merged after at least one of the above reviewer approves the PR.
 
