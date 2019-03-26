@@ -6,7 +6,7 @@ Git project to share deliverables of multi-cloud manager.
 
 ### Viewing the Cookbook
 
-The HTML-readable version of the cookbook is available via https://pages.github.com/CASE/kubernetes-multicloud-management/.
+The HTML-readable version of the cookbook is available via https://ibm-cloud-architecture.github.io/kubernetes-multicloud-management/.
 
 ### Building the Cookbook locally
 
@@ -26,7 +26,7 @@ The Cookbook for ICP Solution Architects is written to support [MkDocs](https://
 ```bash
 export GITHUB_USERNAME=PUT_YOUR_GITHUB_USERNAME_HERE
 git clone git@github.com:${GITHUB_USERNAME}/kubernetes-multicloud-management.git
-cd refarch-mcm/cookbook
+cd kubernetes-multicloud-management/cookbook
 ```
 
 1. Ensure that all your local changes to the `master` branch have been committed and pushed to the remote repository.
