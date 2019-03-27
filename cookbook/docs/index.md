@@ -60,3 +60,7 @@ How to manage an IBM Cloud Private on OpenShift cluster with MCM
 **Chapter 10-2 - Manage AWS EKS**   
 How to manage an hosted Kubernetes cluster on AWS EKS   
 [Go>>](chapter10_2_mcm-eks.md)
+
+**Chapter 1 - Manage Azure AKS**   
+How to manage an hosted Kubernetes cluster on Azure AKS   
+[Go>>](chapter10_2_mcm-eks.md)   
