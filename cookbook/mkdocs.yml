@@ -1,7 +1,7 @@
 site_name: Cookbook for managing Kuberenetes clusters with IBM Multicloud Manager
 nav:
   - Home: index.md
-  - Scenarios for multi-cluster management: engagementguide.md
+  - Scenarios for multi-cluster management: multicloud_scenarios.md
   - Quick Start: quickstart.md
   - Architecting MCM Solution: solutionarchitecture.md
   - DevOps with MCM: devops-mcm.md
