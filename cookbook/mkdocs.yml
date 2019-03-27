@@ -10,6 +10,6 @@ nav:
   - Day 2 operation with MCM: day2operation.md
   - MCM monitoring and event management: mcm-monitoring-event-management.md
   - Manage Red Hat OpenShift platform with MCM: mcm-openshift.md
-  #- Manage AWS EKS cluster with MCM: mcm-eks.md
+  - Manage AWS EKS cluster with MCM: mcm-eks.md
 theme: readthedocs
 extra_css: ["extra.css"]

@@ -57,7 +57,7 @@ Monitoring and event management features delivered with MCM
 How to manage an IBM Cloud Private on OpenShift cluster with MCM   
 [Go>>](mcm-openshift.md)   
 
-**Chapter 10-2 - Manage AWS EKS**   
+**Chapter 11 - Manage AWS EKS**   
 How to manage an hosted Kubernetes cluster on AWS EKS   
 [Go>>](mcm-eks.md)
 

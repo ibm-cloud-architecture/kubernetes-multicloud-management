@@ -1,5 +1,7 @@
 ## The era of Multicloud
 
+Author: Gang Chen (gangchen@us.ibm.com)
+
 We are in a Multicloud arena with 8 out of 10 enterprises committing to multicloud and 71% use three or more cloud providers. Embracing Multicloud will be the end game. IBM Multicloud Manager is the enterprise-grade multicloud management solution for Kubernetes.
 
 Many enterprises deploy multiple Kubernetes clusters on premises and in the public cloud, such as IBM Cloud™, Amazon Web Services (AWS), and Azure. You might find yourself using different vendor-supported Kubernetes releases, including IBM Cloud Private, Red Hat® OpenShift®, IBM Cloud Kubernetes Service, Amazon EKS, and Azure AKS. As each cloud provider or Kubernetes solution comes with its own tools and operations, managing a Multicloud Kubernetes environment can be overwhelming.
