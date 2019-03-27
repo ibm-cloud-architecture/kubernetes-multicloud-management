@@ -24,7 +24,7 @@ Note that nowhere in the above pipeline example there is a mention of cluster ce
     + In the following sections, you will learn how to setup MCM to manage these 2 clusters.
   * 1 x NFS server.
     + Use these [instructions](https://www.digitalocean.com/community/tutorials/how-to-set-up-an-nfs-mount-on-ubuntu-16-04) to setup a NFS server.
-    + Make sure to create and expose an NFS Shared Directory, which will be used by Jenkins to persiste build data.
+    + Make sure to create and expose an NFS Shared Directory, which will be used by Jenkins to persist build data.
   * [Kubectl](https://kubernetes.io/docs/user-guide/kubectl-overview/) (Kubernetes CLI)
     + Follow the instructions [here](https://kubernetes.io/docs/tasks/tools/install-kubectl/) to install it on your platform.
   * [ICP Helm](https://github.com/kubernetes/helm) (Kubernetes package manager)

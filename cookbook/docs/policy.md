@@ -243,22 +243,6 @@ The above may look overwhelming, but outside a few fields specific to the `Compl
 
 Once again, the `Compliance` object is responsible for applying the specified `Policy` objects to the matching clusters and reporting status back to the Compliance Manager dashboard in MCM.
 
-## Optional: The Architecture
-Though the architecture of MCM Compliance Manager will not be the focus of this document, it doesn't hurt to understand on a high level the principles of what goes on. Here is a picture of the current architecture of the Compliance Manager:
-![Compliance Manager Architecture](images/policy/mcm-compliance-manager-architecture.png?raw=true)
-
-Though not immediately apparent, the above architecture implements the following 2 requirements:
-
-* **Imperative-Style Commands**: for query/ad-hoc tasks such as `get all pods from all clusters`, `check resource limits on all pods`, or `get app topology`
-	+ This is implemented by the `Aggregated API Server` and `Tasks Handlers` in Klusterlets.
-* **Desired state based management**: for continuous enforcement of policies and policy compliance, deployment and management of application topologies etc.
-	+ Based on CRDs and CRD Controllers.
-
-To learn more about MCM Compliance Manager architecture, please visit the following links:
-
-* [https://github.ibm.com/IBMPrivateCloud/roadmap/blob/master/feature-specs/hcm/compliance-manager/compliance-spec.md](https://github.ibm.com/IBMPrivateCloud/roadmap/blob/master/feature-specs/hcm/compliance-manager/compliance-spec.md)
-* [https://github.ibm.com/IBMPrivateCloud/hcm-compliance](https://github.ibm.com/IBMPrivateCloud/hcm-compliance)
-
 ## Compliance Manager Tutorial
 Now that we know the basic concepts and understand on a high level the components that power the Compliance Manager, let's go ahead and apply a sample Compliance object to our clusters and see what that looks like on the Compliance Manager dashboard.
 
