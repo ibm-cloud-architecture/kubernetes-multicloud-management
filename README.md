@@ -42,8 +42,8 @@ cd kubernetes-multicloud-management/cookbook
 	```bash
 	fabio	git@github.com:fabiogomezdiaz/kubernetes-multicloud-management.git (fetch)
 	fabio	git@github.com:fabiogomezdiaz/kubernetes-multicloud-management.git (push)
-	origin	git@github.com:CASE/kubernetes-multicloud-management.git (fetch)
-	origin	git@github.com:CASE/kubernetes-multicloud-management.git (push)
+	origin	git@github.com:ibm-cloud-architecture/kubernetes-multicloud-management.git (fetch)
+	origin	git@github.com:ibm-cloud-architecture/kubernetes-multicloud-management.git (push)
 	```
 	* To deploy the MkDocs pages to the `fabio` repo, you will need to run the command as `mkdocs gh-deploy -r fabio`
 4. Open `https://${GITHUB_USERNAME}.github.io/kubernetes-multicloud-management/` to see

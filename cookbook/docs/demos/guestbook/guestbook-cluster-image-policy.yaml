@@ -1,0 +1,18 @@
+apiVersion: securityenforcement.admission.cloud.ibm.com/v1beta1
+kind: ClusterImagePolicy
+metadata:
+  name: guestbook
+spec:
+  repositories:
+  - name: 'gcr.io/google_samples/gb-redisslave'
+    policy:
+      va:
+        enabled: false
+  - name: 'gcr.io/kubernetes-e2e-test-images/redis'
+    policy:
+      va:
+        enabled: false
+  - name: 'gcr.io/google-samples/gb-frontend'
+    policy:
+      va:
+        enabled: false

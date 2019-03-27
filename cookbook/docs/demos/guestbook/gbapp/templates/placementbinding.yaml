@@ -1,0 +1,39 @@
+apiVersion: mcm.ibm.com/v1alpha1
+kind: PlacementBinding
+metadata:
+  name: {{ template "guestbookapplication.fullname" . }}
+  labels:
+    app: {{ template "guestbookapplication.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    name: {{ template "guestbookapplication.fullname" . }}
+    servicekind: CacheService
+placementRef:
+  apiGroup: mcm.ibm.com
+  kind: PlacementPolicy
+  name: {{ template "guestbookapplication.fullname" . }}
+subjects:
+- apiGroup: mcm.ibm.com
+  kind: Deployable
+  name: {{ template "guestbookapplication.fullname" . }}
+---
+apiVersion: mcm.ibm.com/v1alpha1
+kind: PlacementBinding
+metadata:
+  name: {{ template "guestbookapplication.fullname" . }}-redismaster
+  labels:
+    app: {{ template "guestbookapplication.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    name: {{ template "guestbookapplication.fullname" . }}
+    servicekind: CacheService
+placementRef:
+  apiGroup: mcm.ibm.com
+  kind: PlacementPolicy
+  name: {{ template "guestbookapplication.fullname" . }}-redismaster
+subjects:
+- apiGroup: mcm.ibm.com
+  kind: Deployable
+  name: {{ template "guestbookapplication.fullname" . }}-redismaster

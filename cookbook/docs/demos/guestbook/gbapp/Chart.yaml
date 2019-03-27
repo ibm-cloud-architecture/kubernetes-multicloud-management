@@ -1,0 +1,4 @@
+apiVersion: v1
+description: Guestbook Application kubernetes sample
+name: gbapp
+version: 0.1.0

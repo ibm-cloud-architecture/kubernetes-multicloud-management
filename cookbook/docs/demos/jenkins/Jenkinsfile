@@ -1,0 +1,192 @@
+def podLabel = "devops-mcm-demo-${UUID.randomUUID().toString()}"
+
+/*
+  Required: Pod Environment Variables
+*/
+def clusterNamespace = env.CLUSTER_NAMESPACE ?: "default"
+def clusterAccountId = env.CLUSTER_ACCOUNT_ID ?: "id-sestg-cluster-account"
+def clusterCredentialId = env.CLUSTER_CREDENTIAL_ID ?: "id-sestg-cluster-credentials"
+def clusterURL = env.CLUSTER_URL ?: "172.16.50.227:8443"
+def helmReleaseName = env.HELM_RELEASE_NAME ?: "guestbook"
+def replicaCount = env.REPLICA_COUNT ?: "1"
+def pipelineImage = env.PIPELINE_IMAGE ?: "ibmcase/kube-helm-cloudctl-mcmctl:3"
+
+/*
+  Deployment Labels
+ */
+def labelEnvironment = env.LABEL_ENVIRONMENT
+def labelDatacenter = env.LABEL_DATACENTER
+def labelOwner = env.LABEL_OWNER
+def labelRegion = env.LABEL_REGION
+def labelVendor = env.LABEL_VENDOR
+
+/*
+  Optional Pod Environment Variables
+ */
+def helmHome = env.HELM_HOME ?: "/root/.helm"
+def skipSSLValidationOption = env.SKIP_SSL_VALIDATION ?: "--skip-ssl-validation"
+def chartName = env.CHART_NAME ?: "gbapp"
+def testEnvironment = env.TEST_ENVIRONMENT ?: "Dev"
+
+/*
+  POD Template
+ */
+podTemplate(label: podLabel, envVars: [
+        envVar(key: 'CLUSTER_NAMESPACE', value: clusterNamespace),
+        envVar(key: 'CLUSTER_ACCOUNT_ID', value: clusterAccountId),
+        envVar(key: 'CLUSTER_URL', value: clusterURL),
+        envVar(key: 'HELM_HOME', value: helmHome),
+        envVar(key: 'SKIP_SSL_VALIDATION', value: skipSSLValidationOption),
+        envVar(key: 'HELM_RELEASE_NAME', value: helmReleaseName),
+        envVar(key: 'REPLICA_COUNT', value: replicaCount),
+        envVar(key: 'LABEL_ENVIRONMENT', value: labelEnvironment),
+        envVar(key: 'LABEL_DATACENTER', value: labelDatacenter),
+        envVar(key: 'LABEL_OWNER', value: labelOwner),
+        envVar(key: 'LABEL_REGION', value: labelRegion),
+        envVar(key: 'LABEL_VENDOR', value: labelVendor),
+        envVar(key: 'CHART_NAME', value: chartName),
+        envVar(key: 'TEST_ENVIRONMENT', value: testEnvironment)
+    ],
+    containers: [
+        containerTemplate(name: 'clis', image: pipelineImage, ttyEnabled: true, command: 'cat')
+    ]) {
+    node(podLabel) {
+        container('clis') {
+            /*
+              This will check out two SCM configured in GIT
+             */
+            checkout scm
+
+            /*
+              Initialize CLIs
+             */
+            stage('Initialize CLIs') {
+                withCredentials([usernamePassword(credentialsId: clusterCredentialId, passwordVariable: 'CLUSTER_PASSWORD', usernameVariable: 'CLUSTER_USERNAME')]) {
+                    sh """
+                    echo "Initializing Helm ..."
+                    export HELM_HOME=${HELM_HOME}
+                    helm init -c
+
+                    echo "Login with cloudctl ..."
+                    cloudctl login -a ${CLUSTER_URL} -u ${CLUSTER_USERNAME}  -p "${CLUSTER_PASSWORD}" -c ${CLUSTER_ACCOUNT_ID} -n ${CLUSTER_NAMESPACE} ${SKIP_SSL_VALIDATION}
+                    """
+                }
+            }
+
+            /*
+              Deploy the app
+             */
+
+            stage('Deploy to ' + testEnvironment) {
+                sh """
+                cd cookbook/docs/demos/guestbook
+                echo "Install ${CHART_NAME} ..."
+
+                PARAMETERS="replicaCount=${REPLICA_COUNT}"
+
+                if [ -n "${LABEL_ENVIRONMENT}" ]; then
+                    PARAMETERS="\${PARAMETERS},targetCluster.labelSelector.matchLabels.environment=${LABEL_ENVIRONMENT}"
+                fi
+
+                if [ -n "${LABEL_DATACENTER}" ]; then
+                    PARAMETERS="\${PARAMETERS},targetCluster.labelSelector.matchLabels.datacenter=${LABEL_DATACENTER}"
+                fi
+
+                if [ -n "${LABEL_OWNER}" ]; then
+                    PARAMETERS="\${PARAMETERS},targetCluster.labelSelector.matchLabels.owner=${LABEL_OWNER}"
+                fi
+
+                if [ -n "${LABEL_REGION}" ]; then
+                    PARAMETERS="\${PARAMETERS},targetCluster.labelSelector.matchLabels.region=${LABEL_REGION}"
+                fi
+
+                if [ -n "${LABEL_VENDOR}" ]; then
+                    PARAMETERS="\${PARAMETERS},targetCluster.labelSelector.matchLabels.vendor=${LABEL_VENDOR}"
+                fi
+
+                helm upgrade --install ${HELM_RELEASE_NAME} --namespace ${CLUSTER_NAMESPACE} --set \${PARAMETERS} ${CHART_NAME} --tls
+                """
+            }
+
+            /*
+              Deployment Validation Tests
+             */
+            stage('Validation Test') {
+                sh """
+
+                function get_deployment() {
+                    mcmctl --cluster-selector environment=${TEST_ENVIRONMENT} get deployments | grep ${HELM_RELEASE_NAME}-${CHART_NAME} | grep -v redis | awk '{print \$2}'
+                }
+
+                function get_replicas() {
+                    mcmctl --cluster-selector environment=${TEST_ENVIRONMENT} get deployments \${1} | grep -v AVAILABLE | awk '{print \$6}'
+                }
+
+                function test_service() {
+                    curl -s http://\${NODE_IP}:\${PORT} | grep Guestbook | grep title
+                }
+
+                set +x
+
+                echo "Getting deployment that has name with \"${HELM_RELEASE_NAME}-${CHART_NAME}\""
+                DEPLOYMENT=`get_deployment`
+
+                until [ -n "\${DEPLOYMENT}" ]; do
+                    echo "Waiting for MCM to deploy charts on clusters"
+                    sleep 1
+                    DEPLOYMENT=`get_deployment`
+                done
+
+                echo "Getting deployment available replicas for \"\${DEPLOYMENT}\""
+                REPLICAS=`get_replicas \${DEPLOYMENT}`
+
+                until [ -n "\${REPLICAS}" ] && [ \${REPLICAS} -ge 1 ]; do
+                    echo "Waiting for \${DEPLOYMENT} to be ready"
+                    sleep 1
+                    REPLICAS=`get_replicas \${DEPLOYMENT}`
+                done
+
+                echo "Success. There are \${REPLICAS} available replicas"
+
+                echo "Getting Worker Node IP"
+                NODE_IP=`mcmctl --cluster-selector environment=${TEST_ENVIRONMENT} get nodes | grep worker | awk '{print \$2}' | head -n 1`
+
+                echo "Getting NodePort"
+                PORT=`mcmctl --cluster-selector environment=${TEST_ENVIRONMENT} get services | grep ${HELM_RELEASE_NAME}-${CHART_NAME} | awk '{print \$6}' | awk -F":" '{print \$2}' | awk -F"/" '{print \$1}'`
+
+                echo "Testing Service on Cluster at http://\${NODE_IP}:\${PORT}"
+                CURL_OUTPUT=`test_service`
+
+                until [ -n "\${CURL_OUTPUT}" ]; do
+                    echo "Getting the home page from http://\${NODE_IP}:\${PORT}"
+                    sleep 1
+                    CURL_OUTPUT=`test_service`
+                done
+
+                echo "PASSED Validation Tests!!!"
+                """
+            }
+
+            /*
+                Trigger Promotion Job
+             */
+            if (env.PROMOTION_JOB && env.PROMOTION_JOB != "") {
+                stage ('Trigger ' + env.PROMOTION_JOB + ' Promotion Job') {
+                    build job: env.PROMOTION_JOB,
+                        parameters: [
+                            [$class: 'StringParameterValue', name: 'CLUSTER_NAMESPACE',     value: clusterNamespace],
+                            [$class: 'StringParameterValue', name: 'CLUSTER_ACCOUNT_ID',    value: clusterAccountId],
+                            [$class: 'StringParameterValue', name: 'CLUSTER_CREDENTIAL_ID', value: clusterCredentialId],
+                            [$class: 'StringParameterValue', name: 'CLUSTER_URL',           value: clusterURL],
+                            [$class: 'StringParameterValue', name: 'HELM_RELEASE_NAME',     value: helmReleaseName],
+                            [$class: 'StringParameterValue', name: 'PIPELINE_IMAGE',        value: pipelineImage],
+                            [$class: 'StringParameterValue', name: 'LABEL_OWNER',           value: "case"],
+                            [$class: 'StringParameterValue', name: 'LABEL_REGION',          value: "US"],
+                            [$class: 'StringParameterValue', name: 'TEST_ENVIRONMENT',      value: "Staging"],
+                            [$class: 'StringParameterValue', name: 'REPLICA_COUNT',         value: "2"]
+                        ]
+                }
+            }
+        } // container
+    } // node
+} // podTemplate

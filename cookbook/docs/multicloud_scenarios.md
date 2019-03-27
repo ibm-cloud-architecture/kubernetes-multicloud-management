@@ -7,9 +7,9 @@ Many enterprises deploy multiple Kubernetes clusters on premises and in the publ
 We summarized the top multicloud multi-cluster Kubernetes management challenges into the following 4 categories:
 
  - Cross-cluster visibility
- - Workload deployment and placement   
- - Compliance and Security   
- - Day 2 operation   
+ - Workload deployment and placement
+ - Compliance and Security
+ - Day 2 operation
 
 ## The Client Story
 

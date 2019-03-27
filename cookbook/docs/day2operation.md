@@ -51,11 +51,11 @@ In IBM there is a special team that is dedicated in developing concepts and asse
 # Monitoring
 When MCM is deployed, the Open Source monitoring tool, Prometheus, and visualization software Grafana, are installed. This combination provides immediate monitoring of the MCM deployment infrastructure components. The Grafana Dashboards that are supplied provide various views of the time-series data collected by Prometheus.
 
-For MCM, Phometheus is configured in a federated structure.  There is a Federated Prometheus server that get data from the local Prometheus server in each cluster. Please click this [Federated Prometheus](./Ch8/FederatedPrometheus.md) link if you want to know more about it.
+For MCM, Phometheus is configured in a federated structure.  There is a Federated Prometheus server that get data from the local Prometheus server in each cluster. Please click this [Federated Prometheus](day2operation/FederatedPrometheus.md) link if you want to know more about it.
 
 Here is the first simple recipe, how to configure more grafana dashboard using the out of the box MCM tools.
 
-> [Recipe-8-1-1](./Ch8/Re-8-1-1-MoreGrafana.md) : How to configure more grafana dahsboard.
+> [Recipe-8-1-1](day2operation/Re-8-1-1-MoreGrafana.md) : How to configure more grafana dahsboard.
 
 # Application Monitoring
 During customer interactions done as part of `Cloud Readiness` on the topic of monitoring, one thing comes out: the customer care more about the health of their Application that they run on the cloud rather than the health of infrastructure itself.  When they want to know about the health of their cloud infrastructure, it is to ensure that the application has enough resources to perform its function.
@@ -64,8 +64,6 @@ In some of the conversation with the customer of Cloud hosted application they e
 
 ## Federated Prometheus
 MCM comes with federated prometheus and grafana pre-configured.  MCM comes with out of the box dashboard that shows the health of MCM and the basic metrics of he application deployed across the cluster.
-
-This section describes MCM [Federated Prometheus](https://github.ibm.com/rafal-szypulka/mcm-monitoring/blob/master/Multi%20Cloud%20Manager%20-%20monitoring.md) in more detail.
 
 Once the initial deployment of MCM is completed, one of the thing that the customer will want is a dashboard that is application/service centric, with metrics that is important for that application. Rather than Infrastructure at the highest level summary of their dashboard they will want their Service to be at the high level dashboard, with the ability to drill down to components that support or made up that Service.
 
@@ -80,13 +78,13 @@ We can either use the platform-provided monitoring tools, or we can create a pac
 ### Build to manage.
 Prometheus collects metrics from monitored systems by "scraping" metrics on the  HTTP endpoints of these systems.  In Prometheus terms, we call the things that Prometheus monitors are called Targets. The Prometheus server scrapes targets at a defined interval and store them in a time-series database. The targets to be scraped and the time-interval for scraping metrics is defined in the `prometheus.yml` configuration file.
 
-![](./Ch8/images/prometheus_target.png)
+![](images/day2operation/prometheus_target.png)
 
 Most likely the existing application does expose the metrics this way. We need to modify the application to expose the metrics. In CSMO this concept is called `Build to Manage`. Prometheus provides client-libraries in a number of languages.
 
 The following recipe shows how to add Prometheus client to expose metrics off your application so it can be monitored by Prometheus.
 
-> [Recipe-8-2-1](./Ch8/Re-8-2-1-Prometheus_Instrumentation.md) : Prometheus Instrumentation.
+> [Recipe-8-2-1](day2operation/Re-8-2-1-Prometheus_Instrumentation.md) : Prometheus Instrumentation.
 
 Information on build to manage can be found further in part of the CSMO education material found here:
 
@@ -99,7 +97,7 @@ If your customer needs professional service there are some service offering avai
 ### Exporter
 If the application can not be modified then another way of getting the data is use something called `Exporters`. An Exporter is a piece of software that gets existing metrics from a third-party system and export them to the metric format that the Prometheus server can understand.
 
-![](./Ch8/images/prometheus_exporter.png)
+![](images/day2operation/prometheus_exporter.png)
 
 One common exporter is collectd exporter.  More information on collectd exporter can be found on this [Collectd Exporter](https://github.com/prometheus/collectd_exporter) github page.
 
@@ -124,7 +122,7 @@ The following is a recipe of creating a grafana dashboard from several sources i
 
 Netcool Agile Service Manager (ASM) is a component of Netcool Operation Insight that allows the visualisation and some control of dynamic infrastructure and services.  Agile Service Manager is available as both on-premise and as a helm chart in MCM Catalog.
 
-This [ASM](./Ch8/asm_detail.md) describes ASM and MCM in more detail.
+This [ASM](day2operation/asm_detail.md) describes ASM and MCM in more detail.
 
 The following recipe provides instruction on Configuring ASM Kubernetes Observer.
 
@@ -138,7 +136,7 @@ However, the native functionality provided by a container engine or runtime is u
 
 ## ELK
 
-The following [ELK](./Ch8/Monitoring.md) subchapter describes the logging solution making use of Elasticsearch, Logstash and Kibana.  While the Logging solution is available out of the box, they are not configured to be used out of the box.
+The following [ELK](day2operation/Monitoring.md) subchapter describes the logging solution making use of Elasticsearch, Logstash and Kibana.  While the Logging solution is available out of the box, they are not configured to be used out of the box.
 
 The following recipes shows how you can configure your ELK.
 

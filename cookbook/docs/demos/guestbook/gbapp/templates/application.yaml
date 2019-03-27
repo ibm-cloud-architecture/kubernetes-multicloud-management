@@ -1,0 +1,23 @@
+apiVersion: app.k8s.io/v1beta1
+kind: Application
+metadata:
+  name: {{ template "guestbookapplication.fullname" . }}
+  labels:
+    app: {{ template "guestbookapplication.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    name: {{ template "guestbookapplication.fullname" . }}
+spec:
+  selector:
+    matchExpressions:
+    - key: app
+      operator: In
+      values:
+      - guestbook
+      - gbf
+      - gbrm
+      - gbrs
+  componentKinds:
+  - group: core
+    kind: Pods

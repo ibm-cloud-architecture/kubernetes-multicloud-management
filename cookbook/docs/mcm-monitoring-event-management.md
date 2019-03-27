@@ -31,7 +31,7 @@ IBM Multicloud Manager Overview dashboard is available from the MCM menu: `Overv
 - Memory Health
 - Storage Capacity
 
-![](images/mcm-overall.png)
+![](images/mcm-monitoring-event-management/mcm-overall.png)
 
 
 ## MCM Application monitoring
@@ -40,11 +40,11 @@ IBM Multicloud Manager Overview dashboard is available from the MCM menu: `Overv
 
 Application dashboards are available from the MCM UI: `Applications -> Launch Health View`
 
-![](images/mcm-app-monit.png)
+![](images/mcm-monitoring-event-management/mcm-app-monit.png)
 
 A Grafana Dashboard for MCM applications is generated automatically for each deployed application and shows metrics related to resource utilization (CPU, memory, network) of the application containers and overall resource utilization of the clusters where an application has been deployed.
 
-![](images/mcm-grafana.png)
+![](images/mcm-monitoring-event-management/mcm-grafana.png)
 
 MCM federated Prometheus is a data source for an application monitoring dashboard. MCM Controller installation deploys a federated Prometheus instance which will pull selected metric data from the Prometheus instances located on managed ICP clusters.
 Deployment name: `mcm-controller-ibm-mcm-controller-prometheus`
@@ -121,7 +121,7 @@ The following procedure describe installation and configuration steps on example
 #### Installation of the Cloud Event Management controller
 Deploy an alerttargetcontroller chart on MCM Contoller cluster in the `kube-system` namespace.
 
-![](images/alerttarget.png)
+![](images/mcm-monitoring-event-management/alerttarget.png)
 `MCM Fullname Override` option can be obtained using:
 
 ```
@@ -129,7 +129,7 @@ kubectl get po -n kube-system|grep klusterlet
 ```
 Copy the pod name part before the `klusterlet` word as on the picture below:
 
-![](images/mcm-override.png)
+![](images/mcm-monitoring-event-management/mcm-override.png)
 
 `ICP Cluster namespace` is the cluster namespace created during klusteret deployment. In our case the namespace name is `mcm-se-dev-31`. It can be obtained using:
 
@@ -144,7 +144,7 @@ After chart deployment, make sure the `alerttargetcontroller` pod is running.
 #### Installation of the Cloud Event Management for IBM Multicloud Manager
 
 Deploy `ibm-cem` chart from the local-chart repo in the `kube-system` namespace on the MCM Controller cluster.
-![](images/cem.png)
+![](images/mcm-monitoring-event-management/cem.png)
 In our setup we used ICP UI console IP address for both `ICP Master IP` and `Ingress Domain` options.
 
 After deployment, wait a couple of minutes to start all the CEM pods and run the following command to configure OIDC registration with IBM Cloud Private:
@@ -214,17 +214,17 @@ kubectl logs <alertmanager pod> -n kube-system
 
 Cloud Event Management console can be accessed from the Multicloud Manager console. Logon to MCM UI as one of the Team (mentioned in the [prerequisites](#prerequisites) section) members and select `Event Management`.
 
-![](images/cem-login.png)
+![](images/mcm-monitoring-event-management/cem-login.png)
 
 You may be asked to authenticate again with the ICP user and you should see one or more subscriptions.
 
-![](images/cem-subs.png)
+![](images/mcm-monitoring-event-management/cem-subs.png)
 
 Example subscription `se-team` on the picture above is a name of the ICP team authorised to manage a cluster namespace.
 
 Click `Launch` and if some defined Prometheus alerts are active (you can verify it in the ICP console `Platform -> Alerting`), you should see incidents in CEM UI:
 
-![](images/cem-incidents.png)
+![](images/mcm-monitoring-event-management/cem-incidents.png)
 
 #### Cloud Event Management documentation
 
