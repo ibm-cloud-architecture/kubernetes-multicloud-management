@@ -9,8 +9,7 @@ nav:
   - DevOps with MCM: devops-mcm.md
   - Policy and Compliance: policy.md
   #- Multicloud management with CAM: cam-integration.md
-  - Day 2 operation with MCM: day2operation.md
-  - MCM monitoring and event management: mcm-monitoring-event-management.md
+  - Monitoring and event management with MCM: mcm-monitoring-event-management.md
   - Manage Red Hat OpenShift platform with MCM: mcm-openshift.md
   - Manage AWS EKS cluster with MCM: mcm-eks.md
 theme: readthedocs

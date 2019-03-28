@@ -49,7 +49,7 @@ Monitoring
 Event management   
 [Go>>](day2operation.md)
 
-**Chapter 9 - MCM monitoring and event management**   
+**Chapter 9 - monitoring and event management with MCM**   
 Monitoring and event management features delivered with MCM   
 [Go>>](mcm-monitoring-event-management.md)   
 
