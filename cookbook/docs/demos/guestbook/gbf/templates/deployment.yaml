@@ -1,0 +1,28 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "guestbookfrontend.fullname" . }}
+  labels:
+    app: {{ template "guestbookfrontend.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "guestbookfrontend.name" . }}
+        release: {{ .Release.Name }}
+        tier: frontend
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.frontend.repository }}:{{ .Values.frontend.tag }}"
+          imagePullPolicy: {{ .Values.frontend.pullPolicy }}
+          ports:
+            - containerPort: 80
+          env:
+          - name: GET_HOSTS_FROM
+            value: dns
+ 

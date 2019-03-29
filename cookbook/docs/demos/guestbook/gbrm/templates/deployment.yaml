@@ -1,0 +1,30 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "guestbookredismaster.fullname" . }}
+  labels:
+    app: {{ template "guestbookredismaster.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ template "guestbookredismaster.name" . }}
+      role: master
+      tier: backend
+  replicas: {{ .Values.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "guestbookredismaster.name" . }}
+        release: {{ .Release.Name }}
+        role: master
+        tier: backend
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.redismaster.repository }}:{{ .Values.redismaster.tag }}"
+          imagePullPolicy: {{ .Values.redismaster.pullPolicy }}
+          ports:
+            - containerPort: 6379

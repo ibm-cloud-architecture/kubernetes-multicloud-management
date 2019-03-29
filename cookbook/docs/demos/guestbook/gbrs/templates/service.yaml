@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-slave
+  labels:
+    app: {{ template "guestbookredisslave.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: 6379
+  selector:
+    app: {{ template "guestbookredisslave.name" . }}
+    release: {{ .Release.Name }}
+    role: slave
+    tier: backend
+    

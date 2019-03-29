@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-master
+  #{{ template "guestbookredismaster.fullname" . }}
+  labels:
+    app: {{ template "guestbookredismaster.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: 6379
+  selector:
+    app: {{ template "guestbookredismaster.name" . }}
+    release: {{ .Release.Name }}
+    role: master
+    tier: backend
+    

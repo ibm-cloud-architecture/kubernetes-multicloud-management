@@ -1,0 +1,8 @@
+replicaCount: 1
+service:
+  type: NodePort
+
+frontend:
+  repository: gcr.io/google-samples/gb-frontend
+  tag: v6
+  pullPolicy: IfNotPresent

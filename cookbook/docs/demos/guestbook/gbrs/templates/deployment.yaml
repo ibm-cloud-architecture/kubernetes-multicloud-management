@@ -1,0 +1,33 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "guestbookredisslave.fullname" . }}
+  labels:
+    app: {{ template "guestbookredisslave.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ template "guestbookredisslave.name" . }}
+      role: slave
+      tier: backend
+  replicas: {{ .Values.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "guestbookredisslave.name" . }}
+        release: {{ .Release.Name }}
+        role: slave
+        tier: backend
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.redisslave.repository }}:{{ .Values.redisslave.tag }}"
+        imagePullPolicy: {{ .Values.redisslave.pullPolicy }}
+        ports:
+          - containerPort: 6379
+        env:
+        - name: GET_HOSTS_FROM
+          value: dns

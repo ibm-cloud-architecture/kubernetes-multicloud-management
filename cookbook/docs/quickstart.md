@@ -40,10 +40,11 @@ Now that you have installed MCM on your IBM Cloud Private (ICP) clusters, it's t
 
 As mentioned before, the official MCM documentation is a great resource to start learning about MCM in detail. However, here is a quick list with a high level summary of the concepts you will be learning throughout this entire document:
 
-### Application:
+### Application
 MCM has the the concept of an `Application`, which is a way to relate multiple workloads (Helm Charts) as a single unit. A cluster application is defined with the [Kubernetes SIG Application CRD](https://github.com/kubernetes-sigs/application) community specification. An `Application`, and its workloads, can be deployed into multiple ICP clusters through MCM with the help of other YAML resources that make up the application.
 
 Here are some of the Application YAML resources you need to use in order to view and manage applications through MCM.
+
   * `Application` resource is used to only view your resource on the Command Line or on the MCM Dashboard.
   * `Deployable` resource deploys your Helm chart.
     + If you have multiple Helm Charts, then you will have a `Deployable` resource for each.

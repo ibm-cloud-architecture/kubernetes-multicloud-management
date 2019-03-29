@@ -29,7 +29,6 @@ Note that nowhere in the above pipeline example there is a mention of cluster ce
     + Follow the instructions [here](https://kubernetes.io/docs/tasks/tools/install-kubectl/) to install it on your platform.
   * [ICP Helm](https://github.com/kubernetes/helm) (Kubernetes package manager)
     + Follow the instructions [here](https://www.ibm.com/support/knowledgecenter/en/SSBS6K_3.1.2/app_center/create_helm_cli.html) to install it on your platform.
-    * **Note**: It is important to use ICP provided Helm for Chart Management on ICP 3.1.
   * [IBM Cloud Private CLI](https://www.ibm.com/support/knowledgecenter/en/SSBS6K_3.1.2/manage_cluster/install_cli.html)
     + Follow the instructions [here](https://www.ibm.com/support/knowledgecenter/en/SSBS6K_3.1.2/manage_cluster/install_cli.html) to install it on your platform.
 
