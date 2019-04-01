@@ -63,7 +63,7 @@ The second cluster will only contain the `MCM Klusterlet` that reports informati
 If the above was done correctly, you have successfully setup the first cluster and can now manage it through the `MCM Controller` in the first cluster.
 
 ### 3. Create Image Policies on Both Clusters
-Since ICP version 3.1, you are required to create `Image Policies` that allow you to pull Docker images from outside Docker registries (i.e. Docker Hub). In our case, you will need to create an Image Policy on each cluster that lets you pull Docker images from any source, which is **NOT RECOMMENDED FOR PRODUCTION USE**, but will suffice our purposes for simplicity. To do so, let's start by cloning the project's git repository:
+Since ICP version 3.1, you are required to create `Image Policies` that allow you to pull Docker images from specific Docker registries (`gcr.io` in our case). To do so, let's start by cloning the project's git repository:
 ```bash
 # Clone the Reference Architecture Repository
 git clone git@github.com:ibm-cloud-architecture/kubernetes-multicloud-management.git
