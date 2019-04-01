@@ -35,6 +35,21 @@ The second cluster will only contain the `MCM Klusterlet` that reports informati
 
 If the above was done correctly, you have successfully setup the first cluster and can now manage it through the `MCM Controller` in the first cluster.
 
+### Verify Clusters in the MCM Dashboard
+To open the MCM Dashboard, on your MCM HUB Cluster and click the top left `Hamburger Icon -> Multicloud Manager` as shown below:
+
+![ICP Dashboard](images/quickstart/0-icp-dashboard.png)
+
+You should then be greeted by the MCM Welcome page. To open the Clusters page, click the `Hamburger Icon -> Clusters` as shown below:
+
+![ICP Dashboard](images/quickstart/1-mcm-welcome.png)
+
+If MCM Klusterlets were installed successfully, you should be able to see your clusters listed as shown below:
+
+![ICP Dashboard](images/quickstart/2-mcm-clusters.png)
+
+**NOTE**: The above is just for illustration purposes, but in your **Cluster** page, you should be able to see the `se-dev-31` and `se-stg-31` clusters. Under the **Status** column, you should see a green checkmark (✅), which indicates that the cluster is healthy and actively sending status from the Klusterlet to the MCM Controller in the HUB Cluster.
+
 ## Core Multicloud Manager Resources to Learn
 Now that you have installed MCM on your IBM Cloud Private (ICP) clusters, it's time to learn how to use it! With anything Kubernetes, you will be interacting with MCM via YAML files (though MCM comes with a nice web portal that we will examine in later chapters).
 
