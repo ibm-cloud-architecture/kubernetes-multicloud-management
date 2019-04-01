@@ -16,4 +16,3 @@ spec:
     release: {{ .Release.Name }}
     role: slave
     tier: backend
-    
