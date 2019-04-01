@@ -126,26 +126,24 @@ Where:
 ### Relationship Resource
 The more `Deployable` objects you create for an `Application`, the harder it becomes to determine your application's topology, specially for newcomers in your team. MCM provides application topology features via [Weave Scope](https://www.weave.works/oss/scope/) out of the box. However, to explicitly specify dependencies between certain components (Deployment, Application, etc), you will need to create an `ApplicationRelationship` resource. Let's look at the `gbapp-frontend-app` ApplicationRelationship resource from the Helm Chart below:
 
-TODO: Confirm the above
-
 ```yaml
 apiVersion: mcm.ibm.com/v1alpha1
 kind: ApplicationRelationship
 metadata:
-  name: {{ template "guestbookapplication.fullname" . }}-frontend-app
+  name: {{ template "guestbookapplication.fullname" . }}-app-frontend
   labels:
     app: {{ template "guestbookapplication.name" . }}
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
 spec:
-  destination:
-    kind: Deployable
-    name: {{ template "guestbookapplication.fullname" . }}-frontend
+  type: contains
   source:
     kind: Application
     name: {{ template "guestbookapplication.fullname" . }}
-  type: contains
+  destination:
+    kind: Deployable
+    name: {{ template "guestbookapplication.fullname" . }}-frontend
 ```
 
 Where:
@@ -153,11 +151,10 @@ Where:
   * **apiVersion**: Contains the MCM API version for ApplicationRelationship.
   * **kind**: Specifies that this is an `ApplicationRelationship` resource type.
   * **metadata**: Contains the resource name and some labels.
+  * **spec.source.kind**: specifies the type of Resource for the `source` object, which is `Application` in this case.
+  * **spec.source.name**: specifies the name of the `source` object, which is the `guestbook-gbapp` Application release and chart name combined.
   * **spec.destination.kind**: specifies the type of Resource for the `destination` object, which is `Deployable` in this case.
   * **spec.destination.name**: specifies the name of the `destination` object, which is the name for the `gbabb-frontend` Deployable.
-  * **spec.source.kind**: specifies the type of Resource for the `source` object, which is `Application` in this case.
-  * **spec.source.name**: specifies the name of the `source` object, which is the `gbapp` Application.
-  * **type**: TODO: Figure this out
 
 ### Placement Policy Resource
 Normally, to deploy an application to multiple clusters, you to run the following steps on each cluster:
