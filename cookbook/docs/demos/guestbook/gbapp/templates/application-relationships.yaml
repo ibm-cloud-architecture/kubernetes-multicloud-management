@@ -1,0 +1,53 @@
+apiVersion: mcm.ibm.com/v1alpha1
+kind: ApplicationRelationship
+metadata:
+  name: {{ template "guestbookapplication.fullname" . }}-app-frontend
+  labels:
+    app: {{ template "guestbookapplication.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  type: contains
+  source:
+    kind: Application
+    name: {{ template "guestbookapplication.fullname" . }}
+  destination:
+    kind: Deployable
+    name: {{ template "guestbookapplication.fullname" . }}-frontend
+---
+apiVersion: mcm.ibm.com/v1alpha1
+kind: ApplicationRelationship
+metadata:
+  name: {{ template "guestbookapplication.fullname" . }}-app-redismaster
+  labels:
+    app: {{ template "guestbookapplication.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  type: contains
+  source:
+    kind: Application
+    name: {{ template "guestbookapplication.fullname" . }}
+  destination:
+    kind: Deployable
+    name: {{ template "guestbookapplication.fullname" . }}-redismaster
+---
+apiVersion: mcm.ibm.com/v1alpha1
+kind: ApplicationRelationship
+metadata:
+  name: {{ template "guestbookapplication.fullname" . }}-app-redisslave
+  labels:
+    app: {{ template "guestbookapplication.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  type: contains
+  source:
+    kind: Application
+    name: {{ template "guestbookapplication.fullname" . }}
+  destination:
+    kind: Deployable
+    name: {{ template "guestbookapplication.fullname" . }}-redisslave

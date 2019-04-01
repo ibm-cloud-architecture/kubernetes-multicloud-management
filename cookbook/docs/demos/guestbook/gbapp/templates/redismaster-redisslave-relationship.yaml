@@ -1,17 +1,17 @@
 apiVersion: mcm.ibm.com/v1alpha1
 kind: ApplicationRelationship
 metadata:
-  name: {{ template "guestbookapplication.fullname" . }}-slave
+  name: {{ template "guestbookapplication.fullname" . }}-redismaster-redisslave
   labels:
     app: {{ template "guestbookapplication.name" . }}
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
 spec:
+  type: usesCreated
+  source:
+    kind: Deployable
+    name: {{ template "guestbookapplication.fullname" . }}-redismaster
   destination:
     kind: Deployable
     name: {{ template "guestbookapplication.fullname" . }}-redisslave
-  source:
-    kind: Deployable
-    name: {{ template "guestbookapplication.fullname" . }}
-  type: usesCreated

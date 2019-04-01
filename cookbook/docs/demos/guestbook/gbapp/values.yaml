@@ -13,3 +13,5 @@ targetCluster:
   resourceSelector:
     type: cpu
   compliances: ""
+
+chartRepoURL: https://raw.githubusercontent.com/ibm-cloud-architecture/kubernetes-multicloud-management/v312/cookbook/docs/demos/guestbook/chart-packages
