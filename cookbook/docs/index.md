@@ -30,7 +30,7 @@ Walk through the application creation and deployment process
 **Chapter 5 - DevOps in Multi-cluster environment**   
 Integration with CI/CD tools   
 Application rollout to multiple clusters   
-[Go>>](devops-mcm.md)
+[Go>>](mcm-devops.md)
 
 **Chapter 6 - Policy and Compliance**   
 What policy/compliance client cares: HIPAA, Resource usage   

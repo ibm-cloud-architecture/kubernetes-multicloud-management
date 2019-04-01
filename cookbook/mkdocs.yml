@@ -6,7 +6,7 @@ nav:
   #- Quick Start: quickstart.md
   #- Architecting MCM Solution: solutionarchitecture.md
   - MCM Applications: mcm-applications.md
-  - DevOps with MCM: devops-mcm.md
+  - DevOps with MCM: mcm-devops.md
   - Policy and Compliance: policy.md
   #- Multicloud management with CAM: cam-integration.md
   - Monitoring and event management with MCM: mcm-monitoring-event-management.md

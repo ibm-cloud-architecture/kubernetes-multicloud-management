@@ -85,7 +85,7 @@ Don't forget to run the above commands on `EACH ICP Cluster` so that there are n
 
 ## Jenkins MCM CI/CD Tutorial
 Here is the High Level Jenkins-MCM DevOps Architecture Diagram and CI/CD Workflow:
-![DevOps Toolchain](images/devops-mcm/jenkins-arch.jpg?raw=true)
+![DevOps Toolchain](images/mcm-devops/jenkins-arch.jpg?raw=true)
 
 The main things to notice are the following:
 
@@ -117,10 +117,10 @@ cloudctl login -a https://ICP_MASTER_IP:8443 -n default --skip-ssl-validation
 Now we are ready to start setting up the Jenkins instance.
 
 ### a. Create a new namespace
-Create a new namespace `devops-mcm-demo`. This namespace will be used for CI/CD setup purposes. User may require 'cluster admin' access to create a new namespace. if you encounter any issues creating namespace, reach out to ICP admin for the same.
+Create a new namespace `mcm-devops-demo`. This namespace will be used for CI/CD setup purposes. User may require 'cluster admin' access to create a new namespace. if you encounter any issues creating namespace, reach out to ICP admin for the same.
 ```bash
-# Create devops-mcm-demo namespace
-kubectl create namespace devops-mcm-demo
+# Create mcm-devops-demo namespace
+kubectl create namespace mcm-devops-demo
 ```
 
 ### b. Create a Persistence Volume Claim
@@ -133,7 +133,7 @@ kubectl apply -f jenkins-pvc.yaml
 Wait a few seconds/minutes for the PVC to be bound and ready. To verify that the PVC has been successfully bound, run the following command:
 ```bash
 # Check that PVC status
-kubectl -n devops-mcm-demo get pvc
+kubectl -n mcm-devops-demo get pvc
 NAME                        STATUS   VOLUME                CAPACITY   ACCESS MODES   STORAGECLASS   AGE
 jenkins-master-claim        Bound    jenkins-master        10Gi       RWO                           1d
 ```
@@ -144,7 +144,7 @@ If you see the above PVC with a Status of `Bound`, that means that your PVC is r
 Let's finally install the [Community Jenkins Helm Chart](https://github.com/helm/charts/tree/master/stable/jenkins). We will be using our own [values.yaml](https://github.com/ibm-cloud-architecture/kubernetes-multicloud-management/blob/master/cookbook/docs/demos/jenkins/deploy/jenkins-values.yaml) file to setup things like admin password, a `/jenkins` prefix (which will be used by ingress), and to use the PVC we created in the above section. To install the chart, run the following command:
 ```bash
 # Install the Jenkins Helm Chart
-helm upgrade --namespace devops-mcm-demo --install jenkins -f jenkins-values.yaml stable/jenkins --tls
+helm upgrade --namespace mcm-devops-demo --install jenkins -f jenkins-values.yaml stable/jenkins --tls
 ```
 
 The Jenkins container will take a few minutes to start and be fully initialized. To access the Jenkins instance once it's ready, you will need to create an Ingress entry as shown in the next section.
@@ -157,7 +157,7 @@ kubectl apply -f jenkins-ingress.yaml
 
 To get the Ingress IP address, run the following command:
 ```bash
-kubectl get ingress -n devops-mcm-demo
+kubectl get ingress -n mcm-devops-demo
 NAME                   HOSTS   ADDRESS         PORTS   AGE
 jenkins-ingress        *       172.16.50.228   80      1d
 ```
@@ -167,7 +167,7 @@ If you see the `jenkins-ingress` listed, the IP Address will be listed under the
 ### e. Login to Jenkins
 Finally, to let's test that the Ingress was created successfully by trying to access Jenkins from your browser. Open a new browser window and go to `http://ICP_INGRESS_IP/jenkins`. You should be greeted with a login window
 
-  ![](images/devops-mcm/jenkins-login.png?raw=true)
+  ![](images/mcm-devops/jenkins-login.png?raw=true)
 
 Now enter `admin` and `admin_0000` (as defined in the `jenkins-values.yaml` file) for username and password, respectively and click the `Sign In` button.
 
@@ -178,13 +178,13 @@ If the login worked, then that means that you have successfully installed Jenkin
 ## 2. Configure Jenkins
 The Jenkins configuration will be default. However, we need to create a Credentials entry for the username and password for the MCM Controller ICP cluster. To create the credentials, open a browser window and go to `http://ICP_INGRESS_IP/jenkins/credentials/store/system/domain/_/newCredentials` and select `Username with password` for **Kind**.
 
-![](images/devops-mcm/jenkins-credentials.png?raw=true)
+![](images/mcm-devops/jenkins-credentials.png?raw=true)
 
 Enter the admin username and password for the ICP cluster. Please make that you enter `id-sedev-cluster-credentials` for the **ID** field, as this is the Jenkins credentials id that will be used by the pipeline.
 
 Depending on whether you are accessing this repository from your own fork or from our repository directly, you may be asked to setup a private ssh key for your GitHub username. To do so, open a browser window and go to `http://ICP_INGRESS_IP/jenkins/credentials/store/system/domain/_/newCredentials` and select `SSH Username with private key` for **Kind**.
 
-![](images/devops-mcm/jenkins-github-ssh.png?raw=true)
+![](images/mcm-devops/jenkins-github-ssh.png?raw=true)
 Now enter your GitHub username and your Private SSH key in the **Username** and **Private Key** fields, respectively.
 
 Now we are ready to start setting up the CI/CD Pipeline.
@@ -223,13 +223,13 @@ Now that we understand the pipeline code at a high level, we can proceed with cr
   * Select `Pipeline` as project type.
   * Click the `OK` Button.
   * This will bring you to the Pipeline Configuration view.
-  ![](images/devops-mcm/jenkins-new-project.png)
+  ![](images/mcm-devops/jenkins-new-project.png)
 
 Now that we have created the pipeline, in the following sections you will setup the pipeline environment variables and the git repository details.
 
 #### i. Setup the Environment Variables
 Let's setup the pipeline environment variables, which contain the cluster specific information needed to deploy the `guestbook` application into the `se-dev-31` cluster. We will explain all of the variables that you need to enter, which result in a configuration similar to the following
-    ![](images/devops-mcm/jenkins-project-conf-general-params.png)
+    ![](images/mcm-devops/jenkins-project-conf-general-params.png)
 
 On the **General** section of the Pipeline Configuration view, check the `This project is parameterized` box, which will expose the `Add Parameter` dropdown. Then click **Add Parameter -> String Parameter** and create the following parameters with their respective `Name` and `Default Value`:
 
@@ -267,7 +267,7 @@ You are done setting up all the environment variables.
 #### ii. Setup the git repository
 Now we need to setup the Pipeline git repository details, which will tell Jenkins the git repository and the location where the Jenkinsfile is located.  We will explain all of the settings that you need to enter, which result in a configuration similar to the following
 
-  ![](images/devops-mcm/jenkins-project-conf-pipeline.png)
+  ![](images/mcm-devops/jenkins-project-conf-pipeline.png)
 
 On the **Pipeline** section of the Pipeline Configuration view do the following:
 
@@ -293,7 +293,7 @@ To create the `mcm-promotion` pipeline, do the following:
   * Click the `OK` Button.
   * This will bring you to the Pipeline Configuration view with pre-filled Environment Variables and Repository details from the `mcm-dev` pipeline.
 
-  ![](images/devops-mcm/jenkins-copy-pipeline.png)
+  ![](images/mcm-devops/jenkins-copy-pipeline.png)
 
 Now go to the **General** section and enter the following values for the environment variables below:
 
@@ -320,23 +320,23 @@ Whew, setting up those pipelines took a lot of work but now comes the rewarding 
 
   * From the Jenkins home page select the `mcm-dev` item, then click `Build with parameters`, which will take you to a view similar to the following, where you can edit the Environment Variables, if needed:
 
-    ![](images/devops-mcm/jenkins-build-w-params.png)
+    ![](images/mcm-devops/jenkins-build-w-params.png)
 
   * Click `Build` to start the pipeline, which will take you back to the project view.
 
 From the `mcm-dev` project view, click on the latest build number (in the above picture it would be #7) to view build details.
 
-  ![](images/devops-mcm/jenkins-project-view.png)
+  ![](images/mcm-devops/jenkins-project-view.png)
 
 To access the build logs, click on the `Console Output` button.
 
-  ![](images/devops-mcm/jenkins-build-output.png)
+  ![](images/mcm-devops/jenkins-build-output.png)
 
 I'll let you look into the logs to figure out what's going on. The best way to read the logs is by matching the output you see with the pipeline stages we went through earlier in the [Pipeline Code Overview](#a-pipeline-code-overview) section.
 
 An important detail to know is that towards the end of the pipeline output, if the `Validation Test` stage completed successfully, you will notice that the pipeline triggers the `mcm-promotion` job and starts a new build for it, as shown below:
 
-  ![](images/devops-mcm/jenkins-application-link-and-promotion.png)
+  ![](images/mcm-devops/jenkins-application-link-and-promotion.png)
 
 If you would like to see output of the `mcm-promotion` job build, just click the `mcm-promotion` build number (#2 in the above picture). The way Jenkins treats jobs that trigger builds for other jobs is that it will wait until the triggered jobs finish before finishing the current job. In our case, the `mcm-dev` job build will wait until `mcm-promotion` job build finishes before it can finish itself.
 
@@ -353,7 +353,7 @@ There are 2 ways in which we can access the `guestbook` application's frontend o
 ### a. Getting the application URL from the Jenkins build output
 On the **Validation Test** stage you will see a link to the `guestbook` application's frontend URL in the logs as shown below:
 
-  ![](images/devops-mcm/jenkins-application-link-and-promotion.png)
+  ![](images/mcm-devops/jenkins-application-link-and-promotion.png)
 
 To access the guestbook application just click on the URL and you will be taken to the web application in your browser.
 
@@ -362,7 +362,7 @@ This step applies to both `mcm-dev` and `mcm-promotion` jobs.
 ### b. Launching the application from the IBM Cloud Private Console
 You can also launch the `guestbook` frontend from the IBM Cloud Private console. To do so, open a new browser window and go to `https://ICP_MASTER_IP:8443/console/workloads/deployments` and enter `guestbook` in the search bar. If done correctly, you will see a view like the following:
 
-  ![](images/devops-mcm/jenkins-icp-launch-application.png)
+  ![](images/mcm-devops/jenkins-icp-launch-application.png)
 
 If you are able to see the `md-guestbook-gbapp`, `md-guestbook-gbapp-redismaster`, and `md-guestbook-gbapp-redisslave` deployments and all have an **Available** value of `1`, then this means that all of the deployments have succesfully been deployed and started. At this point, all it takes to launch the application is to click the `Launch` button in the `md-guestbook-gbapp` row.
 
@@ -371,7 +371,7 @@ This step applies to both `se-dev-31` and `se-stg-31` clusters.
 ### c. Testing the Application
 The guestbook application itself is very simple. It consists of a web application that saves `guest` names (or any text) to a Redis deployment and persists them there even if the web application dies or restarts for some reason. To test its functionality, enter any text in the textbox shown below and click the `Submit` button.
 
-  ![MCM Clusters](images/devops-mcm/jenkins-application.png?raw=true)
+  ![MCM Clusters](images/mcm-devops/jenkins-application.png?raw=true)
 
 If everything worked successfully, you will see that the text you entered has now moved below the Submit button, which indicates that the text has been saved to and successfully read from the Redis deployment. To make sure that the text persists in the Redis deployment, feel free to refresh the page and make sure that the text you entered is bein shown again below the `Submit` button.
 
