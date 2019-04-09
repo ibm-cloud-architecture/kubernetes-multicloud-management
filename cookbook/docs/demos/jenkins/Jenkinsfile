@@ -9,7 +9,7 @@ def clusterCredentialId = env.CLUSTER_CREDENTIAL_ID ?: "id-sestg-cluster-credent
 def clusterURL = env.CLUSTER_URL ?: "172.16.50.227:8443"
 def helmReleaseName = env.HELM_RELEASE_NAME ?: "guestbook"
 def replicaCount = env.REPLICA_COUNT ?: "1"
-def pipelineImage = env.PIPELINE_IMAGE ?: "ibmcase/kube-helm-cloudctl-mcmctl:3"
+def pipelineImage = env.PIPELINE_IMAGE ?: "ibmcase/kube-helm-cloudctl-mcmctl:3.1.2"
 
 /*
   Deployment Labels
@@ -149,7 +149,7 @@ podTemplate(label: podLabel, envVars: [
                 echo "Success. There are \${REPLICAS} available replicas"
 
                 echo "Getting Worker Node IP"
-                NODE_IP=`mcmctl --cluster-selector environment=${TEST_ENVIRONMENT} get nodes | grep worker | awk '{print \$2}' | head -n 1`
+                NODE_IP=`mcmctl --cluster-selector environment=${TEST_ENVIRONMENT} get nodes -o wide | grep worker | awk '{print \$7}' | head -n 1`
 
                 echo "Getting NodePort"
                 PORT=`mcmctl --cluster-selector environment=${TEST_ENVIRONMENT} get services | grep ${HELM_RELEASE_NAME}-${CHART_NAME} | awk '{print \$6}' | awk -F":" '{print \$2}' | awk -F"/" '{print \$1}'`
