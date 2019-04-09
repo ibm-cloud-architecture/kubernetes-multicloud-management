@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ###################### Update as per ENVIRONMENT ####################
-namespace="devops-mcm-demo"
+namespace="mcm-devops-demo"
 jenkins_chart="stable/jenkins"
 jenkins_release_name="jenkins"
 jenkins_values="jenkins-values.yaml"

@@ -1,0 +1,14 @@
+apiVersion: securityenforcement.admission.cloud.ibm.com/v1beta1
+kind: ClusterImagePolicy
+metadata:
+  name: jenkins
+spec:
+  repositories:
+  - name: 'docker.io/jenkins/jenkins'
+    policy:
+      va:
+        enabled: false
+  - name: 'ibmcase/kube-helm-cloudctl-mcmctl'
+    policy:
+      va:
+        enabled: false

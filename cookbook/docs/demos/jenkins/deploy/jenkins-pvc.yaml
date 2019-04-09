@@ -3,10 +3,10 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: jenkins-master
-  namespace: devops-mcm-demo
+  namespace: mcm-devops-demo
   labels:
     volume: jenkins-master
-    project: "devops-mcm-demo"
+    project: "mcm-devops-demo"
 spec:
   capacity:
     storage: 10Gi
@@ -20,15 +20,15 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: jenkins-master-claim
-  namespace: devops-mcm-demo
+  namespace: mcm-devops-demo
   labels:
-    project: "devops-mcm-demo"
+    volume: jenkins-master
+    project: "mcm-devops-demo"
 spec:
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
       storage: 10Gi
-  selector:
-    matchLabels:
-      volume: jenkins-master
+  volumeName: "jenkins-master"
+  storageClassName: ""

@@ -78,7 +78,7 @@ Now, on `EACH ICP CLUSTER`, let's run the following commands:
 cloudctl login -a https://ICP_MASTER_IP:8443 -n default --skip-ssl-validation
 
 # Create the Image Policy in the ICP Cluster
-kubectl apply -f cookbook/docs/demos/guestbook/imagepolicy.yaml
+kubectl apply -f cookbook/docs/demos/guestbook/guestbook-cluster-image-policy.yaml
 ```
 
 Don't forget to run the above commands on `EACH ICP Cluster` so that there are no issues when deploying the guestbook application.
@@ -123,7 +123,14 @@ Create a new namespace `mcm-devops-demo`. This namespace will be used for CI/CD 
 kubectl create namespace mcm-devops-demo
 ```
 
-### b. Create a Persistence Volume Claim
+### b. Create Jenkins Image Policy
+Since we will be deploying the Jenkins Helm chart, we will need to create a Cluster Image Policy that allows the cluster to pull the Jenkins and the custom Jenkins Slave images from Docker Hub. To do so, run the following command:
+```bash
+# Create the Image Policy in the Jenkins ICP Cluster
+kubectl apply -f jenkins-cluster-image-policy.yaml
+```
+
+### c. Create a Persistence Volume Claim
 Create Persistence Volume (PV) and a Persistence Volume Claim (PVC) using the NFS Shared Directory you created earlier. To create the PV and the PVC, open the [jenkins-pvc.yaml](demos/jenkins/deploy/jenkins-pvc.yaml) and change the values of Lines [16](https://github.com/ibm-cloud-architecture/kubernetes-multicloud-management/blob/master/cookbook/docs/demos/jenkins/deploy/jenkins-pvc.yaml#L16) and [17](https://github.com/ibm-cloud-architecture/kubernetes-multicloud-management/blob/master/cookbook/docs/demos/jenkins/deploy/jenkins-pvc.yaml#L17) to the NFS server's IP Address and the Share Directory's absolute path, respectively. Then save the file and create the PV and PVC with the following command:
 ```bash
 # Create the PV and PVC
@@ -140,7 +147,7 @@ jenkins-master-claim        Bound    jenkins-master        10Gi       RWO       
 
 If you see the above PVC with a Status of `Bound`, that means that your PVC is ready to be used!
 
-### c. Install the Jenkins Helm Chart
+### d. Install the Jenkins Helm Chart
 Let's finally install the [Community Jenkins Helm Chart](https://github.com/helm/charts/tree/master/stable/jenkins). We will be using our own [values.yaml](https://github.com/ibm-cloud-architecture/kubernetes-multicloud-management/blob/master/cookbook/docs/demos/jenkins/deploy/jenkins-values.yaml) file to setup things like admin password, a `/jenkins` prefix (which will be used by ingress), and to use the PVC we created in the above section. To install the chart, run the following command:
 ```bash
 # Install the Jenkins Helm Chart
@@ -149,7 +156,7 @@ helm upgrade --namespace mcm-devops-demo --install jenkins -f jenkins-values.yam
 
 The Jenkins container will take a few minutes to start and be fully initialized. To access the Jenkins instance once it's ready, you will need to create an Ingress entry as shown in the next section.
 
-### d. Create Jenkins Ingress
+### e. Create Jenkins Ingress
 To be able to access the Jenkins instance, you will need an Ingress record that forwards traffic from the Ingress IP address to the Jenkins pod. To create the Ingress, run the following command:
 ```bash
 kubectl apply -f jenkins-ingress.yaml
@@ -164,7 +171,7 @@ jenkins-ingress        *       172.16.50.228   80      1d
 
 If you see the `jenkins-ingress` listed, the IP Address will be listed under the `ADDRESS` column.
 
-### e. Login to Jenkins
+### f. Login to Jenkins
 Finally, to let's test that the Ingress was created successfully by trying to access Jenkins from your browser. Open a new browser window and go to `http://ICP_INGRESS_IP/jenkins`. You should be greeted with a login window
 
   ![](images/mcm-devops/jenkins-login.png?raw=true)
@@ -249,7 +256,7 @@ On the **General** section of the Pipeline Configuration view, check the `This p
   * **REPLICA_COUNT**: `1`
     + The replica count is the number of matching clusters that the `guestbook` application will be deployed into.
     + Since this is the `mcm-dev` pipeline, we will set this to just `1`.
-  * **PIPELINE_IMAGE**: `ibmcase/kube-helm-cloudctl-mcmctl:3`
+  * **PIPELINE_IMAGE**: `ibmcase/kube-helm-cloudctl-mcmctl:3.1.2`
     + The docker image that contains all of the CLIs needed by the pipeline, which are `cloudctl`, `mcmctl`, `kubectl`, and `helm`.
     + This image is publicly available on our Docker Hub and the source can be found [here](https://github.com/ibm-cloud-architecture/kubernetes-multicloud-management/blob/master/cookbook/docs/demos/docker/Dockerfile).
     + **NOTE:** We built this image for demo purposes, which means that it should NOT be used for PRODUCTION. For that, you will have to create your own Docker image with the specific versions of the CLIs that you wish to use.
@@ -304,7 +311,7 @@ Now go to the **General** section and enter the following values for the environ
   * **HELM_RELEASE_NAME**: `guestbook`
   * **REPLICA_COUNT**: `2`
     + Since we want to deploy the application to both `se-dev-31` and `se-stg-31` clusters, we set the replica count to `2`.
-  * **PIPELINE_IMAGE**: `ibmcase/kube-helm-cloudctl-mcmctl:3`
+  * **PIPELINE_IMAGE**: `ibmcase/kube-helm-cloudctl-mcmctl:3.1.2`
   * Rename **LABEL_ENVIRONMENT** to **LABEL_OWNER** and set the value to `case`
     + Since both `se-dev-31` and `se-stg-31` share the `Owner` cluster selector label with a value of `case`, we can use this label to select both cluster as deployment candidates for the `guestbook` application.
   * **TEST_ENVIRONMENT**: `Staging`
