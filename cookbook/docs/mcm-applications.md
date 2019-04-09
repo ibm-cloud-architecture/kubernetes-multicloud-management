@@ -23,7 +23,7 @@ In this document, we are going to cover the basic `Application` concepts we lear
 
 The actual `Guestbook` application code comes from the Kubernetes Community, and it's located publicly on the [kubernetes/examples](https://github.com/kubernetes/examples/tree/master/guestbook) repository. The application is broken up in the following 3 services:
 
-![GuestBook Architecture](images/mcm-applications/guestbook-architecture.jpg?raw=true)
+![GuestBook Architecture](images/mcm-applications/guestbook-architecture.png?raw=true)
 
   * **Redis Master**: A Redis Master instance.
   * **Redis Slave**: A Redis Slave instance, which replicates the contents of the Redis Master.
