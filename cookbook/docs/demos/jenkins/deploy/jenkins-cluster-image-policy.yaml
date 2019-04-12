@@ -8,7 +8,11 @@ spec:
     policy:
       va:
         enabled: false
-  - name: 'ibmcase/kube-helm-cloudctl-mcmctl'
+  - name: 'docker.io/jenkins/jnlp-slave'
+    policy:
+      va:
+        enabled: false
+  - name: 'docker.io/ibmcase/kube-helm-cloudctl-mcmctl'
     policy:
       va:
         enabled: false
