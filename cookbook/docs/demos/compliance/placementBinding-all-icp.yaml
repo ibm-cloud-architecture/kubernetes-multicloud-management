@@ -1,0 +1,12 @@
+apiVersion: mcm.ibm.com/v1alpha1
+kind: PlacementBinding
+metadata:
+  name: default-binding-all-icp
+  namespace: mcm
+placementRef:
+  name: default-placement-all-icp
+subjects:
+- name: default-all-icp
+  kind: Compliance
+- name: default-all-icp-informational
+  kind: Compliance

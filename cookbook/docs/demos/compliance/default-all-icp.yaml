@@ -1,0 +1,55 @@
+apiVersion: compliance.mcm.ibm.com/v1alpha1
+kind: Compliance
+metadata:
+  name: default-all-icp
+  namespace: mcm
+spec:
+  runtime-rules:
+    - apiVersion: policy.mcm.ibm.com/v1alpha1
+      kind: Policy
+      metadata:
+        name: policy-all-icp
+        labels:
+          targets: all-icp
+      spec:
+        remediationAction: "inform" # enforce or inform
+        complianceType: "musthave" # used as default, when missing in a particular sub-template
+        namespaces:
+          include: ["default"]
+          exclude: ["kube*"]
+        role-templates:
+          - apiVersion: roletemplate.mcm.ibm.com/v1alpha1
+            metadata:
+              namespace: "" # will be inferred
+              name: operator-role
+            selector:
+              matchLabels:
+                hipaa: "true"
+            complianceType: "musthave" # at this level, it means the role must exist with the rules that it musthave below
+            rules:
+              - complianceType: "mustnothave" # at this level, it means if the role exists the rule is a mustnothave
+                policyRule:
+                  apiGroups: ["core"]
+                  resources: ["secrets"]
+                  verbs: ["get", "list", "watch","delete", "create", "update", "patch"]
+              - complianceType: "musthave" # at this level, it means if the role exists the rule is a musthave
+                policyRule:
+                  apiGroups: ["core"]
+                  resources: ["pods"]
+                  verbs: ["get", "list", "watch"]
+        object-templates:
+          - complianceType: "musthave"
+            objectDefinition:
+              kind: RoleBinding
+              apiVersion: rbac.authorization.k8s.io/v1
+              metadata:
+                name: operate-pods-rolebinding
+                namespace: default
+              subjects:
+              - kind: User
+                name: admin # Name is case sensitive
+                apiGroup: rbac.authorization.k8s.io
+              roleRef:
+                kind: Role #this must be Role or ClusterRole
+                name: operator # this must match the name of the Role or ClusterRole you wish to bind to
+                apiGroup: rbac.authorization.k8s.io
