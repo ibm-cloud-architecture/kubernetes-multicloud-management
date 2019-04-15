@@ -1,8 +1,12 @@
 replicaCount: 1
 service:
-  type: NodePort
+  type: ClusterIP
 
 frontend:
   repository: gcr.io/google-samples/gb-frontend
   tag: v6
   pullPolicy: IfNotPresent
+
+ingress:
+  path: /frontend
+  host: se-stg-312-proxy-53b15ff5-307608-wdc07.lb.bluemix.net
