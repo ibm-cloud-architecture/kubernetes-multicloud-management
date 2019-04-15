@@ -1,6 +1,6 @@
 replicaCount: 1
 service:
-  type: ClusterIP
+  type: NodePort
 
 frontend:
   repository: gcr.io/google-samples/gb-frontend
