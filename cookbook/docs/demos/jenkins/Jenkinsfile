@@ -27,6 +27,7 @@ def helmHome = env.HELM_HOME ?: "/root/.helm"
 def skipSSLValidationOption = env.SKIP_SSL_VALIDATION ?: "--skip-ssl-validation"
 def chartName = env.CHART_NAME ?: "gbapp"
 def testEnvironment = env.TEST_ENVIRONMENT ?: "Dev"
+def useNodePort = env.USE_NODE_PORT ?: ""
 
 /*
   POD Template
@@ -45,7 +46,8 @@ podTemplate(label: podLabel, envVars: [
         envVar(key: 'LABEL_REGION', value: labelRegion),
         envVar(key: 'LABEL_VENDOR', value: labelVendor),
         envVar(key: 'CHART_NAME', value: chartName),
-        envVar(key: 'TEST_ENVIRONMENT', value: testEnvironment)
+        envVar(key: 'TEST_ENVIRONMENT', value: testEnvironment),
+        envVar(key: 'USE_NODE_PORT', value: useNodePort)
     ],
     containers: [
         containerTemplate(name: 'clis', image: pipelineImage, ttyEnabled: true, command: 'cat')
@@ -122,8 +124,12 @@ podTemplate(label: podLabel, envVars: [
                     mcmctl --cluster-selector environment=${TEST_ENVIRONMENT} get deployments \${1} | grep -v AVAILABLE | awk '{print \$6}'
                 }
 
+                function get_ingress() {
+                    mcmctl --cluster-selector environment=Staging get ingress ${HELM_RELEASE_NAME}-gbf --namespace ${CLUSTER_NAMESPACE} | grep ${HELM_RELEASE_NAME}-gbf | awk '{print \$4}'
+                }
+
                 function test_service() {
-                    curl -s http://\${NODE_IP}:\${PORT} | grep Guestbook | grep title
+                    curl -k -L -s "\${URL}" | grep Guestbook | grep title
                 }
 
                 set +x
@@ -148,17 +154,30 @@ podTemplate(label: podLabel, envVars: [
 
                 echo "Success. There are \${REPLICAS} available replicas"
 
-                echo "Getting Worker Node IP"
-                NODE_IP=`mcmctl --cluster-selector environment=${TEST_ENVIRONMENT} get nodes -o wide | grep worker | awk '{print \$7}' | head -n 1`
+                if [ -n "${USE_NODE_PORT}" ]; then
+                    echo "Getting Node Port URL"
+                    echo "Getting Worker Node IP"
+                    NODE_IP=`mcmctl --cluster-selector environment=${TEST_ENVIRONMENT} get nodes -o wide | grep worker | awk '{print \$7}' | head -n 1`
 
-                echo "Getting NodePort"
-                PORT=`mcmctl --cluster-selector environment=${TEST_ENVIRONMENT} get services | grep ${HELM_RELEASE_NAME}-${CHART_NAME} | awk '{print \$6}' | awk -F":" '{print \$2}' | awk -F"/" '{print \$1}'`
+                    echo "Getting NodePort"
+                    PORT=`mcmctl --cluster-selector environment=${TEST_ENVIRONMENT} get services | grep ${HELM_RELEASE_NAME}-${CHART_NAME} | awk '{print \$6}' | awk -F":" '{print \$2}' | awk -F"/" '{print \$1}'`
 
-                echo "Testing Service on Cluster at http://\${NODE_IP}:\${PORT}"
+                    URL="\${NODE_IP}:\${PORT}"
+                else
+                    echo "Getting Ingress URL"
+                    URL=`get_ingress`
+                    until [ -n "\${URL}" ]; do
+                        echo "Waiting for Ingress to become available..."
+                        sleep 1
+                        URL=`get_ingress`
+                    done
+                fi
+
+                echo "Testing Service on Cluster at \${URL}"
                 CURL_OUTPUT=`test_service`
 
                 until [ -n "\${CURL_OUTPUT}" ]; do
-                    echo "Getting the home page from http://\${NODE_IP}:\${PORT}"
+                    echo "Getting the home page from \${URL}"
                     sleep 1
                     CURL_OUTPUT=`test_service`
                 done
