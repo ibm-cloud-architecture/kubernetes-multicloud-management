@@ -125,7 +125,7 @@ podTemplate(label: podLabel, envVars: [
                 }
 
                 function get_ingress() {
-                    mcmctl --cluster-selector environment=Staging get ingress ${HELM_RELEASE_NAME}-gbf --namespace ${CLUSTER_NAMESPACE} | grep ${HELM_RELEASE_NAME}-gbf | awk '{print \$4}'
+                    mcmctl --cluster-selector environment=${TEST_ENVIRONMENT} get ingress --namespace ${CLUSTER_NAMESPACE} | grep ${HELM_RELEASE_NAME}-${CHART_NAME} | grep gbf | awk '{print \$4}'
                 }
 
                 function test_service() {
