@@ -214,9 +214,8 @@ The pipeline code (which you can checkout [here](https://github.com/ibm-cloud-ar
         - Wait until the guestbook deployments show up in the cluster.
       + Use `mcmctl` to obtain the available replicas for each deployment.
         - Wait until there is at least 1 available replica.
-      + Use `mcmctl` to get the IP Address of 1 worker node.
-      + Use `mcmctl` to get the NodePort of the `guestbook` frontend service.
-      + Finally, use `curl` to query the `guestbook` frontend service using the worker IP address and NodePort from above and check that we get the guestbook frontend HTML code.
+      + Use `mcmctl` to get the IP Address (or domain name) of the cluster's Ingress for the `geustbook` frontend service.
+      + Finally, use `curl` to query the `guestbook` frontend service using the Ingress from above and check that we get the guestbook frontend HTML code.
   4. **Trigger Promotion Job**
     * Assuming that we provided the name of the promotion job and that the pipeline passes validation tests, this step will trigger the `mcm-promotion` pipeline, which runs the same stages minus the **Trigger Promotion Job** stage.
     * The `mcm-promotion` pipeline uses the same pipeline code (with different cluster selector labels and a replica count of 2) to deploy the `guestbook` app to both `se-dev-31` and `se-stg-31` clusters.
