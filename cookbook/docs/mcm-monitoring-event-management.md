@@ -160,7 +160,7 @@ The following procedure describes installation and configuration steps on exampl
 #### Installation of the Cloud Event Management controller
 Deploy an `alerttargetcontroller` chart on both MCM hub cluster and managed clusters in the `kube-system` namespace.
 
-![](images/mcm-monitoring-event-management/alerttarget.png)
+![](images/mcm-monitoring-event-management/alerttarget1.png)
 `MCM Fullname Override` option can be obtained using:
 
 ```
@@ -195,7 +195,7 @@ Deploy `ibm-cem` chart you loaded together with CEM image to `local-charts` repo
 
 >CEM chart provided with `ibm-charts` repository is a `Community Edition` version which is not designed to work with MCM.
 
-![](images/mcm-monitoring-event-management/cem.png )
+![](images/mcm-monitoring-event-management/cem1.png )
 In our setup we used ICP UI console hostname for both `ICP Master IP` and `Ingress Domain` options.
 
 After deployment, wait a couple of minutes until all CEM pods are started and run the following command to configure OIDC registration with IBM Cloud Private:
@@ -282,7 +282,7 @@ Cloud Event Management console can be accessed from the Multicloud Manager conso
 
 You may be asked to authenticate again with the ICP user and you should see one or more subscriptions.
 
-![](images/mcm-monitoring-event-management/cem-subs.png)
+![](images/mcm-monitoring-event-management/cem-subs1.png)
 
 Example subscription `cem-1` on the picture above is a name of the ICP `Team` authorized to manage a cluster namespace.
 
