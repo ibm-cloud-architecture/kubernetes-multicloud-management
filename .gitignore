@@ -17,3 +17,4 @@ resources/.arch-internal-preview.css
 cookbook/site
 cookbook/docs/demos/docker/cloudctl
 cookbook/docs/demos/docker/mcmctl
+*.html

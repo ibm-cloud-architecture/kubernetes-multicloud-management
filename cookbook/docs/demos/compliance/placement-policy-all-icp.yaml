@@ -1,7 +1,7 @@
 apiVersion: mcm.ibm.com/v1alpha1
 kind: PlacementPolicy
 metadata:
-  name: default-placement-all-icp
+  name: placement-policy-all-icp
   namespace: mcm
 spec:
   clusterLabels:
