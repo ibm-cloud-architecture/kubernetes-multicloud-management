@@ -166,13 +166,11 @@ podTemplate(label: podLabel, envVars: [
                 else
                     echo "Getting Ingress URL"
                     URL=`get_ingress`
-                    echo "Ingress: http://\${URL}"
 
                     until [ -n "\${URL}" ] && [ "\${URL}" != "80" ]; do
                         echo "Waiting for Ingress to become available..."
                         sleep 1
                         URL=`get_ingress`
-                        echo "Ingress: http://\${URL}"
                     done
                 fi
 
