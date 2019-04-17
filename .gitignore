@@ -15,6 +15,6 @@ resources/.arch-internal-preview.css
 .DS_Store
 */.DS_Store
 site
-docs/demos/docker/cloudctl
-docs/demos/docker/mcmctl
+demos/docker/cloudctl
+demos/docker/mcmctl
 *.html
