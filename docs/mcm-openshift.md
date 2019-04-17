@@ -83,7 +83,7 @@ cloudctl login -a https://ICP_MASTER_IP:8443 -n default --skip-ssl-validation;
 git clone https://github.com/ibm-cloud-architecture/kubernetes-multicloud-management.git
 
 # Go to application directory
-cd kubernetes-multicloud-management/cookbook/docs/demos/guestbook
+cd kubernetes-multicloud-management/docs/demos/guestbook
 
 # Create image policy to allow docker images from any Docker Registry
 # NOT RECOMMENDED FOR PRODUCTION
@@ -98,7 +98,7 @@ helm upgrade --install guestbook --set replicaCount=2 --set targetCluster.labelS
 
 If the above was done correctly, then the application was deployed to both clusters usin only one `helm upgrade` command using the `owner` cluster selector that was passed above. This is possible because both clusters share a cluster selector label value of `case` for the `owner` field. The MCM Controller looks up clusters that match those labels and then deploys the application to those clusters.
 
-For more details on the `guestbook` application, check out the helm chart [here](https://github.com/ibm-cloud-architecture/kubernetes-multicloud-management/tree/master/cookbook/docs/demos/guestbook/gbapp).
+For more details on the `guestbook` application, check out the helm chart [here](https://github.com/ibm-cloud-architecture/kubernetes-multicloud-management/tree/master/docs/demos/guestbook/gbapp).
 
 To verify that the application was created in MCM and deployed to both clusters, let's run the following command:
 

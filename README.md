@@ -16,7 +16,7 @@ The Cookbook for ICP Solution Architects is written to support [MkDocs](https://
 2. Clone the code and serve pages locally as follows:
 	```bash
 	git clone git@github.com:ibm-cloud-architecture/kubernetes-multicloud-management.git
-	cd kubernetes-multicloud-management/cookbook
+	cd kubernetes-multicloud-management
 	mkdocs serve
 	```
 3. Go to http://127.0.0.1:8000 in your browser.
@@ -26,7 +26,7 @@ The Cookbook for ICP Solution Architects is written to support [MkDocs](https://
 ```bash
 export GITHUB_USERNAME=PUT_YOUR_GITHUB_USERNAME_HERE
 git clone git@github.com:${GITHUB_USERNAME}/kubernetes-multicloud-management.git
-cd kubernetes-multicloud-management/cookbook
+cd kubernetes-multicloud-management
 ```
 
 1. Ensure that all your local changes to the `master` branch have been committed and pushed to the remote repository.
@@ -37,7 +37,7 @@ cd kubernetes-multicloud-management/cookbook
 	git pull origin gh-pages
 	git checkout master
 	```
-3. Run `mkdocs gh-deploy` from the [cookbook](cookbook/) directory.  Note that the `gh-deploy` command will fail if you do not have the latest commits to the branch pulled locally.
+3. Run `mkdocs gh-deploy` from the root directory.  Note that the `gh-deploy` command will fail if you do not have the latest commits to the branch pulled locally.
 	* If you have git remote links for both this repository and your fork, you will need to run the command with an extra flag. For example, here is a local clone of the code that has 2 remote repos: `fabio` (fork) and `origin` (main repo):
 	```bash
 	fabio	git@github.com:fabiogomezdiaz/kubernetes-multicloud-management.git (fetch)
