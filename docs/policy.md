@@ -298,7 +298,7 @@ This tutorial will assume you have the following pre-requisites:
             * **vendor**: ICP
 
 ### 1. Apply the Compliance
-Now that we have installed MCM in both clusters, let's create the **Compliance**, **Placement Policy**, and **Placement Binding** objects located at [docs/demos/compliance](https://github.com/ibm-cloud-architecture/kubernetes-multicloud-management/tree/master/docs/demos/compliance). Here is a high level breakdown of the contents of the `Compliance` object:
+Now that we have installed MCM in both clusters, let's create the **Compliance**, **Placement Policy**, and **Placement Binding** objects located at [demos/compliance](https://github.com/ibm-cloud-architecture/kubernetes-multicloud-management/tree/master/demos/compliance). Here is a high level breakdown of the contents of the `Compliance` object:
 
 * A **Policy** that `enforces` the creation of the policy's **RoleTemplate** if the cluster is found non-compliant.
     + This means that even if the cluster was found compliant and, for some reason, a cluster admin deletes the role, the Compliance Manager will recreate it.
@@ -315,7 +315,7 @@ git clone git@github.com:ibm-cloud-architecture/kubernetes-multicloud-management
 cd kubernetes-multicloud-management
 
 # Apply the Compliance
-kubectl apply -f docs/demos/compliance
+kubectl apply -f demos/compliance
 ```
 
 Where:

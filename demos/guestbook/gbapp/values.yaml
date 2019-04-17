@@ -14,4 +14,4 @@ targetCluster:
     type: cpu
   compliances: ""
 
-chartRepoURL: https://raw.githubusercontent.com/ibm-cloud-architecture/kubernetes-multicloud-management/v312/docs/demos/guestbook/chart-packages
+chartRepoURL: https://raw.githubusercontent.com/ibm-cloud-architecture/kubernetes-multicloud-management/v312/demos/guestbook/chart-packages

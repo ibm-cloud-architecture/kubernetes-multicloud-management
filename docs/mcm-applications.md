@@ -34,9 +34,9 @@ The actual `Guestbook` application code comes from the Kubernetes Community, and
 
 The above 3 services were converted into the following 3 Helm Charts for the purpose of this demo. You can find the source code for the Helm Charts here:
 
-  * **Redis Master**: [gbrm](https://github.com/ibm-cloud-architecture/kubernetes-multicloud-management/tree/v312/docs/demos/guestbook/gbapp/gbrm).
-  * **Redis Slave**: [gbrs](https://github.com/ibm-cloud-architecture/kubernetes-multicloud-management/tree/v312/docs/demos/guestbook/gbapp/gbrs).
-  * **Frontend**: [gbf](https://github.com/ibm-cloud-architecture/kubernetes-multicloud-management/tree/v312/docs/demos/guestbook/gbapp/gbf).
+  * **Redis Master**: [gbrm](https://github.com/ibm-cloud-architecture/kubernetes-multicloud-management/tree/v312/demos/guestbook/gbapp/gbrm).
+  * **Redis Slave**: [gbrs](https://github.com/ibm-cloud-architecture/kubernetes-multicloud-management/tree/v312/demos/guestbook/gbapp/gbrs).
+  * **Frontend**: [gbf](https://github.com/ibm-cloud-architecture/kubernetes-multicloud-management/tree/v312/demos/guestbook/gbapp/gbf).
 
 Lastly, in order to deploy the above charts through MCM, we are also going to need a Helm chart that deploys all of the MCM resources. Those resources do the actual deployment, monitoring, and topology setup for the 3 Helm Charts mentioned above.
 
@@ -44,7 +44,7 @@ In the next sections, you are going to explore parts of the source code that mak
 
 **NOTE**: To checkout the entire source code of the `gbapp` Helm Chart, checkout the link below:
 
-  * [docs/demos/guestbook/gbapp](https://github.com/ibm-cloud-architecture/kubernetes-multicloud-management/tree/v312/docs/demos/guestbook/gbapp)
+  * [demos/guestbook/gbapp](https://github.com/ibm-cloud-architecture/kubernetes-multicloud-management/tree/v312/demos/guestbook/gbapp)
 
 ### Application Resource
 First things first, in order for MCM to recognize your workloads as an MCM application, you have to create an `Application` resource. The `Application` resource lets you specify criteria to associate Kubernetes resources to your application so that MCM can manage and monitor them. Let's look at the `gbapp` Application resource from the Helm Chart below:
@@ -238,10 +238,10 @@ Where:
 ### MCM Application Helm Chart
 The above YAML resources mostly cover supporting the `frontend` Helm Chart. To see how we put together an MCM Application Helm Chart that deploys all of the 3 Guestbook Helm Charts, checkout the source code at the link below:
 
-  * [docs/demos/guestbook/gbapp](https://github.com/ibm-cloud-architecture/kubernetes-multicloud-management/tree/v312/docs/demos/guestbook/gbapp)
+  * [demos/guestbook/gbapp](https://github.com/ibm-cloud-architecture/kubernetes-multicloud-management/tree/v312/demos/guestbook/gbapp)
 
 ## Deployment MCM Application
-Now that you are aware of how to create MCM Applications, it is time to deploy the `gbapp` MCM Application Helm Chart, which deploys the Guestbook Frontend ([gbf](https://github.com/ibm-cloud-architecture/kubernetes-multicloud-management/tree/v312/docs/demos/guestbook/gbapp/gbf)), Redis Master ([gbrm](https://github.com/ibm-cloud-architecture/kubernetes-multicloud-management/tree/v312/docs/demos/guestbook/gbapp/gbrm)), and Redis Slave ([gbrs](https://github.com/ibm-cloud-architecture/kubernetes-multicloud-management/tree/v312/docs/demos/guestbook/gbapp/gbrs)) charts.
+Now that you are aware of how to create MCM Applications, it is time to deploy the `gbapp` MCM Application Helm Chart, which deploys the Guestbook Frontend ([gbf](https://github.com/ibm-cloud-architecture/kubernetes-multicloud-management/tree/v312/demos/guestbook/gbapp/gbf)), Redis Master ([gbrm](https://github.com/ibm-cloud-architecture/kubernetes-multicloud-management/tree/v312/demos/guestbook/gbapp/gbrm)), and Redis Slave ([gbrs](https://github.com/ibm-cloud-architecture/kubernetes-multicloud-management/tree/v312/demos/guestbook/gbapp/gbrs)) charts.
 
 Before you start with the examples, you will need to clone the code and log into the MCM Hub Cluster with the commands below:
 
@@ -267,10 +267,10 @@ Since ICP version 3.1, you are required to create `Image Policies` that allow yo
 cloudctl login -a https://ICP_MASTER_IP:8443 -n default --skip-ssl-validation
 
 # Go to Helm Charts directory
-cd docs/demos/guestbook
+cd demos/guestbook
 
 # Create the Image Policy in the ICP Cluster
-kubectl apply -f docs/demos/guestbook/guestbook-cluster-image-policy.yaml
+kubectl apply -f demos/guestbook/guestbook-cluster-image-policy.yaml
 ```
 
 Don't forget to run the above commands on `EACH ICP Cluster` so that there are no issues when deploying the `gbapp` application.
@@ -283,7 +283,7 @@ The process of deploying an MCM Application is the same as deploying a Helm Char
 cloudctl login -a https://HUB_CLUSTER_MASTER_IP:8443 -n default --skip-ssl-validation
 
 # If not already there, go to the Helm Charts directory
-cd docs/demos/guestbook
+cd demos/guestbook
 
 # Deploy MCM Application Helm Chart
 helm upgrade --install guestbook --set replicaCount=1 --set targetCluster.labelSelector.matchLabels.environment=Dev ./gbapp --tls
@@ -293,7 +293,7 @@ Where:
 
   * **replicaCount**: is a field that indicates the number of application instances we are deploying, which is 1.
   * **targetCluster.labelSelector.matchLabels.environment**: means we are using the `environment` field with a value of `Dev`, which tells the MCM Controller to should find a cluster that has that value for that field.
-    + Checkout the [docs/demos/guestbook/gbapp/values.yaml](https://github.com/ibm-cloud-architecture/kubernetes-multicloud-management/tree/v312/docs/demos/guestbook/gbapp/values.yaml#L7) to learn the different fields we can use as cluster selectors.
+    + Checkout the [demos/guestbook/gbapp/values.yaml](https://github.com/ibm-cloud-architecture/kubernetes-multicloud-management/tree/v312/demos/guestbook/gbapp/values.yaml#L7) to learn the different fields we can use as cluster selectors.
 
 Assuming that everything went well, you should now see the `guestbook-gbapp` MCM Application show up in the `Applications` page as shown below:
 ![](images/mcm-applications/2-guestbook.png)
@@ -330,7 +330,7 @@ Now that you have learned how to navigate the Application Details page, let's pr
 To redeploy the application to the `se-stg-31` cluster, all we have to do is change the value of the `environment` field to `Staging`, and MCM will take care of uninstalling the application from the `se-dev-31` cluster and then redeploying it to the `se-stg-31` cluster. To do so, run the command below:
 ```bash
 # If not already there, go to the Helm Charts directory
-cd docs/demos/guestbook
+cd demos/guestbook
 
 # Deploy MCM Application Helm Chart
 helm upgrade --install guestbook --set replicaCount=1 --set targetCluster.labelSelector.matchLabels.environment=Staging ./gbapp --tls
@@ -345,7 +345,7 @@ Now let's go ahead and deploy the application to both clusters simultaneously! T
 
 ```bash
 # If not already there, go to the Helm Charts directory
-cd docs/demos/guestbook
+cd demos/guestbook
 
 # Deploy MCM Application Helm Chart
 helm upgrade --install guestbook --set replicaCount=2 --set targetCluster.labelSelector.matchLabels.owner=case ./gbapp --tls

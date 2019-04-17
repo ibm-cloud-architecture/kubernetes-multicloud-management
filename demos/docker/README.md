@@ -7,7 +7,7 @@ To download `cloudctl` CLI, use the instructions below:
 To download `mcmctl` CLI, use the instructions below:
 * https://www.ibm.com/support/knowledgecenter/en/SSBS6K_3.1.2/mcm/installing/install.html
 
-**NOTE:** Make sure to rename the CLIs to `cloudctl` and `mcmctl`, respectively. Also, make sure that you put the CLIs in the `cookbook/docs/demos/docker` folder so that the CLIs get picked up when building the Docker image
+**NOTE:** Make sure to rename the CLIs to `cloudctl` and `mcmctl`, respectively. Also, make sure that you put the CLIs in the `demos/docker` folder so that the CLIs get picked up when building the Docker image
 
 ## Building the Docker Image
 Once you have the CLIs ready, build the Docker image using the commands below:

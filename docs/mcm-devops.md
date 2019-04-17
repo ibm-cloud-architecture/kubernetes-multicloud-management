@@ -78,7 +78,7 @@ Now, on `EACH ICP CLUSTER`, let's run the following commands:
 cloudctl login -a https://ICP_MASTER_IP:8443 -n default --skip-ssl-validation
 
 # Create the Image Policy in the ICP Cluster
-kubectl apply -f docs/demos/guestbook/guestbook-cluster-image-policy.yaml
+kubectl apply -f demos/guestbook/guestbook-cluster-image-policy.yaml
 ```
 
 Don't forget to run the above commands on `EACH ICP Cluster` so that there are no issues when deploying the guestbook application.
@@ -108,7 +108,7 @@ We are now going to start the process of installing the [Community Jenkins Helm 
 Let's start by going to the Jenkins folder, followed by a `cloudctl login`:
 ```bash
 # Go to the Jenkins folder
-cd docs/demos/jenkins/deploy
+cd demos/jenkins/deploy
 
 # Login against the ICP Cluster that will contain the Jenkins instance
 cloudctl login -a https://ICP_MASTER_IP:8443 -n default --skip-ssl-validation
@@ -131,7 +131,7 @@ kubectl apply -f jenkins-cluster-image-policy.yaml
 ```
 
 ### c. Create a Persistence Volume Claim
-Create Persistence Volume (PV) and a Persistence Volume Claim (PVC) using the NFS Shared Directory you created earlier. To create the PV and the PVC, open the [jenkins-pvc.yaml](demos/jenkins/deploy/jenkins-pvc.yaml) and change the values of Lines [16](https://github.com/ibm-cloud-architecture/kubernetes-multicloud-management/blob/master/docs/demos/jenkins/deploy/jenkins-pvc.yaml#L16) and [17](https://github.com/ibm-cloud-architecture/kubernetes-multicloud-management/blob/master/docs/demos/jenkins/deploy/jenkins-pvc.yaml#L17) to the NFS server's IP Address and the Share Directory's absolute path, respectively. Then save the file and create the PV and PVC with the following command:
+Create Persistence Volume (PV) and a Persistence Volume Claim (PVC) using the NFS Shared Directory you created earlier. To create the PV and the PVC, open the [jenkins-pvc.yaml](demos/jenkins/deploy/jenkins-pvc.yaml) and change the values of Lines [16](https://github.com/ibm-cloud-architecture/kubernetes-multicloud-management/blob/master/demos/jenkins/deploy/jenkins-pvc.yaml#L16) and [17](https://github.com/ibm-cloud-architecture/kubernetes-multicloud-management/blob/master/demos/jenkins/deploy/jenkins-pvc.yaml#L17) to the NFS server's IP Address and the Share Directory's absolute path, respectively. Then save the file and create the PV and PVC with the following command:
 ```bash
 # Create the PV and PVC
 kubectl apply -f jenkins-pvc.yaml
@@ -148,7 +148,7 @@ jenkins-master-claim        Bound    jenkins-master        10Gi       RWO       
 If you see the above PVC with a Status of `Bound`, that means that your PVC is ready to be used!
 
 ### d. Install the Jenkins Helm Chart
-Let's finally install the [Community Jenkins Helm Chart](https://github.com/helm/charts/tree/master/stable/jenkins). We will be using our own [values.yaml](https://github.com/ibm-cloud-architecture/kubernetes-multicloud-management/blob/master/docs/demos/jenkins/deploy/jenkins-values.yaml) file to setup things like admin password, a `/jenkins` prefix (which will be used by ingress), and to use the PVC we created in the above section. To install the chart, run the following command:
+Let's finally install the [Community Jenkins Helm Chart](https://github.com/helm/charts/tree/master/stable/jenkins). We will be using our own [values.yaml](https://github.com/ibm-cloud-architecture/kubernetes-multicloud-management/blob/master/demos/jenkins/deploy/jenkins-values.yaml) file to setup things like admin password, a `/jenkins` prefix (which will be used by ingress), and to use the PVC we created in the above section. To install the chart, run the following command:
 ```bash
 # Install the Jenkins Helm Chart
 helm upgrade --namespace mcm-devops-demo --install jenkins -f jenkins-values.yaml stable/jenkins --tls
@@ -200,7 +200,7 @@ Now we are ready to start setting up the CI/CD Pipeline.
 Now we are going to create 2 pipeline projects. The first pipeline project will be called `mcm-dev` and, as the name implies, will be used to deploy the `guestbook` app to the `se-dev-31` cluster. The second pipeline will be called `mcm-promotion` and, as the name implies, it will be used to promote the `guestbook` deployment from the `se-dev-31` to the `se-stg-31` cluster.
 
 ### a. Pipeline Code Overview
-The pipeline code (which you can checkout [here](https://github.com/ibm-cloud-architecture/kubernetes-multicloud-management/blob/master/docs/demos/jenkins/Jenkinsfile)) consists of the following 4 stages:
+The pipeline code (which you can checkout [here](https://github.com/ibm-cloud-architecture/kubernetes-multicloud-management/blob/master/demos/jenkins/Jenkinsfile)) consists of the following 4 stages:
 
   1. **Initialize CLIs**
     * In this stage, the pipeline will log against the MCM Controller cluster and initialize contexts for `kubectl`, `helm`, and `mcmctl` CLIs.
@@ -257,7 +257,7 @@ On the **General** section of the Pipeline Configuration view, check the `This p
     + Since this is the `mcm-dev` pipeline, we will set this to just `1`.
   * **PIPELINE_IMAGE**: `ibmcase/kube-helm-cloudctl-mcmctl:3.1.2`
     + The docker image that contains all of the CLIs needed by the pipeline, which are `cloudctl`, `mcmctl`, `kubectl`, and `helm`.
-    + This image is publicly available on our Docker Hub and the source can be found [here](https://github.com/ibm-cloud-architecture/kubernetes-multicloud-management/blob/master/docs/demos/docker/Dockerfile).
+    + This image is publicly available on our Docker Hub and the source can be found [here](https://github.com/ibm-cloud-architecture/kubernetes-multicloud-management/blob/master/demos/docker/Dockerfile).
     + **NOTE:** We built this image for demo purposes, which means that it should NOT be used for PRODUCTION. For that, you will have to create your own Docker image with the specific versions of the CLIs that you wish to use.
   * **LABEL_ENVIRONMENT**: `Dev`
     + This is the `Environment` cluster selector label that we will use to select the `se-dev-31` cluster to deploy the `guestbook` application.
@@ -283,7 +283,7 @@ On the **Pipeline** section of the Pipeline Configuration view do the following:
     + If using `SSH` to clone the repository, enter `git@github.com:ibm-cloud-architecture/kubernetes-multicloud-management.git` instead.
     + Also, if using `SSH`, in the **Credentials** field select the `SSH Credentials` that you created earlier.
   * Enter `*/master` in the **Branches to build -> Branch Specifier** field.
-  * Enter `docs/demos/jenkins/Jenkinsfile` in the **Script Path** field.
+  * Enter `demos/jenkins/Jenkinsfile` in the **Script Path** field.
 
 #### iii. Save the pipeline configuration
 Now that you have configured pipeline, go ahead and click the `Save` button to save your the pipeline configuration.

@@ -81,7 +81,7 @@ podTemplate(label: podLabel, envVars: [
 
             stage('Deploy to ' + testEnvironment) {
                 sh """
-                cd docs/demos/guestbook
+                cd demos/guestbook
                 echo "Install ${CHART_NAME} ..."
 
                 PARAMETERS="replicaCount=${REPLICA_COUNT}"
