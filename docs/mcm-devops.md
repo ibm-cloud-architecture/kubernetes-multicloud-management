@@ -271,7 +271,7 @@ On the **General** section of the Pipeline Configuration view, check the `This p
 You are done setting up all the environment variables.
 
 #### ii. Setup the git repository
-Now we need to setup the Pipeline git repository details, which will tell Jenkins the git repository and the location where the Jenkinsfile is located.  We will explain all of the settings that you need to enter, which result in a configuration similar to the following
+Now we need to setup the Pipeline git repository details, which will tell Jenkins the git repository and the location where the Jenkinsfile is located.  We will explain all of the settings that you need to enter, which result in a configuration similar to the following:
 
   ![](images/mcm-devops/jenkins-project-conf-pipeline.png)
 
