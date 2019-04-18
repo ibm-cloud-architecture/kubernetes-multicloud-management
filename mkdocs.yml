@@ -1,4 +1,4 @@
-site_name: Cookbook for managing Kuberenetes clusters with IBM Multicloud Manager
+site_name: Guide for Managing Kubernetes Clusters with IBM Multicloud Manager
 nav:
   - Home: index.md
   - Scenarios for Multi-cluster Management: mcm-multicloud-scenarios.md
