@@ -1,8 +1,7 @@
 # Scenarios for Multi-cluster Management
-## The Era of Multicloud
-
 Author: Gang Chen (gangchen@us.ibm.com)
 
+## The Era of Multicloud
 We are in a Multicloud arena with 8 out of 10 enterprises committing to multicloud and 71% use three or more cloud providers. Embracing Multicloud will be the end game. IBM Multicloud Manager is the enterprise-grade multicloud management solution for Kubernetes.
 
 Many enterprises deploy multiple Kubernetes clusters on premises and in the public cloud, such as IBM Cloud™, Amazon Web Services (AWS), and Azure. You might find yourself using different vendor-supported Kubernetes releases, including IBM Cloud Private, Red Hat® OpenShift®, IBM Cloud Kubernetes Service, Amazon EKS, and Azure AKS. As each cloud provider or Kubernetes solution comes with its own tools and operations, managing a Multicloud Kubernetes environment can be overwhelming.
@@ -15,7 +14,6 @@ We summarized the top multicloud multi-cluster Kubernetes management challenges 
 * Day 2 operation
 
 ## The Client Story
-
 Let's start by walking through a client story. The acmeAir company (a fictitious airline company combining multiple real client scenarios and requirements) is adopting cloud with following key principles:
 
 * Multi-cloud (On-prem, IBM Cloud, AWS, Azure)
@@ -44,12 +42,11 @@ This list gives you a big picture of the issues when dealing with multiple Kuber
 
 
 ## Cross-cluster Visibility
-
-** User Story (Client needs): **
+**User Story (Client needs):**
 
 More and more clients adopt multiple-cloud strategy where they will host and operate multiple Kubernetes clusters across multiple cloud IaaS environment (including on-prem). Operators need a single management interface and utility to manage all these clusters with secure access. Operators can easily get health status of all the clusters managed including overall health condition, the key resource usage information. This function should be delivered through both a UI and CLI utility. Operators can easily add, remove and update the labels of a managed cluster.
 
-** MCM Capability **
+**MCM Capability**
 
 The current release of MCM provides the following features in cluster inventory:
 
@@ -61,8 +58,7 @@ The current release of MCM provides the following features in cluster inventory:
 * View (read only) the health status of pods, nodes, persistent volumes and applications running in those clusters.
 
 ## Workload Deployment and Placement
-
-** User Story (client needs): **
+**User Story (Client needs):**
 
 Developers and Operators may want to deploy workloads (Cloud-Native apps, App modernization packages) to multiple clusters. For example, Developers or DevOps engineer would like to deploy the application Helm Chart to Dev cluster environment, and later promote it to QA environment, both through a single Catalog UI or CLI utility. The Operators often deploy workload to multiple clusters as well. In our acmeAir example, production workload needs to be deployed to 2 cloud provider clusters and ensure the consistency of the application.
 
@@ -70,7 +66,7 @@ Users would like to embed the multi-cluster support capability in their existing
 
 Sometimes, developers and operators may need to deploy and manage the workload in a higher abstract format where several modules/Helm charts are grouped as deployment unit with dependency and other relationship built-in. Particularly, when some of the dependent components may end up in different clusters, the capability to have an abstract Application component spanning cross multiple cluster becomes very helpful.
 
-** MCM Capability **
+**MCM Capability**
 
 * Abstract Application component. This defines the representation of the common resource across clusters. This part is similar to [Kubernetes Federation V2](https://github.com/kubernetes-sigs/federation-v2) feature. MCM has more exposure in dependency management capability. As well as reflect the relationship in a visual `topology` format.
 * Component placement. More information will be addressed in below section. In general, MCM can place a workload on different clusters/namespaces based on a set of selectors and criteria. This can be powerful in a multiple-clusters scenario. For example, solving the request from Air Canada, Telus.
@@ -78,13 +74,12 @@ Sometimes, developers and operators may need to deploy and manage the workload i
 * Managed cross-cluster Helm repository.
 * Local or Remote Helm chart deployment through multi-cluster catalog or CLI.
 
-** Features/Gaps **
+**Features/Gaps**
 
 * Package and creating MCM Application is a manual process requiring knowledge of the MCM application schema. A scaffolding tool could be very helpful to package components into MCM application.
 * Integrating with existing CI/CD toolchain seems rudimentary at CLI level. Perhaps a dedicated MCM plugin for Jenkins can prove useful.
 
 ## Compliance and Security
-
 This feature is meant to address the following requests:
 
 * How do I set consistent security policies across environments?
@@ -92,7 +87,7 @@ This feature is meant to address the following requests:
 * How can I place workloads based on capacity and/or policy?
 * How can I ensure that all the clusters are configured properly based on their desired state.
 
-** User Story **
+**User Story**
 
 Operators need to ensure that the clusters are operating properly by comparing the current configuration of various resources against a desired state. And operator would like to enforce role or pod object placement within the clusters through a set of policy templates.
 
@@ -101,7 +96,7 @@ The acmeair.com site will be deployed to both IBM Cloud and AWS. However, only I
 
 Another example is associated with Workload deployment explained in above section. acmeair.com is planning to roll out a new feature, but they would like it to be first deployed in Dev and QA environments to run various tests. Instead of manually configuring the CI/CD pipelines with the Dev and QA environment credentials to do the deployment, DevOps engineers can simply update the MCM Application Placement Policy (explained in [MCM Applications chapter](mcm-applications.md)) with the cluster selector labels of the Dev and QA environments and MCM will take of finding the Dev and QA environments (based on the provided labels) and deploy the feature on those clusters.
 
-** MCM capability **
+**MCM Capability**
 
 * Set and enforce polices for Security, Applications and Infrastructure (Auto enforcement at cluster level).
 * Check compliance against deployment parameters, configuration and policies.

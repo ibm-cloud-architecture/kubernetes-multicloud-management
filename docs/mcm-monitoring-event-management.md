@@ -12,12 +12,11 @@ This chapter is focused on monitoring and event management features delivered by
         - [Installation of the Cloud Event Management controller](#installation-of-the-cloud-event-management-controller)
         - [Installation of the Cloud Event Management for IBM Multicloud Manager](#installation-of-the-cloud-event-management-for-ibm-multicloud-manager)
     + [User management](#user-management)
-    + [First logon to the CEM console](#first-logon-to-the-cem-console)
+    + [First logon to the CEM console](#first-login-to-the-cem-console)
 * [Conclusion](#conclusion)
 
 
 ## Overall MCM dashboard
-
 IBM Multicloud Manager Overview dashboard is available from the **Overview** section in the MCM menu.
 
 ![](images/mcm-monitoring-event-management/mcm-overall.png)
@@ -44,9 +43,7 @@ You can also view the information about each application and clusters where this
 The Overview page can be further personalized with the filtering feature. Click **Filter results** menu to specify what information is displayed on your page.
 
 ## MCM Application monitoring
-
 ### Metrics collection and visualization
-
 To access an Application Health View Dashboard (shown below), you must first access the **Applications** page from the MCM Menu:
 
 ![](images/mcm-monitoring-event-management/mcm-app-monit.png)
@@ -128,14 +125,12 @@ More information about Prometheus federation mechanisms: [https://prometheus.io/
 
 
 ## IBM Cloud Event Management for IBM Multicloud Manager
-
 IBM Cloud Event Management (CEM) allows to set up a real-time incident management for the applications and infrastructure managed by the Multi Cloud Manager. Incidents are generated from events/alerts which indicate that something has happened on an application, service, or another monitored object.
 Cloud Event Management can receive events from various monitoring sources, either on premise or in the cloud.
 
 In the MCM environment, the CEM collects alerts from Prometheus instances located at each managed cluster. The Cloud Event Management Controller for MCM (deployed using `alerttargetcontroller` helm chart) automatically configures managed Prometheus Alertmanager instances to send alert notifications to the central CEM instance installed on MCM Controller.
 
 ### Installing the Cloud Event Management for IBM Multicloud Manager
-
 The IBM Cloud Event Management for MCM is included inside IBM Multicloud Manager installation package. Unpack the MCM installation archive `mcm-3.1.2.tgz` and inside you will find two CEM PPA packages:
 
 * **Could Event Management Controller** - alerttargetcontroller-ppa-0.0.2.tar.gz
@@ -189,7 +184,6 @@ atc-alerttargetcontroller-alerttargetcontroller-77f87fb77cx6fph   1/1     Runnin
 ```
 
 #### Installation of the Cloud Event Management for IBM Multicloud Manager
-
 Deploy `ibm-cem` chart you loaded together with CEM image to `local-charts` repository in the `kube-system` namespace on the MCM hub cluster.
 
 * **NOTE**: The CEM chart provided with ICP's built-in `ibm-charts` repository is a `Community Edition` version which is not designed to work with MCM.
@@ -269,7 +263,6 @@ kubectl logs <alertmanager pod> -n kube-system
 ```
 
 ### User management
-
 CEM console access is managed through ICP `Teams` page in the ICP Console. To create a team with `Administrator` role, run the following steps:
 
 * On the MCM HUB Cluster, go to **Manage -> Identity & Access**.
@@ -280,8 +273,7 @@ CEM console access is managed through ICP `Teams` page in the ICP Console. To cr
 
 ![](images/mcm-monitoring-event-management/cem-team.png)
 
-### First logon to the CEM console
-
+### First login to the CEM console
 Cloud Event Management console can be accessed from the Multicloud Manager console. Logon to MCM UI as one of the Team members (mentioned in the [User Management](#user-management) section) and select `Event Management`.
 
 ![](images/mcm-monitoring-event-management/cem-login.png)
@@ -305,7 +297,6 @@ Click on the `Generator URL` link to open the Prometheus UI on the managed clust
 ![](images/mcm-monitoring-event-management/cem-prom.png)
 
 ## Conclusion
-
 **IBM Cloud Event Management** for **IBM Multicloud Manager** enables you to access Prometheus alert information for each of your managed clusters from a centralized location.
 
 To learn more about using and operating Cloud Event Management, check out the [Cloud Event Management documentation](https://www.ibm.com/support/knowledgecenter/SSURRN/com.ibm.cem.doc/index.html).

@@ -163,4 +163,4 @@ The last step that remains is to verify that the guestbook deployments are shown
 If you are able to see the `md-guestbook-gbapp`, `md-guestbook-gbapp-redismaster`, and `md-guestbook-gbapp-redisslave` deployments and all have at least `1` pod available, then this means that all of the deployments have succesfully been deployed and started. You might need to search for `guestbook` and make sure the view is displaying deployments for all the namespaces to be able to see them.
 
 ## Conclusion
-Now that you know how to use MCM to manage, monitor, and deploy applications on IBM Cloud Private and IBM Cloud Private on OpenShift clusters, you should checkout the [Manage AWS EKS clusters with MCM](mcm-eks.md) to learn how to use MCM to manage, monitor, and deploy applications on AWS EKS clusters.
+Now that you know how to use MCM to manage, monitor, and deploy applications on IBM Cloud Private and IBM Cloud Private on OpenShift clusters, you should checkout the [Manage AWS EKS clusters with MCM](mcm-eks.md) chapter to learn how to use MCM to manage, monitor, and deploy applications on AWS EKS clusters.
