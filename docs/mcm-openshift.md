@@ -1,4 +1,4 @@
-# Using MCM to Manage an IBM Cloud Private on OpenShift Cluster
+# Manage Red Hat OpenShift Clusters
 **Author:** Fabio Gomez (fabiogomez@us.ibm.com)
 
 This section focuses on demonstrating how to manage an IBM Cloud Private on OpenShift cluster through MCM.

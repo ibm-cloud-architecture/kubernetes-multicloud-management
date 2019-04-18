@@ -1,4 +1,4 @@
-# IBM Multicloud Manager - monitoring and event management
+# IBM Multicloud Manager - Monitoring and Event Management
 **Author:** Rafal Szypulka (rafal.szypulka@pl.ibm.com)
 
 This chapter is focused on monitoring and event management features delivered by IBM Multicloud Manager 3.1.2.

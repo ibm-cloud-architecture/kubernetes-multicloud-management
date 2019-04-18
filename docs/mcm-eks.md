@@ -1,4 +1,4 @@
-# Manage AWS EKS clusters with MCM
+# Manage AWS EKS Clusters
 Author: Gang Chen (gangchen@us.ibm.com)
 
 This section focuses on how to manage AWS hosted Kubernetes as a Service EKS cluster through MCM.

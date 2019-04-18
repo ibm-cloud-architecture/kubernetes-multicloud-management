@@ -109,4 +109,4 @@ Another example is associated with Workload deployment explained in above sectio
 ## Conclusion
 Multicloud is the way the industry is going right now. However, the management of multiple Kubernetes clusters across multiple cloud providers is no easy feat, as shown in the user stories above. IBM Multicloud Manager takes care of the needs in these user stories and places itself as the central location to manage Kubernetes clusters across multiple cloud providers and their workloads.
 
-To get started learning and using MCM, checkout the [Quick Start](quickstart.md) and [MCM Applications](mcm-applications.md) chapters.
+To get started learning and using MCM, checkout the [Quick Start](mcm-quickstart.md) and [MCM Applications](mcm-applications.md) chapters.

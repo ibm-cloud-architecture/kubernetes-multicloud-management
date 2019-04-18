@@ -1,11 +1,11 @@
-# Creating and Deploying MCM Applications
+# Create and Deploy Applications with MCM
 **Author:** Fabio Gomez (fabiogomez@us.ibm.com)
 
 In this document, we will go over the process of creating and deploying an MCM Application on multiple clusters using the Helm CLI against the MCM Hub Cluster.
 
 ## Pre-Requisites
   * 2 x [IBM Cloud Private](https://www.ibm.com/support/knowledgecenter/en/SSBS6K_3.1.2/kc_welcome_containers.html) Clusters with MCM Installed.
-    + I recommend you go through the [`Installing MCM`](quickstart.md#installing-mcm) section of the [Quick Start](quickstart.md) chapter.
+    + I recommend you go through the [`Installing MCM`](mcm-quickstart.md#installing-mcm) section of the [Quick Start](mcm-quickstart.md) chapter.
   * [Kubectl](https://kubernetes.io/docs/user-guide/kubectl-overview/) (Kubernetes CLI)
     + Follow the instructions [here](https://kubernetes.io/docs/tasks/tools/install-kubectl/) to install it on your platform.
   * [ICP Helm](https://github.com/kubernetes/helm) (Kubernetes package manager)
@@ -14,12 +14,12 @@ In this document, we will go over the process of creating and deploying an MCM A
     + Follow the instructions [here](https://www.ibm.com/support/knowledgecenter/en/SSBS6K_3.1.2/manage_cluster/install_cli.html) to install it on your platform.
 
 ## Creating Multicloud Manager Applications
-As explained in the [`Core Multicloud Manager Resources to Learn`](quickstart.md#core-multicloud-manager-resources-to-learn) section of the [Quick Start](quickstart.md) chapter, an `Application` is a way to relate multiple workloads (Helm Charts) as a single unit. By implementing the custom MCM YAML resources, MCM can monitor your applications, automate their deployment to multiple clusters, and extract the topology of all its components, amongst other features. Though not immediately useful for developers, these capabilities makes the lives of operators easier by having a single place where they can deploy and monitor applications on multiple clusters.
+As explained in the [`Core Multicloud Manager Resources to Learn`](mcm-quickstart.md#core-multicloud-manager-resources-to-learn) section of the [Quick Start](mcm-quickstart.md) chapter, an `Application` is a way to relate multiple workloads (Helm Charts) as a single unit. By implementing the custom MCM YAML resources, MCM can monitor your applications, automate their deployment to multiple clusters, and extract the topology of all its components, amongst other features. Though not immediately useful for developers, these capabilities makes the lives of operators easier by having a single place where they can deploy and monitor applications on multiple clusters.
 
 With the MCM Hub Cluster dashboard you can deploy a regular Helm Chart to multiple IBM Cloud Private (ICP) clusters, but that's the only benefit you get out of the box. To fully leverage MCM's deployment automation, monitoring, topology and its other capabilities, you will have to create custom MCM YAML resources that get deployed with your charts. Luckily, no changes need to be made to the original Helm Charts or their application code.
 
 ### Guestbook Helm Charts Introduced
-In this document, we are going to cover the basic `Application` concepts we learned in [`Core Multicloud Manager Resources to Learn`](quickstart.md#core-multicloud-manager-resources-to-learn), but we will be using the `Guestbook` MCM Application code as an example to deploy 3 separate charts (explained later) on multiple clusters.
+In this document, we are going to cover the basic `Application` concepts we learned in [`Core Multicloud Manager Resources to Learn`](mcm-quickstart.md#core-multicloud-manager-resources-to-learn), but we will be using the `Guestbook` MCM Application code as an example to deploy 3 separate charts (explained later) on multiple clusters.
 
 The actual `Guestbook` application code comes from the Kubernetes Community, and it's located publicly on the [kubernetes/examples](https://github.com/kubernetes/examples/tree/master/guestbook) repository. The application is broken up in the following 3 services:
 
@@ -200,7 +200,7 @@ Where:
   * **spec.resourceHint**: If more than one cluster matches the labels and values provided above, you can specify to MCM a resource specific criteria to select the clusters.
     + For example, you can ask MCM to select the clsuter with the most available CPU cores.
   * **spec.compliances**: Contains a list of `Compliances` (outside of the scope of this chapter) resources to attach this policy to.
-    + To learn about `Compliance` resources, checkout the [MCM Compliance Manager Chapter](policy.md).
+    + To learn about `Compliance` resources, checkout the [Create Multi-cluster Compliance Policies Chapter](mcm-compliance.md).
 
 ### Placement Binding Resource
 Just like how a Kubernetes `Role` requires `RoleBinding` to attach it to a specific `ServiceAccount`, a `PlacementPolicy` requires another resource that binds its rules to specific resources. This MCM resources is the `PlacementBinding`, which can bind the `PlacementPolicy` rules to specific Deployables. Let's look at the `gbapp-frontend` PlacementPolicy resource from the Helm Chart below:

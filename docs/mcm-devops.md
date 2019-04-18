@@ -1,4 +1,4 @@
-# DevOps with MCM & Tutorial
+# DevOps in Multi-cluster Environment
 **Author:** Fabio Gomez (fabiogomez@us.ibm.com)
 
 This section focuses on using Jenkins and MCM command line tool `mcmctl` to run CI/CD Pipelines that deploy applications on multiple clusters.
