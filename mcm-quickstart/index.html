@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Quick Start - Guide for Managing Kubernetes Clusters with IBM Multicloud Manager</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link href="../extra.css" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Quick Start";
+    var mkdocs_page_input_path = "mcm-quickstart.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Guide for Managing Kubernetes Clusters with IBM Multicloud Manager</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../mcm-multicloud-scenarios/">Scenarios for Multi-cluster Management</a>
+	    </li>
+          
+            <li class="toctree-l1 current">
+		
+    <a class="current" href="./">Quick Start</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l2"><a href="#multicloud-manager-quick-start">Multicloud Manager Quick Start</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l3" href="#installing-mcm">Installing MCM</a></li>
+        
+            <li><a class="toctree-l3" href="#core-multicloud-manager-resources-to-learn">Core Multicloud Manager Resources to Learn</a></li>
+        
+        </ul>
+    
+
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../mcm-applications/">Create and Deploy Applications with MCM</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../mcm-devops/">DevOps in Multi-cluster Environment</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../mcm-compliance/">Create Multi-cluster Compliance Policies</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../mcm-monitoring-event-management/">Monitoring and Event Management with MCM</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../mcm-openshift/">Manage Red Hat OpenShift Clusters</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../mcm-eks/">Manage AWS EKS Clusters</a>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Guide for Managing Kubernetes Clusters with IBM Multicloud Manager</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Quick Start</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="multicloud-manager-quick-start">Multicloud Manager Quick Start</h1>
+<p>In this document we will point you to the right resources to install IBM Multicloud Manager (MCM). Also, we will mention the core concepts you will need to learn to start using MCM and point you to the right resources.</p>
+<h2 id="installing-mcm">Installing MCM</h2>
+<p>The official MCM documentation has great instructions on how to install MCM Controller and MCM Klusterlet on an IBM Cloud Private cluster. You will follow those instructions with a few modifications to install MCM on two existing <a href="https://www.ibm.com/support/knowledgecenter/en/SSBS6K_3.1.2/kc_welcome_containers.html">IBM Cloud Private</a> clusters. Using two clusters instead of just one is better to show the benefits of MCM.</p>
+<h3 id="cluster-1-mcm-controller-and-klusterlet-cluster-preparation">Cluster 1: MCM Controller and Klusterlet Cluster Preparation</h3>
+<p>The first cluster will be the <code>MCM Controller</code>, which means that this cluster will be able to manage other clusters, itself included. In order for this cluster to become the MCM Controller and manage itself, we will need to install both the <code>MCM Controller</code> and the <code>MCM Klusterlet</code> Helm Charts. The MCM Controller is in charge of monitoring and send commands to all clusters. The <code>MCM Klusterlet</code> is responsible for reporting status back to the MCM Controller and implementing its instructions.</p>
+<ul>
+<li>Follow these <a href="https://www.ibm.com/support/knowledgecenter/SSBS6K_3.1.2/mcm/installing/install.html">instructions</a> to install the MCM Controller and the MCM Klusterlet.</li>
+<li>Follow these <a href="https://www.ibm.com/support/knowledgecenter/SSBS6K_3.1.2/mcm/installing/klusterlet.html">instructions</a> to install the MCM Klusterlet.</li>
+<li>In the Klusterlet section, for <strong>Cluster Name</strong> field enter <code>se-dev-31</code>.</li>
+<li>Make sure to use these labels and values for this cluster:<ul>
+<li><strong>cloud</strong>: IBM</li>
+<li><strong>datacenter</strong>: austin</li>
+<li><strong>environment</strong>: Dev</li>
+<li><strong>owner</strong>: case</li>
+<li><strong>region</strong>: US</li>
+<li><strong>vendor</strong>: ICP</li>
+</ul>
+</li>
+</ul>
+<p>If the above was done correctly, you have successfully setup the first cluster and can now manage it through <code>MCM Controller</code>.</p>
+<h3 id="cluster-2-mcm-klusterlet-cluster-preparation">Cluster 2: MCM Klusterlet Cluster Preparation</h3>
+<p>The second cluster will only contain the <code>MCM Klusterlet</code> that reports information back to the <code>MCM Controller</code> cluster.</p>
+<ul>
+<li>Follow these <a href="https://www.ibm.com/support/knowledgecenter/SSBS6K_3.1.2/mcm/installing/klusterlet.html">instructions</a> to install the MCM Klusterlet.</li>
+<li>For <strong>Cluster Name</strong> field, enter <code>se-stg-31</code>.</li>
+<li>Make sure to use these labels and values for this cluster:<ul>
+<li><strong>cloud</strong>: IBM</li>
+<li><strong>datacenter</strong>: dallas</li>
+<li><strong>environment</strong>: Staging</li>
+<li><strong>owner</strong>: case</li>
+<li><strong>region</strong>: US</li>
+<li><strong>vendor</strong>: ICP</li>
+</ul>
+</li>
+</ul>
+<p>If the above was done correctly, you have successfully setup the first cluster and can now manage it through the <code>MCM Controller</code> in the first cluster.</p>
+<h3 id="verify-clusters-in-the-mcm-dashboard">Verify Clusters in the MCM Dashboard</h3>
+<p>To open the MCM Dashboard, on your MCM HUB Cluster and click the top left <code>Hamburger Icon -&gt; Multicloud Manager</code> as shown below:</p>
+<p><img alt="ICP Dashboard" src="../images/quickstart/0-icp-dashboard.png" /></p>
+<p>You should then be greeted by the MCM Welcome page. To open the Clusters page, click the <code>Hamburger Icon -&gt; Clusters</code> as shown below:</p>
+<p><img alt="ICP Dashboard" src="../images/quickstart/1-mcm-welcome.png" /></p>
+<p>If MCM Klusterlets were installed successfully, you should be able to see your clusters listed as shown below:</p>
+<p><img alt="ICP Dashboard" src="../images/quickstart/2-mcm-clusters.png" /></p>
+<p><strong>NOTE</strong>: The above is just for illustration purposes, but in your <strong>Cluster</strong> page, you should be able to see the <code>se-dev-31</code> and <code>se-stg-31</code> clusters. Under the <strong>Status</strong> column, you should see a green checkmark (✅), which indicates that the cluster is healthy and actively sending status from the Klusterlet to the MCM Controller in the HUB Cluster.</p>
+<h2 id="core-multicloud-manager-resources-to-learn">Core Multicloud Manager Resources to Learn</h2>
+<p>Now that you have installed MCM on your IBM Cloud Private (ICP) clusters, it's time to learn how to use it! With anything Kubernetes, you will be interacting with MCM via YAML files (though MCM comes with a nice web portal that we will examine in later chapters).</p>
+<p>As mentioned before, the official MCM documentation is a great resource to start learning about MCM in detail. However, here is a quick list with a high level summary of the concepts you will be learning throughout this entire document:</p>
+<h3 id="application">Application</h3>
+<p>MCM has the the concept of an <code>Application</code>, which is a way to relate multiple workloads (Helm Charts) as a single unit. A cluster application is defined with the <a href="https://github.com/kubernetes-sigs/application">Kubernetes SIG Application CRD</a> community specification. An <code>Application</code>, and its workloads, can be deployed into multiple ICP clusters through MCM with the help of other YAML resources that make up the application.</p>
+<p>Here are some of the Application YAML resources you need to use in order to view and manage applications through MCM.</p>
+<ul>
+<li><code>Application</code> resource is used to only view your resource on the Command Line or on the MCM Dashboard.</li>
+<li><code>Deployable</code> resource deploys your Helm chart.<ul>
+<li>If you have multiple Helm Charts, then you will have a <code>Deployable</code> resource for each.</li>
+</ul>
+</li>
+<li><code>PlacementPolicy</code> resource defines the criteria to find cluster(s) to place or deploy workloads.</li>
+<li><code>DeployableOverride</code> is used to define different values from the original Deployable and override a deployment.<ul>
+<li>This is useful if you would like to pass different configuration values for specific clusters, i.e. a different database URL.</li>
+</ul>
+</li>
+<li><code>ApplicationRelationship</code> deploys an application on another application based on the source and destination values.<ul>
+<li>It is also a way to visually connect your application components and see the topology on the MCM dashboard.</li>
+</ul>
+</li>
+</ul>
+<p>To read more about the above resources, check out the <a href="https://www.ibm.com/support/knowledgecenter/SSBS6K_3.1.2/mcm/applications/apps_overview.html#application-resource">official documentation</a>.</p>
+<h3 id="compliance-and-policy">Compliance and Policy</h3>
+<p>Multicloud Manager has the ability to validate and/or enforce the existence and non-existence of Kubernetes resources with specific configurations in your clusters through <code>Compliance</code> YAML files. For example, MCM can prevent or inform you of the existence of any god-level or too powerful roles bound to a specific account in a specific namespace across multiple clusters.</p>
+<p>As of version 3.1.2, MCM can also enforce and/or inform you of the existence and non-existence of any Kubernetes resource. This level of compliance checks makes it super simple to enforce configuration parity across multiple clusters. Also, since it's a YAML file, the compliance checks are self-documenting and can be checked into source code!</p>
+<p>To learn more about <code>Compliance</code> resource and its features, checkout <a href="https://www.ibm.com/support/knowledgecenter/SSBS6K_3.1.2/mcm/compliance/policy_overview.html">official documentation</a>.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../mcm-applications/" class="btn btn-neutral float-right" title="Create and Deploy Applications with MCM">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../mcm-multicloud-scenarios/" class="btn btn-neutral" title="Scenarios for Multi-cluster Management"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../mcm-multicloud-scenarios/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../mcm-applications/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+
+</body>
+</html>

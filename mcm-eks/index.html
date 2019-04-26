@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Manage AWS EKS Clusters - Guide for Managing Kubernetes Clusters with IBM Multicloud Manager</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link href="../extra.css" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Manage AWS EKS Clusters";
+    var mkdocs_page_input_path = "mcm-eks.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Guide for Managing Kubernetes Clusters with IBM Multicloud Manager</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../mcm-multicloud-scenarios/">Scenarios for Multi-cluster Management</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../mcm-quickstart/">Quick Start</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../mcm-applications/">Create and Deploy Applications with MCM</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../mcm-devops/">DevOps in Multi-cluster Environment</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../mcm-compliance/">Create Multi-cluster Compliance Policies</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../mcm-monitoring-event-management/">Monitoring and Event Management with MCM</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../mcm-openshift/">Manage Red Hat OpenShift Clusters</a>
+	    </li>
+          
+            <li class="toctree-l1 current">
+		
+    <a class="current" href="./">Manage AWS EKS Clusters</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l2"><a href="#manage-aws-eks-clusters">Manage AWS EKS Clusters</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l3" href="#architecture">Architecture</a></li>
+        
+            <li><a class="toctree-l3" href="#pre-requisites">Pre-Requisites</a></li>
+        
+            <li><a class="toctree-l3" href="#1-prepare-eks-cluster">1. Prepare EKS cluster</a></li>
+        
+            <li><a class="toctree-l3" href="#2-install-mcm-klusterlet-on-eks">2. Install MCM Klusterlet on EKS</a></li>
+        
+            <li><a class="toctree-l3" href="#3-deploy-a-sample-application-to-the-managed-eks-cluster">3. Deploy a Sample Application to the Managed EKS Cluster</a></li>
+        
+            <li><a class="toctree-l3" href="#4-delete-the-eks-cluster">4. Delete the EKS Cluster</a></li>
+        
+            <li><a class="toctree-l3" href="#conclusion">Conclusion</a></li>
+        
+        </ul>
+    
+
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Guide for Managing Kubernetes Clusters with IBM Multicloud Manager</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Manage AWS EKS Clusters</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="manage-aws-eks-clusters">Manage AWS EKS Clusters</h1>
+<p>Author: Gang Chen (gangchen@us.ibm.com)</p>
+<p>This section focuses on how to manage an AWS hosted Kubernetes as a Service EKS cluster through MCM.</p>
+<h2 id="architecture">Architecture</h2>
+<p><img alt="EKS cluster managed by MCM Architecture" src="../images/eks/mcm-eks.png" /></p>
+<p>To manage an Amazon Elastic Container Service for Kubernetes (EKS) cluster, you need to install the IBM Multicloud Manager Klusterlet in an EKS cluster. This guide will walk through the detail setup and configuration under this architecture.</p>
+<h2 id="pre-requisites">Pre-Requisites</h2>
+<p>In order to go through this document, you are going to need the following:</p>
+<ul>
+<li>1 x <a href="https://www.ibm.com/support/knowledgecenter/en/SSBS6K_3.1.2/kc_welcome_containers.html">IBM Cloud Private</a> cluster.</li>
+<li><a href="https://www.ibm.com/support/knowledgecenter/en/SSBS6K_3.1.2/mcm/installing/install.html">IBM Multicloud Manager on ICP  (hub)</a></li>
+<li><a href="https://kubernetes.io/docs/user-guide/kubectl-overview/">Kubectl</a> (Kubernetes CLI)<ul>
+<li>Follow the instructions <a href="https://kubernetes.io/docs/tasks/tools/install-kubectl/">here</a> to install it on your platform.</li>
+</ul>
+</li>
+<li><a href="https://www.ibm.com/support/knowledgecenter/en/SSBS6K_3.1.2/mcm/installing/install.html#install_cli">MCM CLI</a><ul>
+<li>Follow the instructions <a href="https://www.ibm.com/support/knowledgecenter/en/SSBS6K_3.1.2/mcm/installing/install.html#install_cli">here</a> to install it on your platform.</li>
+</ul>
+</li>
+</ul>
+<p>Essentially, you need to have the MCM hub controller already installed and configured before managing EKS clusters.</p>
+<h2 id="1-prepare-eks-cluster">1. Prepare EKS cluster</h2>
+<p>You need to have an EKS cluster ready. We'll cover the high level steps here rather than going in detail on how to create an EKS cluster. <a href="https://docs.aws.amazon.com/eks/latest/userguide/getting-started.html#eks-launch-workers">Getting Started with Amazon EKS</a> is pretty easy to follow to get an EKS cluster.</p>
+<h3 id="a-create-your-amazon-eks-service-role">a. Create your Amazon EKS Service Role</h3>
+<p>EKS kubernetes components uses this role to get Permission in AWS environment.
+For the sample configuration, I defined a role as:</p>
+<pre><code class="bash">eksCaseServiceRole
+</code></pre>
+
+<h3 id="b-create-cluster-vpc-and-securitygroup">b. Create Cluster VPC and SecurityGroup</h3>
+<p>It is recommended that you create a unique VPC and SecurityGroup for each EKS cluster.
+The getting started guide uses AWS CloudFormation to automate the VPC and SecurityGroup creation.</p>
+<p><img alt="EKS VPC and SecurityGroup" src="../images/eks/eks-vpc-securitygroup.png" /></p>
+<p>You'll need the VPC, Subnet and SecurityGroup information for later steps.</p>
+<h3 id="c-configure-kubectl-and-aws-cli-to-work-with-eks">c. Configure kubectl and AWS CLI to Work with EKS</h3>
+<p>In order for <code>kubectl</code> to interact with EKS, you'll need to configure the command line utilities to manage the authentication and authorization properly. Please follow these instruction to <a href="https://docs.aws.amazon.com/eks/latest/userguide/getting-started.html#eks-configure-kubectl">Configure kubectl for EKS</a>, which you can run from your workstation.</p>
+<h3 id="d-create-eks-cluster">d. Create EKS cluster</h3>
+<p>You can either create a cluster using AWS console or CLI. I used the console to create a cluster. You will be using the VPC and Security Group information created before when going through the cluster creation wizard.</p>
+<p><img alt="EKS cluster creation" src="../images/eks/eks-create-cluster.png" /></p>
+<p>As this point, you are just getting an empty EKS cluster with control plane provisioned. But you will be charged for $0.20 per hour going forward. Once you are done with the cluster, go ahead and delete it to avoid further charges.</p>
+<p>You can validate that your cluster is running by running the following command"</p>
+<pre><code class="bash">kubectl get svc
+</code></pre>
+
+<p>You should see output similar to the following, which means that <code>kubectl</code> was configured properly:</p>
+<pre><code class="bash">NAME             TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+svc/kubernetes   ClusterIP   10.100.0.1   &lt;none&gt;        443/TCP   1m
+</code></pre>
+
+<h3 id="e-launch-and-configure-eks-worker-nodes">e. Launch and Configure EKS Worker Nodes</h3>
+<p>In order to install MCM Klusterlet or do anything with your EKS cluster, you need to provision Worker nodes (essentially a collection of EC2 instances) and join them to the EKS cluster. Again, Amazon suggest to use CloudFormation to provision and join EKS worker nodes. To do so, you will need to provide the VPC, Subnet, SecurityGroup and EKS cluster name that you created earlier in the Stack creation wizard.</p>
+<p>Upon finishing the CloudFormation creation, you should see a stack similar to the following:</p>
+<p><img alt="EKS cluster Worker Nodes join cluster" src="../images/eks/eks-cluster-worker-nodes.png" /></p>
+<p>You can validate that your worker nodes joined the EKS cluster by running the following command:</p>
+<pre><code class="bash">$ kubectl get nodes
+NAME                              STATUS    ROLES     AGE       VERSION
+ip-192-168-1xx-22.ec2.internal    Ready     &lt;none&gt;    7h        v1.11.5
+ip-192-168-1xx-117.ec2.internal   Ready     &lt;none&gt;    7h        v1.11.5
+</code></pre>
+
+<p>You can deploy sample apps to validate your cluster, but it is now ready to be managed by IBM MCM.</p>
+<h2 id="2-install-mcm-klusterlet-on-eks">2. Install MCM Klusterlet on EKS</h2>
+<p>Here is the official documentation for <a href="https://www.ibm.com/support/knowledgecenter/en/SSBS6K_3.1.2/mcm/installing/mcm_eks.html">Installing the IBM Multicloud Manager Klusterlet Amazon Elastic Container Service for Kubernetes</a>. It is a pretty straight forward process to get the klusterlet installed with the new IBM Multicloud Manager inception container. To learn more about the inception image, checkout its Docker Hub page at:</p>
+<ul>
+<li><a href="https://hub.docker.com/r/ibmcom/mcm-inception-amd64">https://hub.docker.com/r/ibmcom/mcm-inception-amd64</a>.</li>
+</ul>
+<h3 id="a-configure-installation">a. Configure Installation</h3>
+<p>Before installing the klusterlet, you need to get the configuration file and add the EKS cluster information. To create the configuration file, run the following commands:</p>
+<pre><code class="bash">$ docker run -v $(pwd):/data -e LICENSE=accept \
+    ibmcom/mcm-inception-amd64:3.1.2-ce \
+    cp -r /installer/cluster.eks /data/cluster
+
+$ cd cluster
+</code></pre>
+
+<p>At this point, you just need to update the <code>config.yaml</code> file and fill in the EKS cluster information:</p>
+<ul>
+<li>aws_access_key_id</li>
+<li>aws_secret_access_key</li>
+<li>aws_region</li>
+<li>eks-cluster</li>
+<li>cluster-name</li>
+<li>cluster-namespace</li>
+<li>cluster-tags</li>
+<li>hub-k8s-endpoint<ul>
+<li>This is the MCM HUB Cluster endpoint.</li>
+</ul>
+</li>
+<li>hub-k8s-token<ul>
+<li>This is the MCM HUB Cluster access token.</li>
+</ul>
+</li>
+</ul>
+<p>Here is the sample file I used:</p>
+<pre><code class="yaml">## Kubernete Service Provider (DO NOT MODIFY)
+kubernete_service_provider: eks
+
+## Service Provider Specific Paramaters
+aws:
+  aws_access_key_id: &lt;your_access_id&gt;
+  aws_secret_access_key: &lt;your_secret_key&gt;
+  aws_region: us-east-1
+  eks-cluster: ibmcase-eks-cluster
+
+## Multicloud Manager Klusterlet Settings
+klusterlet:
+  cluster-name: ibmcase-eks-cluster
+  cluster-namespace: eks-cluster
+  cluster-tags:
+    environment: 'Dev'
+    owner: 'ibmcase'
+    datacenter: 'auto-detect'
+    region: 'auto-detect'
+  hub-k8s-endpoint: https://mcm-mastr-xxx-xxxx-tor01.lb.bluemix.net:8001
+  hub-k8s-token: xxxx
+</code></pre>
+
+<h3 id="b-install-klusterlet-run-the-inception-container">b. Install Klusterlet - Run the Inception Container</h3>
+<p>To start the installation using the configuration file you provided, run the following command:</p>
+<pre><code class="bash">$ docker run --net=host -t -e LICENSE=accept \
+    -v &quot;$(pwd)&quot;:/installer/cluster \
+    ibmcom/mcm-inception-amd64:3.1.2-ce \
+    install-mcm-klusterlet -v
+</code></pre>
+
+<p>In couple of minutes, you should see the installation completion message similar to this:</p>
+<pre><code class="bash">...
+...
+...
+NOTES:
+Thank you for installing ibm-mcmk-dev.
+
+Your release is named ibm-mcm-klusterlet.
+
+To learn more about the release, try:
+
+$ helm status ibm-mcm-klusterlet
+$ helm get ibm-mcm-klusterlet
+stdout_lines: &lt;omitted&gt;
+
+TASK [addon : include_tasks] ************************************************************************************************************************
+skipping: [localhost] =&gt; (item={'key': u'ibm-mcm-klusterlet', 'value': {u'path': u'/addon/ibm-mcmk-dev-3.1.2-ce.tgz', u'namespace': u'mcm-klusterlet', u'use_custom_template': True}})  =&gt; changed=false
+item:
+key: ibm-mcm-klusterlet
+value:
+  namespace: mcm-klusterlet
+  path: /addon/ibm-mcmk-dev-3.1.2-ce.tgz
+  use_custom_template: true
+skip_reason: Conditional result was False
+
+PLAY RECAP ******************************************************************************************************************************************
+localhost                  : ok=47   changed=28   unreachable=0    failed=0   
+
+Playbook run took 0 days, 0 hours, 0 minutes, 50 seconds
+
+</code></pre>
+
+<p>If you get an output similar to above, that means your EKS cluster is now ready to be managed by MCM! You can validate the installation by running the following command, which should show the <code>ibm-mcm-klusterlet-*</code> pods:</p>
+<pre><code class="bash">$ kubectl get pods --all-namespaces
+
+NAMESPACE        NAME                                                              READY     STATUS    RESTARTS   AGE
+kube-system      aws-node-dmwhw                                                    1/1       Running   0          8h
+kube-system      aws-node-lfjxk                                                    1/1       Running   0          8h
+kube-system      coredns-7bcbfc4774-fl48s                                          1/1       Running   0          22h
+kube-system      coredns-7bcbfc4774-h22bw                                          1/1       Running   0          22h
+kube-system      kube-proxy-2gsts                                                  1/1       Running   0          8h
+kube-system      kube-proxy-gb6zz                                                  1/1       Running   0          8h
+kube-system      tiller-deploy-b7f4768d6-vp9js                                     1/1       Running   0          6h
+mcm-klusterlet   ibm-mcm-klusterlet-ibm-mcmk-dev-klusterlet-c49b87894-dgp7k        4/4       Running   0          6h
+mcm-klusterlet   ibm-mcm-klusterlet-ibm-mcmk-dev-weave-scope-app-54dd79b6fblvfx6   2/2       Running   0          6h
+mcm-klusterlet   ibm-mcm-klusterlet-ibm-mcmk-dev-weave-scope-pzw5c                 1/1       Running   0          6h
+mcm-klusterlet   ibm-mcm-klusterlet-ibm-mcmk-dev-weave-scope-rlrcl                 1/1       Running   0          6h
+mcm-klusterlet   ibm-mcm-monitoring-prometheus-6cb4d8dbdb-g4mbb                    2/2       Running   0          6h
+</code></pre>
+
+<p>If you log in to the MCM HUB console, you should see the EKS cluster show up in the <strong>Clusters</strong> page:</p>
+<p><img alt="EKS cluster Worker Nodes join cluster" src="../images/eks/mcm-eks-console.png" /></p>
+<h2 id="3-deploy-a-sample-application-to-the-managed-eks-cluster">3. Deploy a Sample Application to the Managed EKS Cluster</h2>
+<h3 id="a-deploy-nodejs-application">a. Deploy NodeJS Application</h3>
+<p>In MCM HUB Cluster console, click the <code>Catalog</code> button to go to the ICP applications catalog. Search for <code>node</code>, then click on the <code>ibm-node-sample</code> application, as shown below:</p>
+<p><img alt="IBM nodeJS sample from MCM catalog" src="../images/eks/mcm-catalog-nodejs.png" /></p>
+<p>Click <code>Configure</code> to move to the Helm configuration page. Enter the following values:</p>
+<ul>
+<li><strong>Helm release name</strong>: ibmnode-eks</li>
+<li><strong>Target namespace</strong>: eks-cluster</li>
+<li>Click the checkbox under <strong>License</strong>.</li>
+</ul>
+<p><img alt="Configure IBM NodeJS sample app" src="../images/eks/configure-ibmnodejs-helm.png" /></p>
+<p>To install on the application on the EKS cluster, make sure to click <strong>Remote Install</strong> (shown above), then in <strong>Target Clusters</strong> field drop down (shown below), check your target EKS cluster as deployment target.</p>
+<p><img alt="Deploy IBM NodeJS sample app to EKS" src="../images/eks/install-nodejs-eks.png" /></p>
+<p>Click <strong>Install</strong> to perform the installation on the EKS cluster.</p>
+<h3 id="b-validate-nodejs-application-installation-on-the-mcm-hub-cluster-console">b. Validate NodeJS Application Installation on the MCM HUB Cluster Console</h3>
+<p>Now go back to the MCM HUB cluster console and go to the <strong>Helm Releases</strong> page to see that the app has been deployed to the EKS cluster:</p>
+<p><img alt="Deploy IBM NodeJS sample app to EKS" src="../images/eks/app-deployed-eks.png" /></p>
+<h3 id="c-validate-nodejs-application-installation-from-kubectl-on-eks">c. Validate NodeJS Application Installation from kubectl on EKS</h3>
+<p>To validate the NodeJS application installation, run the following command:</p>
+<pre><code class="bash"># Get the application pod
+$ kubectl get pods -n eks-cluster # replace the namespace with the one you correlated
+NAME                                               READY     STATUS    RESTARTS   AGE
+ibmnode-eks-nodejssample-nodejs-54775f7845-ngf6f   1/1       Running   0          2m
+
+# Get the application service
+$ kubectl get svc -n eks-cluster
+NAME                              TYPE       CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
+ibmnode-eks-nodejssample-nodejs   NodePort   10.100.220.242   &lt;none&gt;        3000:32337/TCP   3m
+</code></pre>
+
+<p>You should see the NodeJS pod and service are running. To see it in browser, you need to expose the service to AWS load balancer or Ingress. I'll leave that to you as homework.</p>
+<p>Congratulations, you now have successfully integrated an EKS cluster with IBM Multicloud Manager and deployed an application on the EKS cluster through IBM Multicloud Manager.</p>
+<h2 id="4-delete-the-eks-cluster">4. Delete the EKS Cluster</h2>
+<p>It is suggested to delete the EKS cluster and worker nodes after testing completes to avoid further charts. To do so, please follow this guide on how to <a href="https://docs.aws.amazon.com/eks/latest/userguide/delete-cluster.html">Delete an EKS cluster</a>.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Now that you know how to use MCM to manage, monitor, and deploy applications on EKS clusters, you should checkout the <a href="../mcm-devops/">DevOps in Multi-cluster Environment</a> chapter and attempt to deploy applications to the EKS cluster with MCM using an automated CI/CD pipeline.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="../mcm-openshift/" class="btn btn-neutral" title="Manage Red Hat OpenShift Clusters"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../mcm-openshift/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+
+</body>
+</html>

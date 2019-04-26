@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>DevOps in Multi-cluster Environment - Guide for Managing Kubernetes Clusters with IBM Multicloud Manager</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link href="../extra.css" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "DevOps in Multi-cluster Environment";
+    var mkdocs_page_input_path = "mcm-devops.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Guide for Managing Kubernetes Clusters with IBM Multicloud Manager</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../mcm-multicloud-scenarios/">Scenarios for Multi-cluster Management</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../mcm-quickstart/">Quick Start</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../mcm-applications/">Create and Deploy Applications with MCM</a>
+	    </li>
+          
+            <li class="toctree-l1 current">
+		
+    <a class="current" href="./">DevOps in Multi-cluster Environment</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l2"><a href="#devops-in-multi-cluster-environment">DevOps in Multi-cluster Environment</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l3" href="#introduction">Introduction</a></li>
+        
+            <li><a class="toctree-l3" href="#pre-requisites">Pre-Requisites</a></li>
+        
+            <li><a class="toctree-l3" href="#jenkins-mcm-cicd-tutorial">Jenkins MCM CI/CD Tutorial</a></li>
+        
+            <li><a class="toctree-l3" href="#1-install-jenkins-chart">1. Install Jenkins Chart</a></li>
+        
+            <li><a class="toctree-l3" href="#2-configure-jenkins">2. Configure Jenkins</a></li>
+        
+            <li><a class="toctree-l3" href="#3-create-2-cicd-pipelines">3. Create 2 CI/CD Pipelines</a></li>
+        
+            <li><a class="toctree-l3" href="#4-running-the-pipelines">4. Running the Pipelines</a></li>
+        
+            <li><a class="toctree-l3" href="#5-test-the-guestbook-application">5. Test the Guestbook Application</a></li>
+        
+            <li><a class="toctree-l3" href="#conclusion">Conclusion</a></li>
+        
+        </ul>
+    
+
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../mcm-compliance/">Create Multi-cluster Compliance Policies</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../mcm-monitoring-event-management/">Monitoring and Event Management with MCM</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../mcm-openshift/">Manage Red Hat OpenShift Clusters</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../mcm-eks/">Manage AWS EKS Clusters</a>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Guide for Managing Kubernetes Clusters with IBM Multicloud Manager</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>DevOps in Multi-cluster Environment</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="devops-in-multi-cluster-environment">DevOps in Multi-cluster Environment</h1>
+<p><strong>Author:</strong> Fabio Gomez (fabiogomez@us.ibm.com)</p>
+<p>This section focuses on using Jenkins and MCM command line tool <code>mcmctl</code> to run CI/CD Pipelines that deploy applications on multiple clusters.</p>
+<h2 id="introduction">Introduction</h2>
+<p>Provisioning and maintaining multiple ICP clusters can be a challenge on its own. On top of that, deploying applications to multiple environments with a CICD pipeline requires highly detailed coordination. The more environments you have, managing Kubernetes service account credentials and their expiration date becomes cumbersome and time-consuming.  Now imagine that an application is made of 50 microservices and they all have to be deployed on each cluster. If you have 3 clusters, that's 150 pipelines that have to have the right environment credentials.</p>
+<p>What happens if the certificate for one environment expires? That means you have to update the certificate in at least 50 pipelines! Even though it is a simple change, in a world of CICD where there is constantly new application updates, you just cannot afford to waste time with such trivial tasks. It would be great to have a tool that can manage certificates for you. Luckily, MCM can do just that for you. In MCM, you can securely  provide and store your clusters endpoints and certificates.  If the certificates expire, MCM will renew them for you automatically.</p>
+<p>MCM takes advantage of its certificate management in another feature, which is the ability to deploy a helm chart to multiple clusters with a single helm install command. MCM accomplishes this, primarily, by allowing the developer to specify in the chart itself what clusters to deploy the chart to by using selector labels. When a user/pipeline performs a helm install against the MCM cluster,  MCM uses these labels to find the clusters that it will then deploy the chart to.</p>
+<p>Using labels allows you to implement, for example, a code promotion pipeline that does the following:</p>
+<ul>
+<li>Deploy a helm chart to all clusters with a label of type environment with a value of dev.</li>
+<li>Run smoke tests against the dev clusters.</li>
+<li>If tests succeed,  deploy the helm chart to all clusters with a label of type environment with a value of staging.</li>
+</ul>
+<p>Note that nowhere in the above pipeline example there is a mention of cluster certificates. Granted, you still need to provide cluster certificates for the MCM cluster that does the deployments, but that's a much easier job on the developer compared to the scenarios above.</p>
+<h2 id="pre-requisites">Pre-Requisites</h2>
+<ul>
+<li>For this tutorial, your main pre-requisite is to have 2 <a href="https://www.ibm.com/support/knowledgecenter/en/SSBS6K_3.1.2/kc_welcome_containers.html">IBM Cloud Private</a> clusters setup.<ul>
+<li>The master nodes for each clusters should be routable for MCM to be able to manage them.</li>
+<li>In the following sections, you will learn how to setup MCM to manage these 2 clusters.</li>
+</ul>
+</li>
+<li>1 x NFS server.<ul>
+<li>Use these <a href="https://www.digitalocean.com/community/tutorials/how-to-set-up-an-nfs-mount-on-ubuntu-16-04">instructions</a> to setup a NFS server.</li>
+<li>Make sure to create and expose an NFS Shared Directory, which will be used by Jenkins to persist build data.</li>
+</ul>
+</li>
+<li><a href="https://kubernetes.io/docs/user-guide/kubectl-overview/">Kubectl</a> (Kubernetes CLI)<ul>
+<li>Follow the instructions <a href="https://kubernetes.io/docs/tasks/tools/install-kubectl/">here</a> to install it on your platform.</li>
+</ul>
+</li>
+<li><a href="https://github.com/kubernetes/helm">ICP Helm</a> (Kubernetes package manager)<ul>
+<li>Follow the instructions <a href="https://www.ibm.com/support/knowledgecenter/en/SSBS6K_3.1.2/app_center/create_helm_cli.html">here</a> to install it on your platform.</li>
+</ul>
+</li>
+<li><a href="https://www.ibm.com/support/knowledgecenter/en/SSBS6K_3.1.2/manage_cluster/install_cli.html">IBM Cloud Private CLI</a><ul>
+<li>Follow the instructions <a href="https://www.ibm.com/support/knowledgecenter/en/SSBS6K_3.1.2/manage_cluster/install_cli.html">here</a> to install it on your platform.</li>
+</ul>
+</li>
+</ul>
+<h3 id="1-mcm-controller-and-klusterlet-cluster-preparation">1. MCM Controller and Klusterlet Cluster Preparation</h3>
+<p>The first cluster will be the <code>MCM Controller</code>, which means that this cluster will be able to manage other clusters, itself included. In order for this cluster to become the MCM Controller and manage itself, we will need to install both the <code>MCM Controller</code> and the <code>MCM Klusterlet</code> Helm Charts. The MCM Controller is in charge of monitoring and send commands to all clusters. The <code>MCM Klusterlet</code> is responsible for reporting status back to the MCM Controller and implementing its instructions.</p>
+<ul>
+<li>Follow these <a href="https://www.ibm.com/support/knowledgecenter/en/SSBS6K_3.1.2/mcm/installing/install.html">instructions</a> to install the MCM Controller and the MCM Klusterlet.</li>
+<li>In the Klusterlet section, for <strong>Cluster Name</strong> field enter <code>se-dev-31</code>.</li>
+<li>Make sure to use these labels and values for this cluster:<ul>
+<li><strong>cloud</strong>: IBM</li>
+<li><strong>datacenter</strong>: austin</li>
+<li><strong>environment</strong>: Dev</li>
+<li><strong>owner</strong>: case</li>
+<li><strong>region</strong>: US</li>
+<li><strong>vendor</strong>: ICP</li>
+</ul>
+</li>
+</ul>
+<p>If the above was done correctly, you have successfully setup the first cluster and can now manage it through <code>MCM Controller</code>.</p>
+<h3 id="2-mcm-klusterlet-cluster-preparation">2. MCM Klusterlet Cluster Preparation</h3>
+<p>The second cluster will only contain the <code>MCM Klusterlet</code> that reports information back to the <code>MCM Controller</code> cluster.</p>
+<ul>
+<li>Follow these <a href="https://www.ibm.com/support/knowledgecenter/SSBS6K_3.1.2/mcm/installing/klusterlet.html">instructions</a> to install the MCM Klusterlet.</li>
+<li>For <strong>Cluster Name</strong> field, enter <code>se-stg-31</code>.</li>
+<li>Make sure to use these labels and values for this cluster:<ul>
+<li><strong>cloud</strong>: IBM</li>
+<li><strong>datacenter</strong>: dallas</li>
+<li><strong>environment</strong>: Staging</li>
+<li><strong>owner</strong>: case</li>
+<li><strong>region</strong>: US</li>
+<li><strong>vendor</strong>: ICP</li>
+</ul>
+</li>
+</ul>
+<p>If the above was done correctly, you have successfully setup the first cluster and can now manage it through the <code>MCM Controller</code> in the first cluster.</p>
+<h3 id="3-create-image-policies-on-both-clusters">3. Create Image Policies on Both Clusters</h3>
+<p>Since ICP version 3.1, you are required to create <code>Image Policies</code> that allow you to pull Docker images from specific Docker registries (<code>gcr.io</code> in our case). To do so, let's start by cloning the project's git repository:</p>
+<pre><code class="bash"># Clone the Reference Architecture Repository
+git clone git@github.com:ibm-cloud-architecture/kubernetes-multicloud-management.git
+
+# Go to the project's folder
+cd kubernetes-multicloud-management
+</code></pre>
+
+<p>Now, on <code>EACH ICP CLUSTER</code>, let's run the following commands:</p>
+<pre><code class="bash"># Login to the ICP Cluster
+cloudctl login -a https://ICP_MASTER_IP:8443 -n default --skip-ssl-validation
+
+# Create the Image Policy in the ICP Cluster
+kubectl apply -f demos/guestbook/guestbook-cluster-image-policy.yaml
+</code></pre>
+
+<p>Don't forget to run the above commands on <code>EACH ICP Cluster</code> so that there are no issues when deploying the guestbook application.</p>
+<h2 id="jenkins-mcm-cicd-tutorial">Jenkins MCM CI/CD Tutorial</h2>
+<p>Here is the High Level Jenkins-MCM DevOps Architecture Diagram and CI/CD Workflow:
+<img alt="DevOps Toolchain" src="../images/mcm-devops/jenkins-arch.jpg?raw=true" /></p>
+<p>The main things to notice are the following:</p>
+<ul>
+<li>A Jenkins instance will be deployed on a IBM Cloud Private (Kubernets) cluster.</li>
+<li>Jenkins will use <code>mcmctl</code> to deploy applications through the MCM Controller.</li>
+<li>MCM Controller will use Placement Policies to decide what clusters to deploy the application to.</li>
+<li>Not all available clusters will be selected to deploy the application to, as shown by the missing arrow to the <code>Prod Cluster</code></li>
+</ul>
+<h3 id="this-guide-will-help-install-the-following-resources">This guide will help install the following resources:</h3>
+<ul>
+<li>1 x 10Gi <a href="https://kubernetes.io/docs/concepts/storage/persistent-volumes/">Persistent Volume Claim</a> (PVC) to Store Jenkins data and builds' information.<ul>
+<li>Be sure that your Kubernetes Cluster can support PVCs size of at least 10Gi</li>
+</ul>
+</li>
+<li>1 x Jenkins Master Kubernetes Pod with Kubernetes Plugin Installed.</li>
+<li>1 x Kubernetes Service for above Jenkins Master Pod with port 8080 exposed to a LoadBalancer.</li>
+<li>Ingress to expose Jenkins service (HTTP/8080), externally (HTTPS/443)</li>
+<li>All using Kubernetes Resources.</li>
+</ul>
+<h2 id="1-install-jenkins-chart">1. Install Jenkins Chart</h2>
+<p>We are now going to start the process of installing the <a href="https://github.com/helm/charts/tree/master/stable/jenkins">Community Jenkins Helm Chart</a>. Feel free to pick any of the ICP clusters for the remaining of this guide to setup Jenkins, but make sure you run all the following commands against <code>ONLY ONE CLUSTER</code>.</p>
+<p>Let's start by going to the Jenkins folder, followed by a <code>cloudctl login</code>:</p>
+<pre><code class="bash"># Go to the Jenkins folder
+cd demos/jenkins/deploy
+
+# Login against the ICP Cluster that will contain the Jenkins instance
+cloudctl login -a https://ICP_MASTER_IP:8443 -n default --skip-ssl-validation
+</code></pre>
+
+<p>Now we are ready to start setting up the Jenkins instance.</p>
+<h3 id="a-create-a-new-namespace">a. Create a new namespace</h3>
+<p>Create a new namespace <code>mcm-devops-demo</code>. This namespace will be used for CI/CD setup purposes. User may require 'cluster admin' access to create a new namespace. if you encounter any issues creating namespace, reach out to ICP admin for the same.</p>
+<pre><code class="bash"># Create mcm-devops-demo namespace
+kubectl create namespace mcm-devops-demo
+</code></pre>
+
+<h3 id="b-create-jenkins-image-policy">b. Create Jenkins Image Policy</h3>
+<p>Since we will be deploying the Jenkins Helm chart, we will need to create a Cluster Image Policy that allows the cluster to pull the Jenkins and the custom Jenkins Slave images from Docker Hub. To do so, run the following command:</p>
+<pre><code class="bash"># Create the Image Policy in the Jenkins ICP Cluster
+kubectl apply -f jenkins-cluster-image-policy.yaml
+</code></pre>
+
+<h3 id="c-create-a-persistence-volume-claim">c. Create a Persistence Volume Claim</h3>
+<p>Create Persistence Volume (PV) and a Persistence Volume Claim (PVC) using the NFS Shared Directory you created earlier. To create the PV and the PVC, open the <a href="demos/jenkins/deploy/jenkins-pvc.yaml">jenkins-pvc.yaml</a> and change the values of Lines <a href="https://github.com/ibm-cloud-architecture/kubernetes-multicloud-management/blob/master/demos/jenkins/deploy/jenkins-pvc.yaml#L16">16</a> and <a href="https://github.com/ibm-cloud-architecture/kubernetes-multicloud-management/blob/master/demos/jenkins/deploy/jenkins-pvc.yaml#L17">17</a> to the NFS server's IP Address and the Share Directory's absolute path, respectively. Then save the file and create the PV and PVC with the following command:</p>
+<pre><code class="bash"># Create the PV and PVC
+kubectl apply -f jenkins-pvc.yaml
+</code></pre>
+
+<p>Wait a few seconds/minutes for the PVC to be bound and ready. To verify that the PVC has been successfully bound, run the following command:</p>
+<pre><code class="bash"># Check that PVC status
+kubectl -n mcm-devops-demo get pvc
+NAME                        STATUS   VOLUME                CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+jenkins-master-claim        Bound    jenkins-master        10Gi       RWO                           1d
+</code></pre>
+
+<p>If you see the above PVC with a Status of <code>Bound</code>, that means that your PVC is ready to be used!</p>
+<h3 id="d-install-the-jenkins-helm-chart">d. Install the Jenkins Helm Chart</h3>
+<p>Let's finally install the <a href="https://github.com/helm/charts/tree/master/stable/jenkins">Community Jenkins Helm Chart</a>. We will be using our own <a href="https://github.com/ibm-cloud-architecture/kubernetes-multicloud-management/blob/master/demos/jenkins/deploy/jenkins-values.yaml">values.yaml</a> file to setup things like admin password, a <code>/jenkins</code> prefix (which will be used by ingress), and to use the PVC we created in the above section. To install the chart, run the following command:</p>
+<pre><code class="bash"># Install the Jenkins Helm Chart
+helm upgrade --namespace mcm-devops-demo --install jenkins -f jenkins-values.yaml stable/jenkins --tls
+</code></pre>
+
+<p>The Jenkins container will take a few minutes to start and be fully initialized. To access the Jenkins instance once it's ready, you will need to create an Ingress entry as shown in the next section.</p>
+<h3 id="e-create-jenkins-ingress">e. Create Jenkins Ingress</h3>
+<p>To be able to access the Jenkins instance, you will need an Ingress record that forwards traffic from the Ingress IP address to the Jenkins pod. To create the Ingress, run the following command:</p>
+<pre><code class="bash">kubectl apply -f jenkins-ingress.yaml
+</code></pre>
+
+<p>To get the Ingress IP address, run the following command:</p>
+<pre><code class="bash">kubectl get ingress -n mcm-devops-demo
+NAME                   HOSTS   ADDRESS         PORTS   AGE
+jenkins-ingress        *       172.16.50.228   80      1d
+</code></pre>
+
+<p>If you see the <code>jenkins-ingress</code> listed, the IP Address will be listed under the <code>ADDRESS</code> column.</p>
+<h3 id="f-login-to-jenkins">f. Login to Jenkins</h3>
+<p>Finally, to let's test that the Ingress was created successfully by trying to access Jenkins from your browser. Open a new browser window and go to <code>http://ICP_INGRESS_IP/jenkins</code>. You should be greeted with a login window</p>
+<p><img alt="" src="../images/mcm-devops/jenkins-login.png?raw=true" /></p>
+<p>Now enter <code>admin</code> and <code>admin_0000</code> (as defined in the <code>jenkins-values.yaml</code> file) for username and password, respectively and click the <code>Sign In</code> button.</p>
+<p>If the login worked, then that means that you have successfully installed Jenkins on your ICP cluster!</p>
+<p><strong>NOTE</strong>: Depending on what version of Jenkins gets installed from the Helm Chart, you may be asked to upgrade some of the Jenkins plugins that were installed with the chart, which is beyond the scope of this document, to ensure that the pipelines work flawlessly. Just know that if you get an error that doesn't make sense while running your pipelines, it may be because your Jenkins plugins need an upgrade.</p>
+<h2 id="2-configure-jenkins">2. Configure Jenkins</h2>
+<p>The Jenkins configuration will be default. However, we need to create a Credentials entry for the username and password for the MCM Controller ICP cluster. To create the credentials, open a browser window and go to <code>http://ICP_INGRESS_IP/jenkins/credentials/store/system/domain/_/newCredentials</code> and select <code>Username with password</code> for <strong>Kind</strong>.</p>
+<p><img alt="" src="../images/mcm-devops/jenkins-credentials.png?raw=true" /></p>
+<p>Enter the admin username and password for the ICP cluster. Please make that you enter <code>id-sedev-cluster-credentials</code> for the <strong>ID</strong> field, as this is the Jenkins credentials id that will be used by the pipeline.</p>
+<p>Depending on whether you are accessing this repository from your own fork or from our repository directly, you may be asked to setup a private ssh key for your GitHub username. To do so, open a browser window and go to <code>http://ICP_INGRESS_IP/jenkins/credentials/store/system/domain/_/newCredentials</code> and select <code>SSH Username with private key</code> for <strong>Kind</strong>.</p>
+<p><img alt="" src="../images/mcm-devops/jenkins-github-ssh.png?raw=true" />
+Now enter your GitHub username and your Private SSH key in the <strong>Username</strong> and <strong>Private Key</strong> fields, respectively.</p>
+<p>Now we are ready to start setting up the CI/CD Pipeline.</p>
+<h2 id="3-create-2-cicd-pipelines">3. Create 2 CI/CD Pipelines</h2>
+<p>Now we are going to create 2 pipeline projects. The first pipeline project will be called <code>mcm-dev</code> and, as the name implies, will be used to deploy the <code>guestbook</code> app to the <code>se-dev-31</code> cluster. The second pipeline will be called <code>mcm-promotion</code> and, as the name implies, it will be used to promote the <code>guestbook</code> deployment from the <code>se-dev-31</code> to the <code>se-stg-31</code> cluster.</p>
+<h3 id="a-pipeline-code-overview">a. Pipeline Code Overview</h3>
+<p>The pipeline code (which you can checkout <a href="https://github.com/ibm-cloud-architecture/kubernetes-multicloud-management/blob/master/demos/jenkins/Jenkinsfile">here</a>) consists of the following 4 stages:</p>
+<ol>
+<li><strong>Initialize CLIs</strong><ul>
+<li>In this stage, the pipeline will log against the MCM Controller cluster and initialize contexts for <code>kubectl</code>, <code>helm</code>, and <code>mcmctl</code> CLIs.</li>
+</ul>
+</li>
+<li><strong>Deploy to X</strong><ul>
+<li>As the name implies, this is the stage in which the <code>guestbook</code> application will be deployed (via <code>helm</code>) to the specified environment.</li>
+<li>Because we are logged against the MCM Controller cluster, the MCM Controller will look at the <code>gbapp</code> chart and figure out, based on the cluster selector labels and the specified number of replicas, what clusters and how many clusters to deploy the application to.</li>
+</ul>
+</li>
+<li><strong>Validation Test</strong><ul>
+<li>In this stage, as the name implies, we will be performing a validation test to confirm that the <code>guestbook</code> application was deployed to the correct cluster. Also, a simple functional test will be done to make sure that we get the web application's HTML code.</li>
+<li>The validation test itself is done as follows:</li>
+<li>Use <code>mcmctl</code> with cluster specific selectors to verify that the <code>guestbook</code> deployments exist in the cluster.<ul>
+<li>Wait until the guestbook deployments show up in the cluster.</li>
+</ul>
+</li>
+<li>Use <code>mcmctl</code> to obtain the available replicas for each deployment.<ul>
+<li>Wait until there is at least 1 available replica.</li>
+</ul>
+</li>
+<li>Use <code>mcmctl</code> to get the IP Address (or domain name) of the cluster's Ingress for the <code>geustbook</code> frontend service.</li>
+<li>Finally, use <code>curl</code> to query the <code>guestbook</code> frontend service using the Ingress from above and check that we get the guestbook frontend HTML code.</li>
+</ul>
+</li>
+<li><strong>Trigger Promotion Job</strong><ul>
+<li>Assuming that we provided the name of the promotion job and that the pipeline passes validation tests, this step will trigger the <code>mcm-promotion</code> pipeline, which runs the same stages minus the <strong>Trigger Promotion Job</strong> stage.</li>
+<li>The <code>mcm-promotion</code> pipeline uses the same pipeline code (with different cluster selector labels and a replica count of 2) to deploy the <code>guestbook</code> app to both <code>se-dev-31</code> and <code>se-stg-31</code> clusters.</li>
+<li>In this case, since the <code>guestbook</code> application was already deployed to the <code>se-dev-31</code> cluster, MCM will simply keep that deployment as is and deploy the <code>guestbook</code> application to the <code>se-stg-31</code> cluster, thus satyisfying the requirements.</li>
+</ul>
+</li>
+</ol>
+<h3 id="b-creating-the-mcm-dev-pipeline">b. Creating the mcm-dev pipeline</h3>
+<p>Now that we understand the pipeline code at a high level, we can proceed with creating the pipelines, which is the easier part. Let's start by creating the <code>mcm-dev</code> pipeline with the following steps:</p>
+<ul>
+<li>From the Jenkins Home page, click on <strong>Jenkins-&gt; New Item</strong>.</li>
+<li>Enter <code>mcm-dev</code> for the <strong>Item Name</strong>.</li>
+<li>Select <code>Pipeline</code> as project type.</li>
+<li>Click the <code>OK</code> Button.</li>
+<li>This will bring you to the Pipeline Configuration view.
+  <img alt="" src="../images/mcm-devops/jenkins-new-project.png" /></li>
+</ul>
+<p>Now that we have created the pipeline, in the following sections you will setup the pipeline environment variables and the git repository details.</p>
+<h4 id="i-setup-the-environment-variables">i. Setup the Environment Variables</h4>
+<p>Let's setup the pipeline environment variables, which contain the cluster specific information needed to deploy the <code>guestbook</code> application into the <code>se-dev-31</code> cluster. We will explain all of the variables that you need to enter, which result in a configuration similar to the following
+    <img alt="" src="../images/mcm-devops/jenkins-project-conf-general-params.png" /></p>
+<p>On the <strong>General</strong> section of the Pipeline Configuration view, check the <code>This project is parameterized</code> box, which will expose the <code>Add Parameter</code> dropdown. Then click <strong>Add Parameter -&gt; String Parameter</strong> and create the following parameters with their respective <code>Name</code> and <code>Default Value</code>:</p>
+<ul>
+<li><strong>CLUSTER_NAMESPACE</strong>: <code>default</code><ul>
+<li>This is the cluster namespace on which the <code>guestbook</code> application will be deployed to.</li>
+</ul>
+</li>
+<li><strong>CLUSTER_ACCOUNT_ID</strong>: <code>id-se-dev-31-cluster-account</code><ul>
+<li>This is the IBM Cloud Private account ID that <code>cloudctl</code> will log in against.</li>
+<li>Assuming that you named this cluster <code>se-dev-31</code> then the above ID will apply.</li>
+<li>If you created your cluster under a different name, then it might show up as <code>id-CLUSTER-NAME-cluster-account</code>.</li>
+<li>To find out the exact id name of the account, perform a <code>cloudctl login</code> and when you get to the account selection you will see the account ID between parenthesis.</li>
+</ul>
+</li>
+<li><strong>CLUSTER_CREDENTIAL_ID</strong>: <code>id-sedev-cluster-credentials</code><ul>
+<li>This is the Jenkins credential id for the ICP cluster's username and password that we created in a previous step.</li>
+</ul>
+</li>
+<li><strong>CLUSTER_URL</strong>: <code>https://MCM_CONTROLLER_CLUSTER_MASTER_IP:8443</code><ul>
+<li>The URL for the MCM Controller cluster, which uses the IP Address of the master node.</li>
+</ul>
+</li>
+<li><strong>HELM_RELEASE_NAME</strong>: <code>guestbook</code><ul>
+<li>The helm release name of the guestbook application.</li>
+</ul>
+</li>
+<li><strong>REPLICA_COUNT</strong>: <code>1</code><ul>
+<li>The replica count is the number of matching clusters that the <code>guestbook</code> application will be deployed into.</li>
+<li>Since this is the <code>mcm-dev</code> pipeline, we will set this to just <code>1</code>.</li>
+</ul>
+</li>
+<li><strong>PIPELINE_IMAGE</strong>: <code>ibmcase/kube-helm-cloudctl-mcmctl:3.1.2</code><ul>
+<li>The docker image that contains all of the CLIs needed by the pipeline, which are <code>cloudctl</code>, <code>mcmctl</code>, <code>kubectl</code>, and <code>helm</code>.</li>
+<li>This image is publicly available on our Docker Hub and the source can be found <a href="https://github.com/ibm-cloud-architecture/kubernetes-multicloud-management/blob/master/demos/docker/Dockerfile">here</a>.</li>
+<li><strong>NOTE:</strong> We built this image for demo purposes, which means that it should NOT be used for PRODUCTION. For that, you will have to create your own Docker image with the specific versions of the CLIs that you wish to use.</li>
+</ul>
+</li>
+<li><strong>LABEL_ENVIRONMENT</strong>: <code>Dev</code><ul>
+<li>This is the <code>Environment</code> cluster selector label that we will use to select the <code>se-dev-31</code> cluster to deploy the <code>guestbook</code> application.</li>
+<li>Notice that we ser the value to <code>Dev</code> to match the cluster selector that was assigned to <code>se-dev-31</code> when we installed the Klusterlet earlier.</li>
+</ul>
+</li>
+<li><strong>TEST_ENVIRONMENT</strong>: <code>Dev</code><ul>
+<li>This variable is used to determine what cluster/environment to perform validation tests against.</li>
+<li>It may look as unnecessary to have this label since we have <strong>LABEL_ENVIRONMENT</strong> set to <code>Dev</code>, but you will notice in the next section when we deploy the <code>guestbook</code> application against multiple clusters that we will have to choose one environment to perform the validation test against.</li>
+</ul>
+</li>
+<li><strong>PROMOTION_JOB</strong>: <code>mcm-promotion</code><ul>
+<li>When this variable is set and the pipeline successfully passed the validation tests, the pipeline will automatically trigger then <code>mcm-promotion</code> pipeline, which will deploy the <code>guestbook</code> application to the <code>se-stg-31</code> cluster along with <code>se-dev-31</code>.</li>
+</ul>
+</li>
+</ul>
+<p>You are done setting up all the environment variables.</p>
+<h4 id="ii-setup-the-git-repository">ii. Setup the git repository</h4>
+<p>Now we need to setup the Pipeline git repository details, which will tell Jenkins the git repository and the location where the Jenkinsfile is located.  We will explain all of the settings that you need to enter, which result in a configuration similar to the following:</p>
+<p><img alt="" src="../images/mcm-devops/jenkins-project-conf-pipeline.png" /></p>
+<p>On the <strong>Pipeline</strong> section of the Pipeline Configuration view do the following:</p>
+<ul>
+<li>Select <code>Pipeline script from SCM</code> on the <strong>Definition</strong> field.
+   Select <code>Git</code> on the <strong>SCM</strong> field</li>
+<li>Enter <code>https://github.com/ibm-cloud-architecture/kubernetes-multicloud-management</code> in the <strong>Repositories -&gt; Repository URL</strong> field.<ul>
+<li>If using <code>SSH</code> to clone the repository, enter <code>git@github.com:ibm-cloud-architecture/kubernetes-multicloud-management.git</code> instead.</li>
+<li>Also, if using <code>SSH</code>, in the <strong>Credentials</strong> field select the <code>SSH Credentials</code> that you created earlier.</li>
+</ul>
+</li>
+<li>Enter <code>*/master</code> in the <strong>Branches to build -&gt; Branch Specifier</strong> field.</li>
+<li>Enter <code>demos/jenkins/Jenkinsfile</code> in the <strong>Script Path</strong> field.</li>
+</ul>
+<h4 id="iii-save-the-pipeline-configuration">iii. Save the pipeline configuration</h4>
+<p>Now that you have configured pipeline, go ahead and click the <code>Save</code> button to save your the pipeline configuration.</p>
+<h3 id="c-creating-the-mcm-promotion-pipeline">c. Creating the mcm-promotion pipeline</h3>
+<p>Now let's move on to creating the <code>mcm-promotion</code> pipeline. Luckily for you, creating this pipeline will be much easier since we can just copy the <code>mcm-dev</code> pipeline and change some environment variables, which saves us time.</p>
+<p>To create the <code>mcm-promotion</code> pipeline, do the following:</p>
+<ul>
+<li>From the Jenkins Home page, click on <strong>Jenkins-&gt; New Item</strong>.</li>
+<li>Enter <code>mcm-promotion</code> for the <strong>Item Name</strong>.</li>
+<li>Enter <code>mcm-dev</code> in the <strong>Copy from</strong> towards the bottom.</li>
+<li>Click the <code>OK</code> Button.</li>
+<li>This will bring you to the Pipeline Configuration view with pre-filled Environment Variables and Repository details from the <code>mcm-dev</code> pipeline.</li>
+</ul>
+<p><img alt="" src="../images/mcm-devops/jenkins-copy-pipeline.png" /></p>
+<p>Now go to the <strong>General</strong> section and enter the following values for the environment variables below:</p>
+<ul>
+<li><strong>CLUSTER_NAMESPACE</strong>: <code>default</code></li>
+<li><strong>CLUSTER_ACCOUNT_ID</strong>: <code>id-se-dev-31-cluster-account</code></li>
+<li><strong>CLUSTER_CREDENTIAL_ID</strong>: <code>id-sedev-cluster-credentials</code></li>
+<li><strong>CLUSTER_URL</strong>: <code>https://MCM_CONTROLLER_CLUSTER_MASTER_IP:8443</code></li>
+<li><strong>HELM_RELEASE_NAME</strong>: <code>guestbook</code></li>
+<li><strong>REPLICA_COUNT</strong>: <code>2</code><ul>
+<li>Since we want to deploy the application to both <code>se-dev-31</code> and <code>se-stg-31</code> clusters, we set the replica count to <code>2</code>.</li>
+</ul>
+</li>
+<li><strong>PIPELINE_IMAGE</strong>: <code>ibmcase/kube-helm-cloudctl-mcmctl:3.1.2</code></li>
+<li>Rename <strong>LABEL_ENVIRONMENT</strong> to <strong>LABEL_OWNER</strong> and set the value to <code>case</code><ul>
+<li>Since both <code>se-dev-31</code> and <code>se-stg-31</code> share the <code>Owner</code> cluster selector label with a value of <code>case</code>, we can use this label to select both cluster as deployment candidates for the <code>guestbook</code> application.</li>
+</ul>
+</li>
+<li><strong>TEST_ENVIRONMENT</strong>: <code>Staging</code><ul>
+<li>Since the goal to this pipeline is to promote/deploy the <code>guestbook</code> application to <code>se-stg-31</code> cluster, we will set the test environment as <code>Staging</code>.</li>
+</ul>
+</li>
+<li>Remove the <strong>PROMOTION_JOB</strong> variable or set its value to an empty string.<ul>
+<li>Since this pipeline is the promotion pipeline, there is no need to automatically trigger another promotion pipeline.</li>
+<li>To promote an application to a production environment, it is best practice for a human to manually trigger the pipeline, watch its progress, and correct any issues that it may come accross.</li>
+</ul>
+</li>
+</ul>
+<p>Now that you have configured pipeline, go ahead and click the <code>Save</code> button to save your the pipeline configuration.</p>
+<h2 id="4-running-the-pipelines">4. Running the Pipelines</h2>
+<p>Whew, setting up those pipelines took a lot of work but now comes the rewarding part. We are finally going to run the pipelines! To run the <code>mcm-dev</code> pipeline, do the following:</p>
+<ul>
+<li>
+<p>From the Jenkins home page select the <code>mcm-dev</code> item, then click <code>Build with parameters</code>, which will take you to a view similar to the following, where you can edit the Environment Variables, if needed:</p>
+<p><img alt="" src="../images/mcm-devops/jenkins-build-w-params.png" /></p>
+</li>
+<li>
+<p>Click <code>Build</code> to start the pipeline, which will take you back to the project view.</p>
+</li>
+</ul>
+<p>From the <code>mcm-dev</code> project view, click on the latest build number (in the above picture it would be #7) to view build details.</p>
+<p><img alt="" src="../images/mcm-devops/jenkins-project-view.png" /></p>
+<p>To access the build logs, click on the <code>Console Output</code> button.</p>
+<p><img alt="" src="../images/mcm-devops/jenkins-build-output.png" /></p>
+<p>I'll let you look into the logs to figure out what's going on. The best way to read the logs is by matching the output you see with the pipeline stages we went through earlier in the <a href="#a-pipeline-code-overview">Pipeline Code Overview</a> section.</p>
+<p>An important detail to know is that towards the end of the pipeline output, if the <code>Validation Test</code> stage completed successfully, you will notice that the pipeline triggers the <code>mcm-promotion</code> job and starts a new build for it, as shown below:</p>
+<p><img alt="" src="../images/mcm-devops/jenkins-application-link-and-promotion.png" /></p>
+<p>If you would like to see output of the <code>mcm-promotion</code> job build, just click the <code>mcm-promotion</code> build number (#2 in the above picture). The way Jenkins treats jobs that trigger builds for other jobs is that it will wait until the triggered jobs finish before finishing the current job. In our case, the <code>mcm-dev</code> job build will wait until <code>mcm-promotion</code> job build finishes before it can finish itself.</p>
+<p>Finally, you will know that the pipeline finished successfully if you see <code>Finished: SUCCESS</code> as the last line of console output. If that's the case, then CONGRATULATIONS!!! You have successfully run an MCM CI/CD pipeline that automatically deploys the <code>guestbook</code> application to the <code>se-dev-31</code> cluster but also, upon passing the validation tests, triggers the <code>mcm-promotion</code> pipeline to deploy the application to the <code>se-stg-31</code> cluster.</p>
+<p>Now let's move on to manually testing the <code>guestbook</code> application on each cluster to verify that the pipelines indeed deployed the application successfully.</p>
+<h2 id="5-test-the-guestbook-application">5. Test the Guestbook Application</h2>
+<p>There are 2 ways in which we can access the <code>guestbook</code> application's frontend on each cluster:</p>
+<ol>
+<li>Getting the application URL from the Jenkins build output.</li>
+<li>From the <code>Deployments</code> page in the IBM Cloud Private console of each cluster.</li>
+</ol>
+<h3 id="a-getting-the-application-url-from-the-jenkins-build-output">a. Getting the application URL from the Jenkins build output</h3>
+<p>On the <strong>Validation Test</strong> stage you will see a link to the <code>guestbook</code> application's frontend URL in the logs as shown below:</p>
+<p><img alt="" src="../images/mcm-devops/jenkins-application-link-and-promotion.png" /></p>
+<p>To access the guestbook application just click on the URL and you will be taken to the web application in your browser.</p>
+<p>This step applies to both <code>mcm-dev</code> and <code>mcm-promotion</code> jobs.</p>
+<h3 id="b-launching-the-application-from-the-ibm-cloud-private-console">b. Launching the application from the IBM Cloud Private Console</h3>
+<p>You can also launch the <code>guestbook</code> frontend from the IBM Cloud Private console. To do so, open a new browser window and go to <code>https://ICP_MASTER_IP:8443/console/workloads/deployments</code> and enter <code>guestbook</code> in the search bar. If done correctly, you will see a view like the following:</p>
+<p><img alt="" src="../images/mcm-devops/jenkins-icp-launch-application.png" /></p>
+<p>If you are able to see the <code>md-guestbook-gbapp</code>, <code>md-guestbook-gbapp-redismaster</code>, and <code>md-guestbook-gbapp-redisslave</code> deployments and all have an <strong>Available</strong> value of <code>1</code>, then this means that all of the deployments have succesfully been deployed and started. At this point, all it takes to launch the application is to click the <code>Launch</code> button in the <code>md-guestbook-gbapp</code> row.</p>
+<p>This step applies to both <code>se-dev-31</code> and <code>se-stg-31</code> clusters.</p>
+<h3 id="c-testing-the-application">c. Testing the Application</h3>
+<p>The guestbook application itself is very simple. It consists of a web application that saves <code>guest</code> names (or any text) to a Redis deployment and persists them there even if the web application dies or restarts for some reason. To test its functionality, enter any text in the textbox shown below and click the <code>Submit</code> button.</p>
+<p><img alt="MCM Clusters" src="../images/mcm-devops/jenkins-application.png?raw=true" /></p>
+<p>If everything worked successfully, you will see that the text you entered has now moved below the Submit button, which indicates that the text has been saved to and successfully read from the Redis deployment. To make sure that the text persists in the Redis deployment, feel free to refresh the page and make sure that the text you entered is bein shown again below the <code>Submit</code> button.</p>
+<p>If all the above was done successfully, that means that you have successfully verified the guestbook deployment and tested its functionality!</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>An automated CI/CD pipeline is the holy grail of a true DevOps setup. It enforces code quality by doing things like Validation Tests. It also saves many headaches when deploying new code to new environments because everything is automated.</p>
+<p>The problem with the traditional CI/CD approach is that the more environments you have (which is common in big enterprises), the more difficult and error prone it becomes to set up multiple CI/CD pipelines because you have to take many configuration settings and credentials into account for each environment.</p>
+<p>Thankfully, MCM takes care of saving all of the environment settings and credentials for you and lets you deploy applications to these environments by supplying values for easy-to-read cluster selector labels, as you saw in the examples above. The only thing that the developer has to remember is the login information for the MCM Controller cluster and the values for the cluster selector labels.</p>
+<p>Now that you have the knowledge of using MCM in your CI/CD pipelines, I encourage you to try this out with your own workloads!</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../mcm-compliance/" class="btn btn-neutral float-right" title="Create Multi-cluster Compliance Policies">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../mcm-applications/" class="btn btn-neutral" title="Create and Deploy Applications with MCM"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../mcm-applications/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../mcm-compliance/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+
+</body>
+</html>

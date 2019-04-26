@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Create and Deploy Applications with MCM - Guide for Managing Kubernetes Clusters with IBM Multicloud Manager</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link href="../extra.css" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Create and Deploy Applications with MCM";
+    var mkdocs_page_input_path = "mcm-applications.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Guide for Managing Kubernetes Clusters with IBM Multicloud Manager</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../mcm-multicloud-scenarios/">Scenarios for Multi-cluster Management</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../mcm-quickstart/">Quick Start</a>
+	    </li>
+          
+            <li class="toctree-l1 current">
+		
+    <a class="current" href="./">Create and Deploy Applications with MCM</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l2"><a href="#create-and-deploy-applications-with-mcm">Create and Deploy Applications with MCM</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l3" href="#pre-requisites">Pre-Requisites</a></li>
+        
+            <li><a class="toctree-l3" href="#creating-multicloud-manager-applications">Creating Multicloud Manager Applications</a></li>
+        
+            <li><a class="toctree-l3" href="#deployment-mcm-application">Deployment MCM Application</a></li>
+        
+            <li><a class="toctree-l3" href="#conclusion">Conclusion</a></li>
+        
+        </ul>
+    
+
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../mcm-devops/">DevOps in Multi-cluster Environment</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../mcm-compliance/">Create Multi-cluster Compliance Policies</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../mcm-monitoring-event-management/">Monitoring and Event Management with MCM</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../mcm-openshift/">Manage Red Hat OpenShift Clusters</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../mcm-eks/">Manage AWS EKS Clusters</a>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Guide for Managing Kubernetes Clusters with IBM Multicloud Manager</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Create and Deploy Applications with MCM</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="create-and-deploy-applications-with-mcm">Create and Deploy Applications with MCM</h1>
+<p><strong>Author:</strong> Fabio Gomez (fabiogomez@us.ibm.com)</p>
+<p>In this document, we will go over the process of creating and deploying an MCM Application on multiple clusters using the Helm CLI against the MCM Hub Cluster.</p>
+<h2 id="pre-requisites">Pre-Requisites</h2>
+<ul>
+<li>2 x <a href="https://www.ibm.com/support/knowledgecenter/en/SSBS6K_3.1.2/kc_welcome_containers.html">IBM Cloud Private</a> Clusters with MCM Installed.<ul>
+<li>I recommend you go through the <a href="../mcm-quickstart/#installing-mcm"><code>Installing MCM</code></a> section of the <a href="../mcm-quickstart/">Quick Start</a> chapter.</li>
+</ul>
+</li>
+<li><a href="https://kubernetes.io/docs/user-guide/kubectl-overview/">Kubectl</a> (Kubernetes CLI)<ul>
+<li>Follow the instructions <a href="https://kubernetes.io/docs/tasks/tools/install-kubectl/">here</a> to install it on your platform.</li>
+</ul>
+</li>
+<li><a href="https://github.com/kubernetes/helm">ICP Helm</a> (Kubernetes package manager)<ul>
+<li>Follow the instructions <a href="https://www.ibm.com/support/knowledgecenter/en/SSBS6K_3.1.2/app_center/create_helm_cli.html">here</a> to install it on your platform.</li>
+</ul>
+</li>
+<li><a href="https://www.ibm.com/support/knowledgecenter/en/SSBS6K_3.1.2/manage_cluster/install_cli.html">IBM Cloud Private CLI</a><ul>
+<li>Follow the instructions <a href="https://www.ibm.com/support/knowledgecenter/en/SSBS6K_3.1.2/manage_cluster/install_cli.html">here</a> to install it on your platform.</li>
+</ul>
+</li>
+</ul>
+<h2 id="creating-multicloud-manager-applications">Creating Multicloud Manager Applications</h2>
+<p>As explained in the <a href="../mcm-quickstart/#core-multicloud-manager-resources-to-learn"><code>Core Multicloud Manager Resources to Learn</code></a> section of the <a href="../mcm-quickstart/">Quick Start</a> chapter, an <code>Application</code> is a way to relate multiple workloads (Helm Charts) as a single unit. By implementing the custom MCM YAML resources, MCM can monitor your applications, automate their deployment to multiple clusters, and extract the topology of all its components, amongst other features. Though not immediately useful for developers, these capabilities makes the lives of operators easier by having a single place where they can deploy and monitor applications on multiple clusters.</p>
+<p>With the MCM Hub Cluster dashboard you can deploy a regular Helm Chart to multiple IBM Cloud Private (ICP) clusters, but that's the only benefit you get out of the box. To fully leverage MCM's deployment automation, monitoring, topology and its other capabilities, you will have to create custom MCM YAML resources that get deployed with your charts. Luckily, no changes need to be made to the original Helm Charts or their application code.</p>
+<h3 id="guestbook-helm-charts-introduced">Guestbook Helm Charts Introduced</h3>
+<p>In this document, we are going to cover the basic <code>Application</code> concepts we learned in <a href="../mcm-quickstart/#core-multicloud-manager-resources-to-learn"><code>Core Multicloud Manager Resources to Learn</code></a>, but we will be using the <code>Guestbook</code> MCM Application code as an example to deploy 3 separate charts (explained later) on multiple clusters.</p>
+<p>The actual <code>Guestbook</code> application code comes from the Kubernetes Community, and it's located publicly on the <a href="https://github.com/kubernetes/examples/tree/master/guestbook">kubernetes/examples</a> repository. The application is broken up in the following 3 services:</p>
+<p><img alt="GuestBook Architecture" src="../images/mcm-applications/guestbook-architecture.png?raw=true" /></p>
+<ul>
+<li><strong>Redis Master</strong>: A Redis Master instance.</li>
+<li><strong>Redis Slave</strong>: A Redis Slave instance, which replicates the contents of the Redis Master.</li>
+<li><strong>Frontend</strong>: An Angular.js application that uses PHP script to communicate with Redis Master and Slave.<ul>
+<li>In the application, you can submit Guestbook names, which get persisted in Redos.</li>
+<li>It sends new names to the Redis Master, which then get replicated to the Redis Slave.</li>
+<li>It then retrieves the names from the Redis Slave and prints them on the screen.</li>
+</ul>
+</li>
+</ul>
+<p>The above 3 services were converted into the following 3 Helm Charts for the purpose of this demo. You can find the source code for the Helm Charts here:</p>
+<ul>
+<li><strong>Redis Master</strong>: <a href="https://github.com/ibm-cloud-architecture/kubernetes-multicloud-management/tree/v312/demos/guestbook/gbapp/gbrm">gbrm</a>.</li>
+<li><strong>Redis Slave</strong>: <a href="https://github.com/ibm-cloud-architecture/kubernetes-multicloud-management/tree/v312/demos/guestbook/gbapp/gbrs">gbrs</a>.</li>
+<li><strong>Frontend</strong>: <a href="https://github.com/ibm-cloud-architecture/kubernetes-multicloud-management/tree/v312/demos/guestbook/gbapp/gbf">gbf</a>.</li>
+</ul>
+<p>Lastly, in order to deploy the above charts through MCM, we are also going to need a Helm chart that deploys all of the MCM resources. Those resources do the actual deployment, monitoring, and topology setup for the 3 Helm Charts mentioned above.</p>
+<p>In the next sections, you are going to explore parts of the source code that make the <code>gbapp</code> Helm Chart (the chart with the MCM Resources) to understand the process of creating an <code>Multicloud Manager Application</code>.</p>
+<p><strong>NOTE</strong>: To checkout the entire source code of the <code>gbapp</code> Helm Chart, checkout the link below:</p>
+<ul>
+<li><a href="https://github.com/ibm-cloud-architecture/kubernetes-multicloud-management/tree/v312/demos/guestbook/gbapp">demos/guestbook/gbapp</a></li>
+</ul>
+<h3 id="application-resource">Application Resource</h3>
+<p>First things first, in order for MCM to recognize your workloads as an MCM application, you have to create an <code>Application</code> resource. The <code>Application</code> resource lets you specify criteria to associate Kubernetes resources to your application so that MCM can manage and monitor them. Let's look at the <code>gbapp</code> Application resource from the Helm Chart below:</p>
+<pre><code class="yaml">apiVersion: app.k8s.io/v1beta1
+kind: Application
+metadata:
+  name: {{ template &quot;guestbookapplication.fullname&quot; . }}
+  labels:
+    app: {{ template &quot;guestbookapplication.name&quot; . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace &quot;+&quot; &quot;_&quot; }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    name: {{ template &quot;guestbookapplication.fullname&quot; . }}
+spec:
+  selector:
+    matchExpressions:
+    - key: app
+      operator: In
+      values:
+      - gbapp
+      - gbf
+      - gbrm
+      - gbrs
+  componentKinds:
+  - group: core
+    kind: Pods
+</code></pre>
+
+<p>Where:</p>
+<ul>
+<li><strong>apiVersion</strong>: Contains the Community SIG API version for Applications.</li>
+<li><strong>kind</strong>: Specifies that this is an <code>Application</code> resource type.</li>
+<li><strong>metadata</strong>: Contains the resource name and some labels.</li>
+<li><strong>spec.selector.matchExpressions</strong>: Contains the selectors that MCM will use to associate other Kubernetes resources to the application.<ul>
+<li>In this case, we are associated all resources with <code>app</code> label that contains any of the values listed in <code>spec.selector.matchExpressions[0].values</code>, which in this case are the names of the charts themselves.</li>
+<li>If you go to the source code of any of the Guestbook Helm Charts and explore its resources (deployments, services, etc) you will notice that they contain an <code>app</code> label that contains the name of the Helm chart.</li>
+</ul>
+</li>
+<li><strong>spec.selector.componentKinds</strong>: Contains a list of the kinds of resources to be associated with the application.<ul>
+<li>In this case we are only associating components of kind <code>Pods</code>.</li>
+<li>However, you can associate resources of type <code>Deployment</code>, <code>StatefulSet</code>, <code>Service</code>, etc.</li>
+<li>You can assign whatever name you like to the <code>group</code> field.</li>
+</ul>
+</li>
+</ul>
+<p>Later on, when we deploy the <code>gbapp</code> Helm Chart, you will see for yourself how the Guestbook resources are associated with the <code>Application</code>.</p>
+<h3 id="deployable-resource">Deployable Resource</h3>
+<p>Now that we know how to create an <code>Application</code> that knows how to associate resources to itself, it's time to learn how an <code>Application</code> can deploy those resources for itself. The way to do that is by creating a <code>Deployable</code> object, where you can specify what Helm chart to deploy and what namespace to deploy the chart into once the <code>PlacementPolicy</code> (explained in later sections) decides what clusters to deploy the Helm Charts into. Let's look at the <code>gbapp-frontend</code> Deployable resource from the Helm Chart below:</p>
+<pre><code class="yaml">apiVersion: mcm.ibm.com/v1alpha1
+kind: Deployable
+metadata:
+  name: {{ template &quot;guestbookapplication.fullname&quot; . }}-frontend
+  labels:
+    app: {{ template &quot;guestbookapplication.name&quot; . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace &quot;+&quot; &quot;_&quot; }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    name: {{ template &quot;guestbookapplication.fullname&quot; . }}-frontend
+    servicekind: ApplicationService
+spec:
+  deployer:
+    kind: helm
+    helm:
+      chartURL: {{ .Values.chartRepoURL }}/gbf-0.1.0.tgz
+      namespace: {{ .Values.appInClusterNamespace }}
+</code></pre>
+
+<p>Where:</p>
+<ul>
+<li><strong>apiVersion</strong>: Contains the MCM API version for Deployables.</li>
+<li><strong>kind</strong>: Specifies that this is an <code>Deployable</code> resource type.</li>
+<li><strong>metadata</strong>: Contains the resource name and some labels.</li>
+<li><strong>spec.deployer.kind</strong>: Specifies that is is a deployer that will deploy a Helm chart.</li>
+<li><strong>spec.deployer.helm.chartURL</strong>: Specifies the URL with the Helm Chart location.<ul>
+<li>In this case the Chart location is on this document's GitHub Repository.</li>
+</ul>
+</li>
+<li><strong>spec.deployer.helm.namespace</strong>: Specifies the cluster namespace to deploy the Helm chart to.</li>
+</ul>
+<h3 id="relationship-resource">Relationship Resource</h3>
+<p>The more <code>Deployable</code> objects you create for an <code>Application</code>, the harder it becomes to determine your application's topology, specially for newcomers in your team. MCM provides application topology features via <a href="https://www.weave.works/oss/scope/">Weave Scope</a> out of the box. However, to explicitly specify dependencies between certain components (Deployment, Application, etc), you will need to create an <code>ApplicationRelationship</code> resource. Let's look at the <code>gbapp-frontend-app</code> ApplicationRelationship resource from the Helm Chart below:</p>
+<pre><code class="yaml">apiVersion: mcm.ibm.com/v1alpha1
+kind: ApplicationRelationship
+metadata:
+  name: {{ template &quot;guestbookapplication.fullname&quot; . }}-app-frontend
+  labels:
+    app: {{ template &quot;guestbookapplication.name&quot; . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace &quot;+&quot; &quot;_&quot; }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  type: contains
+  source:
+    kind: Application
+    name: {{ template &quot;guestbookapplication.fullname&quot; . }}
+  destination:
+    kind: Deployable
+    name: {{ template &quot;guestbookapplication.fullname&quot; . }}-frontend
+</code></pre>
+
+<p>Where:</p>
+<ul>
+<li><strong>apiVersion</strong>: Contains the MCM API version for ApplicationRelationship.</li>
+<li><strong>kind</strong>: Specifies that this is an <code>ApplicationRelationship</code> resource type.</li>
+<li><strong>metadata</strong>: Contains the resource name and some labels.</li>
+<li><strong>spec.source.kind</strong>: specifies the type of Resource for the <code>source</code> object, which is <code>Application</code> in this case.</li>
+<li><strong>spec.source.name</strong>: specifies the name of the <code>source</code> object, which is the <code>guestbook-gbapp</code> Application release and chart name combined.</li>
+<li><strong>spec.destination.kind</strong>: specifies the type of Resource for the <code>destination</code> object, which is <code>Deployable</code> in this case.</li>
+<li><strong>spec.destination.name</strong>: specifies the name of the <code>destination</code> object, which is the name for the <code>gbabb-frontend</code> Deployable.</li>
+</ul>
+<h3 id="placement-policy-resource">Placement Policy Resource</h3>
+<p>Normally, to deploy an application to multiple clusters, you to run the following steps on each cluster:</p>
+<ul>
+<li>Login to get the kubernetes context.</li>
+<li>Run the <code>helm install</code> command.</li>
+</ul>
+<p>This does not seem like a lot of work for 2 or 3 clusters. But the more clusters you have to work with, the more credentials you have to remember and manage. Also, if you are using CI/CD pipelines to deploy your workloads, the more clusters you have, the more pipelines you have to write and embed those credentials to, which can lead to human errors. If those credentials were to change, you would have to update those credentials wherever they are being used, which can get hard to track.</p>
+<p>By leveraging MCM, access to your clusters is managed from a central location. MCM expands on this capability with <code>Placement Policies</code> by allowing you to deploy workloads through it by specifying cluster labels, which are much easier to remember and manage. By adopting MCM into your CI/CD pipelines, you only have to remember the credentials for the MCM Hub cluster. To deploy workloads to multiple clusters, you only have to provide the number of application replicas and the cluster labels that match the clusters that you would like to deploy them to.</p>
+<p>Let's look at the <code>gbapp-frontend</code> PlacementPolicy resource from the Helm Chart below:</p>
+<pre><code class="yaml">apiVersion: mcm.ibm.com/v1alpha1
+kind: PlacementPolicy
+metadata:
+  name: {{ template &quot;guestbookapplication.fullname&quot; . }}-frontend
+  labels:
+    app: {{ template &quot;guestbookapplication.name&quot; . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace &quot;+&quot; &quot;_&quot; }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    name: {{ template &quot;guestbookapplication.fullname&quot; . }}-frontend
+    servicekind: CacheService
+spec:
+  clusterReplicas: {{ .Values.replicaCount }}
+  clusterLabels:
+    matchLabels:
+{{ toYaml .Values.targetCluster.labelSelector.matchLabels | indent 6 }}
+  resourceHint:
+{{ toYaml .Values.targetCluster.resourceSelector | indent 4 }}
+  compliances: {{ .Values.targetCluster.compliances }}
+</code></pre>
+
+<p>Where:</p>
+<ul>
+<li><strong>apiVersion</strong>: Contains the MCM API version for PlacementPolicy.</li>
+<li><strong>kind</strong>: Specifies that this is an <code>PlacementPolicy</code> resource type.</li>
+<li><strong>metadata</strong>: Contains the resource name and some labels.</li>
+<li><strong>spec.clusterReplicas</strong>: contains the number of replicas (application instances) to deploy.</li>
+<li><strong>spec.clusterLabels.matchLabels</strong>: Contains the list of labels and values that clusters must have for MCM to deploy applications to them.</li>
+<li><strong>spec.resourceHint</strong>: If more than one cluster matches the labels and values provided above, you can specify to MCM a resource specific criteria to select the clusters.<ul>
+<li>For example, you can ask MCM to select the clsuter with the most available CPU cores.</li>
+</ul>
+</li>
+<li><strong>spec.compliances</strong>: Contains a list of <code>Compliances</code> (outside of the scope of this chapter) resources to attach this policy to.<ul>
+<li>To learn about <code>Compliance</code> resources, checkout the <a href="../mcm-compliance/">Create Multi-cluster Compliance Policies Chapter</a>.</li>
+</ul>
+</li>
+</ul>
+<h3 id="placement-binding-resource">Placement Binding Resource</h3>
+<p>Just like how a Kubernetes <code>Role</code> requires <code>RoleBinding</code> to attach it to a specific <code>ServiceAccount</code>, a <code>PlacementPolicy</code> requires another resource that binds its rules to specific resources. This MCM resources is the <code>PlacementBinding</code>, which can bind the <code>PlacementPolicy</code> rules to specific Deployables. Let's look at the <code>gbapp-frontend</code> PlacementPolicy resource from the Helm Chart below:</p>
+<pre><code class="yaml">apiVersion: mcm.ibm.com/v1alpha1
+kind: PlacementBinding
+metadata:
+  name: {{ template &quot;guestbookapplication.fullname&quot; . }}-frontend
+  labels:
+    app: {{ template &quot;guestbookapplication.name&quot; . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace &quot;+&quot; &quot;_&quot; }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    name: {{ template &quot;guestbookapplication.fullname&quot; . }}-frontend
+    servicekind: CacheService
+placementRef:
+  apiGroup: mcm.ibm.com
+  kind: PlacementPolicy
+  name: {{ template &quot;guestbookapplication.fullname&quot; . }}-frontend
+subjects:
+- apiGroup: mcm.ibm.com
+  kind: Deployable
+  name: {{ template &quot;guestbookapplication.fullname&quot; . }}-frontend
+</code></pre>
+
+<p>Where:</p>
+<ul>
+<li><strong>apiVersion</strong>: Contains the MCM API version for PlacementBinding.</li>
+<li><strong>kind</strong>: Specifies that this is an <code>PlacementBinding</code> resource type.</li>
+<li><strong>metadata</strong>: Contains the resource name and some labels.</li>
+<li><strong>placementRef.name</strong>: Specifies the <code>PlacementPolicy</code> name to bind.</li>
+<li><strong>subjects[0].name</strong>: Specifies the <code>Deployable</code> name to bind the <code>PlacementPolicy</code> to.</li>
+</ul>
+<h3 id="mcm-application-helm-chart">MCM Application Helm Chart</h3>
+<p>The above YAML resources mostly cover supporting the <code>frontend</code> Helm Chart. To see how we put together an MCM Application Helm Chart that deploys all of the 3 Guestbook Helm Charts, checkout the source code at the link below:</p>
+<ul>
+<li><a href="https://github.com/ibm-cloud-architecture/kubernetes-multicloud-management/tree/v312/demos/guestbook/gbapp">demos/guestbook/gbapp</a></li>
+</ul>
+<h2 id="deployment-mcm-application">Deployment MCM Application</h2>
+<p>Now that you are aware of how to create MCM Applications, it is time to deploy the <code>gbapp</code> MCM Application Helm Chart, which deploys the Guestbook Frontend (<a href="https://github.com/ibm-cloud-architecture/kubernetes-multicloud-management/tree/v312/demos/guestbook/gbapp/gbf">gbf</a>), Redis Master (<a href="https://github.com/ibm-cloud-architecture/kubernetes-multicloud-management/tree/v312/demos/guestbook/gbapp/gbrm">gbrm</a>), and Redis Slave (<a href="https://github.com/ibm-cloud-architecture/kubernetes-multicloud-management/tree/v312/demos/guestbook/gbapp/gbrs">gbrs</a>) charts.</p>
+<p>Before you start with the examples, you will need to clone the code and log into the MCM Hub Cluster with the commands below:</p>
+<pre><code class="bash"># Clone the Repository
+git clone https://github.com/ibm-cloud-architecture/kubernetes-multicloud-management.git
+</code></pre>
+
+<p>Also, open a new browser tab and go to the <code>Applications</code> page on the MCM Dashboard, as shown below:</p>
+<p><img alt="" src="../images/mcm-applications/0-applications.png" /></p>
+<p>You should then be greeted by an empty Applications page, which we will be populating later:</p>
+<p><img alt="" src="../images/mcm-applications/1-applications.png" /></p>
+<p>Now you are ready to start deploying the MCM Application!</p>
+<h3 id="0-create-image-policies-on-both-clusters">0. Create Image Policies on Both Clusters</h3>
+<p>Since ICP version 3.1, you are required to create <code>Image Policies</code> that allow you to pull Docker images from specific Docker registries (<code>gcr.io</code> in our case). To do so, let's run the following commands on <code>EACH ICP CLUSTER</code>:</p>
+<pre><code class="bash"># Login to the ICP Cluster
+cloudctl login -a https://ICP_MASTER_IP:8443 -n default --skip-ssl-validation
+
+# Go to Helm Charts directory
+cd demos/guestbook
+
+# Create the Image Policy in the ICP Cluster
+kubectl apply -f demos/guestbook/guestbook-cluster-image-policy.yaml
+</code></pre>
+
+<p>Don't forget to run the above commands on <code>EACH ICP Cluster</code> so that there are no issues when deploying the <code>gbapp</code> application.</p>
+<h3 id="1-deploy-to-dev-cluster">1. Deploy to Dev Cluster</h3>
+<p>The process of deploying an MCM Application is the same as deploying a Helm Chart. To deploy the <code>gbapp</code> MCM Application Helm chart, run the commands below:</p>
+<pre><code class="bash"># Log into MCM HUB Cluster
+cloudctl login -a https://HUB_CLUSTER_MASTER_IP:8443 -n default --skip-ssl-validation
+
+# If not already there, go to the Helm Charts directory
+cd demos/guestbook
+
+# Deploy MCM Application Helm Chart
+helm upgrade --install guestbook --set replicaCount=1 --set targetCluster.labelSelector.matchLabels.environment=Dev ./gbapp --tls
+</code></pre>
+
+<p>Where:</p>
+<ul>
+<li><strong>replicaCount</strong>: is a field that indicates the number of application instances we are deploying, which is 1.</li>
+<li><strong>targetCluster.labelSelector.matchLabels.environment</strong>: means we are using the <code>environment</code> field with a value of <code>Dev</code>, which tells the MCM Controller to should find a cluster that has that value for that field.<ul>
+<li>Checkout the <a href="https://github.com/ibm-cloud-architecture/kubernetes-multicloud-management/tree/v312/demos/guestbook/gbapp/values.yaml#L7">demos/guestbook/gbapp/values.yaml</a> to learn the different fields we can use as cluster selectors.</li>
+</ul>
+</li>
+</ul>
+<p>Assuming that everything went well, you should now see the <code>guestbook-gbapp</code> MCM Application show up in the <code>Applications</code> page as shown below:
+<img alt="" src="../images/mcm-applications/2-guestbook.png" /></p>
+<p>The above is all it takes to deploy an MCM Application. To deploy to multiple clusters (done in later sections) all you have to do is change the fields, values, and number of replicas in the <code>helm upgrade</code> command and MCM takes care of the rest.</p>
+<p>Before exploring the multiple cluster scenario, let's first get familiar with examining MCM Application details on the <code>Applications</code> page.</p>
+<h3 id="2-exploring-the-application-details-page">2. Exploring the Application Details Page</h3>
+<p>If you click on the <code>guestbook-gbapp</code> entry, you will be taken to that application's overview page, which contains multiple sections that show you the custom MCM Resources that were deployed. The first section you will encounter is the <code>Application Details</code>, which contains the high level MCM Application details:
+<img alt="" src="../images/mcm-applications/3-guestbook-details.png" /></p>
+<p>If you scroll down, you see a section for the <code>Application Deployments</code>, which show the deployment status foe each of the 3 Helm Charts. If there was an error on the charts deployment, you will see the deployment status reflected under the <code>Status</code> column and the failure details under the <code>Reason</code> column.
+<img alt="" src="../images/mcm-applications/4-guestbook-deployments.png" /></p>
+<p>If you scroll down further, you will encounter the <code>Placement Policies</code> section, which contains the placement policies used to deploy the Helm charts into the <code>se-stg-31</code> cluster. If you look under the <code>Decisions</code> column, you will notice that, after finding a cluster that matches the labels we provided earlier, it decided to use the <code>se-dev-312-ubuntu</code> cluster (for you it's going to be <code>se-dev-31</code> or whatever name you assigned to the cluster).
+<img alt="" src="../images/mcm-applications/5-guestbook-placement-policies.png" /></p>
+<p>Down below is the <code>Placement Bindings</code> section, which should show the <code>Placement Policies</code> and their respected <code>Subjects</code> (Deployables) to be bound to.
+<img alt="" src="../images/mcm-applications/6-guestbook-placement-bindings.png" /></p>
+<p>After that you will find the <code>Deployable Objects</code> section, which contain a list of all of the Helm Charts, along with the Chart URL and the namespace to deploy them into.
+<img alt="" src="../images/mcm-applications/7-guestbook-deployables.png" /></p>
+<p>Next you will find the <code>Application Relationships</code> section, which contains a list of all the relationships between the Application and the Deployable objects.
+<img alt="" src="../images/mcm-applications/8-guestbook-application-relationships.png" /></p>
+<p>Last but not least, if you click on the <code>Diagram</code> tab, you will see a visual representation of the Application and all of the resources we inspected above, including the Helm Charts resources (Pods, Deployments, and Services). This diagram is available thanks to the <a href="https://www.weave.works/oss/scope/">Weave Scope</a> component in MCM, which takes the <code>Application Relationship</code> objects and its own algorithm to deduce and reduce the application topology on the screen. If you click on any of the components you will open a small view with either a short description or the YAML resource file that was used to create the resource.
+<img alt="" src="../images/mcm-applications/9-diagram.png" /></p>
+<p>Now that you have learned how to navigate the Application Details page, let's proceed with redeploying the application into another cluster, followed by multiple clusters.</p>
+<h3 id="3-redeploy-to-staging-cluster">3. Redeploy to Staging Cluster</h3>
+<p>To redeploy the application to the <code>se-stg-31</code> cluster, all we have to do is change the value of the <code>environment</code> field to <code>Staging</code>, and MCM will take care of uninstalling the application from the <code>se-dev-31</code> cluster and then redeploying it to the <code>se-stg-31</code> cluster. To do so, run the command below:</p>
+<pre><code class="bash"># If not already there, go to the Helm Charts directory
+cd demos/guestbook
+
+# Deploy MCM Application Helm Chart
+helm upgrade --install guestbook --set replicaCount=1 --set targetCluster.labelSelector.matchLabels.environment=Staging ./gbapp --tls
+</code></pre>
+
+<p>That's all it takes. With the same <code>cloudctl</code> session, we were able to move the application from one cluster to another by simply changing the value of a label. This is very powerful for operations folks or anyone responsible for deploying an application to multiple environments as it is very user intuitive while leveraging the capabilities of the MCM platform.</p>
+<p>I encourage you to refresh the Applications page and explore how the resources mentioned earlier changed. The only change was the cluster name that the resources were deployed into.</p>
+<h3 id="4-redeploy-to-both-clusters">4. Redeploy to Both Clusters</h3>
+<p>Now let's go ahead and deploy the application to both clusters simultaneously! To do so, we will have to use a different label of which value is shared by both clusters. Both <code>se-dev-31</code> and <code>se-stg-31</code> clusters actually share the value of <code>case</code> for the label <code>owner</code>, so we will use that for the deployment. The last thing that remains is to increase the value of <code>replicaCount</code> from <code>1</code> to <code>2</code> in order for MCM to know that it needs to install the application on two clusters that match label values. To install the application on both clusters, run the command below:</p>
+<pre><code class="bash"># If not already there, go to the Helm Charts directory
+cd demos/guestbook
+
+# Deploy MCM Application Helm Chart
+helm upgrade --install guestbook --set replicaCount=2 --set targetCluster.labelSelector.matchLabels.owner=case ./gbapp --tls
+</code></pre>
+
+<p>That's really it. Once again, by using the same <code>cloudctl</code> session to the HUB Cluster, we were able to redeploy the application to both clusters by simply using a label with a value that both clusters share and increasing the <code>replicaCount</code> value to <code>2</code>. Imagine how easy it would be to write a CI/CD pipeline to promote an application from one environment to another and run tests! <strong>NOTE</strong>: More on CI/CD on the <a href="../mcm-devops/">DevOps with MCM &amp; Tutorial Chapter</a>.</p>
+<p>Anyways, feel free to refresh and checkout the MCM Application Details page again to see what changed. Most resources look the same with the main difference being the <code>Application Deployments</code> section below, which contains details of all the Helm deployments across both clusters instead of just one.
+<img alt="" src="../images/mcm-applications/10-multiple-clusters.png" /></p>
+<p>Another thing that changed significantly is the <code>Diagram</code> tab below, which shows a topology diagram that includes the resources of both clusters.
+<img alt="" src="../images/mcm-applications/11-diagram-multiple-clusters.png" /></p>
+<h3 id="5-health-view-dashboard">5. Health View Dashboard</h3>
+<p>When deploying an MCM Application, MCM creates a dashboard in Grafana that lets you visualize CPU, memory, filesystem, and bandwidth usage. The data is shows is pulled from the Federated Prometheus instance that gets deployed with the MCM Controller chart. To access the Health View, first go back to the <code>Applications</code> page as shown below:</p>
+<p><img alt="" src="../images/mcm-applications/2-guestbook.png" /></p>
+<p>Now click the <code>Launch Health View</code> link under the <code>Dashboard</code> column and it should open a Grafana dashboard in a new page that looks similar to the following:</p>
+<p><img alt="" src="../images/mcm-applications/12-health-view.png" /></p>
+<p>Feel free to scroll around to see the resource consumption for each of the Helm Chart deployments.</p>
+<h3 id="5-cleanup">5. Cleanup</h3>
+<p>To uninstall the MCM Application from both clusters, run the command below:</p>
+<pre><code class="bash">helm delete guestbook --purge --tls
+</code></pre>
+
+<h2 id="conclusion">Conclusion</h2>
+<p>We hope this chapter opened your mind and made you realize how easy it is to use MCM to deploy an application to multiple clusters from a central location and with a simple cluster selection criteria. Usually, when companies company grows, the number of application environments grow as well and the complexity of deploying and managing applications on those environments grows as well.</p>
+<p>Now that you know how to use MCM to deploy, manage, and monitor your applications on multiple clusters, you should checkout the <a href="../mcm-devops/">DevOps with MCM &amp; Tutorial Chapter</a> to learn how to use MCM in an automated CI/CD pipeline to promote applications between environments and run tests.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../mcm-devops/" class="btn btn-neutral float-right" title="DevOps in Multi-cluster Environment">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../mcm-quickstart/" class="btn btn-neutral" title="Quick Start"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../mcm-quickstart/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../mcm-devops/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+
+</body>
+</html>
