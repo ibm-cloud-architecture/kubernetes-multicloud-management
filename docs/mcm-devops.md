@@ -36,14 +36,19 @@ Note that nowhere in the above pipeline example there is a mention of cluster ce
 The first cluster will be the `MCM Controller`, which means that this cluster will be able to manage other clusters, itself included. In order for this cluster to become the MCM Controller and manage itself, we will need to install both the `MCM Controller` and the `MCM Klusterlet` Helm Charts. The MCM Controller is in charge of monitoring and send commands to all clusters. The `MCM Klusterlet` is responsible for reporting status back to the MCM Controller and implementing its instructions.
 
   * Follow these [instructions](https://www.ibm.com/support/knowledgecenter/en/SSBS6K_3.1.2/mcm/installing/install.html) to install the MCM Controller and the MCM Klusterlet.
-  * In the Klusterlet section, for **Cluster Name** field enter `se-dev-31`.
-  * Make sure to use these labels and values for this cluster:
-    + **cloud**: IBM
-    + **datacenter**: austin
-    + **environment**: Dev
-    + **owner**: case
-    + **region**: US
-    + **vendor**: ICP
+  * In the **Controller** section, enter the following values for their respective fields:
+      + **Helm release name**: `mcm-controller`
+  * In the **Klusterlet** section, enter the following values for their respective fields:
+      + **Helm release name**: `mcm-klusterlet`
+      + **Cluster Name**: `se-dev-31`
+      + Check the **Deploy on Hub-Cluster?** box.
+      + **All parameters (Click on the dropdown arrow)** -> **Multicloud Manager Klusterlet Configuration**:
+          - **cloud**: `IBM`
+          - **datacenter**: `austin`
+          - **environment**: `Dev`
+          - **owner**: `case`
+          - **region**: `US`
+          - **vendor**: `ICP`
 
 If the above was done correctly, you have successfully setup the first cluster and can now manage it through `MCM Controller`.
 
@@ -51,14 +56,16 @@ If the above was done correctly, you have successfully setup the first cluster a
 The second cluster will only contain the `MCM Klusterlet` that reports information back to the `MCM Controller` cluster.
 
   * Follow these [instructions](https://www.ibm.com/support/knowledgecenter/SSBS6K_3.1.2/mcm/installing/klusterlet.html) to install the MCM Klusterlet.
-  * For **Cluster Name** field, enter `se-stg-31`.
-  * Make sure to use these labels and values for this cluster:
-    + **cloud**: IBM
-    + **datacenter**: dallas
-    + **environment**: Staging
-    + **owner**: case
-    + **region**: US
-    + **vendor**: ICP
+  * Enter the following values for their respective fields:
+      + **Helm release name**: `mcm-klusterlet`
+      + **Cluster Name**: `se-stg-31`
+      + **All parameters (Click on the dropdown arrow)** -> **Multicloud Manager Klusterlet Configuration**:
+          - **cloud**: `IBM`
+          - **datacenter**: `dallas`
+          - **environment**: `Staging`
+          - **owner**: `case`
+          - **region**: `US`
+          - **vendor**: `ICP`
 
 If the above was done correctly, you have successfully setup the first cluster and can now manage it through the `MCM Controller` in the first cluster.
 
