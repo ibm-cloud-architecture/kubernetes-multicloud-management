@@ -197,14 +197,23 @@
 <p>The first cluster will be the <code>MCM Controller</code>, which means that this cluster will be able to manage other clusters, itself included. In order for this cluster to become the MCM Controller and manage itself, we will need to install both the <code>MCM Controller</code> and the <code>MCM Klusterlet</code> Helm Charts. The MCM Controller is in charge of monitoring and send commands to all clusters. The <code>MCM Klusterlet</code> is responsible for reporting status back to the MCM Controller and implementing its instructions.</p>
 <ul>
 <li>Follow these <a href="https://www.ibm.com/support/knowledgecenter/en/SSBS6K_3.1.2/mcm/installing/install.html">instructions</a> to install the MCM Controller and the MCM Klusterlet.</li>
-<li>In the Klusterlet section, for <strong>Cluster Name</strong> field enter <code>se-dev-31</code>.</li>
-<li>Make sure to use these labels and values for this cluster:<ul>
-<li><strong>cloud</strong>: IBM</li>
-<li><strong>datacenter</strong>: austin</li>
-<li><strong>environment</strong>: Dev</li>
-<li><strong>owner</strong>: case</li>
-<li><strong>region</strong>: US</li>
-<li><strong>vendor</strong>: ICP</li>
+<li>In the <strong>Controller</strong> section, enter the following values for their respective fields:<ul>
+<li><strong>Helm release name</strong>: <code>mcm-controller</code></li>
+</ul>
+</li>
+<li>In the <strong>Klusterlet</strong> section, enter the following values for their respective fields:<ul>
+<li><strong>Helm release name</strong>: <code>mcm-klusterlet</code></li>
+<li><strong>Cluster Name</strong>: <code>se-dev-31</code></li>
+<li>Check the <strong>Deploy on Hub-Cluster?</strong> box.</li>
+<li><strong>All parameters (Click on the dropdown arrow)</strong> -&gt; <strong>Multicloud Manager Klusterlet Configuration</strong>:<ul>
+<li><strong>cloud</strong>: <code>IBM</code></li>
+<li><strong>datacenter</strong>: <code>austin</code></li>
+<li><strong>environment</strong>: <code>Dev</code></li>
+<li><strong>owner</strong>: <code>case</code></li>
+<li><strong>region</strong>: <code>US</code></li>
+<li><strong>vendor</strong>: <code>ICP</code></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -213,14 +222,18 @@
 <p>The second cluster will only contain the <code>MCM Klusterlet</code> that reports information back to the <code>MCM Controller</code> cluster.</p>
 <ul>
 <li>Follow these <a href="https://www.ibm.com/support/knowledgecenter/SSBS6K_3.1.2/mcm/installing/klusterlet.html">instructions</a> to install the MCM Klusterlet.</li>
-<li>For <strong>Cluster Name</strong> field, enter <code>se-stg-31</code>.</li>
-<li>Make sure to use these labels and values for this cluster:<ul>
-<li><strong>cloud</strong>: IBM</li>
-<li><strong>datacenter</strong>: dallas</li>
-<li><strong>environment</strong>: Staging</li>
-<li><strong>owner</strong>: case</li>
-<li><strong>region</strong>: US</li>
-<li><strong>vendor</strong>: ICP</li>
+<li>Enter the following values for their respective fields:<ul>
+<li><strong>Helm release name</strong>: <code>mcm-klusterlet</code></li>
+<li><strong>Cluster Name</strong>: <code>se-stg-31</code></li>
+<li><strong>All parameters (Click on the dropdown arrow)</strong> -&gt; <strong>Multicloud Manager Klusterlet Configuration</strong>:<ul>
+<li><strong>cloud</strong>: <code>IBM</code></li>
+<li><strong>datacenter</strong>: <code>dallas</code></li>
+<li><strong>environment</strong>: <code>Staging</code></li>
+<li><strong>owner</strong>: <code>case</code></li>
+<li><strong>region</strong>: <code>US</code></li>
+<li><strong>vendor</strong>: <code>ICP</code></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
