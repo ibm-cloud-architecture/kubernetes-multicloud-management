@@ -241,7 +241,7 @@
 <h3 id="3-create-image-policies-on-both-clusters">3. Create Image Policies on Both Clusters</h3>
 <p>Since ICP version 3.1, you are required to create <code>Image Policies</code> that allow you to pull Docker images from specific Docker registries (<code>gcr.io</code> in our case). To do so, let's start by cloning the project's git repository:</p>
 <pre><code class="bash"># Clone the Reference Architecture Repository
-git clone git@github.com:ibm-cloud-architecture/kubernetes-multicloud-management.git
+git clone https://github.com/ibm-cloud-architecture/kubernetes-multicloud-management.git
 
 # Go to the project's folder
 cd kubernetes-multicloud-management
@@ -457,7 +457,7 @@ Now enter your GitHub username and your Private SSH key in the <strong>Username<
 <li>Select <code>Pipeline script from SCM</code> on the <strong>Definition</strong> field.
    Select <code>Git</code> on the <strong>SCM</strong> field</li>
 <li>Enter <code>https://github.com/ibm-cloud-architecture/kubernetes-multicloud-management</code> in the <strong>Repositories -&gt; Repository URL</strong> field.<ul>
-<li>If using <code>SSH</code> to clone the repository, enter <code>git@github.com:ibm-cloud-architecture/kubernetes-multicloud-management.git</code> instead.</li>
+<li>If using <code>SSH</code> to clone the repository, enter <code>https://github.com/ibm-cloud-architecture/kubernetes-multicloud-management.git</code> instead.</li>
 <li>Also, if using <code>SSH</code>, in the <strong>Credentials</strong> field select the <code>SSH Credentials</code> that you created earlier.</li>
 </ul>
 </li>
