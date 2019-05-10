@@ -15,7 +15,7 @@ The Cookbook for ICP Solution Architects is written to support [MkDocs](https://
 1. Install MkDocs locally following the [official documentation instructions](https://www.mkdocs.org/#installation).
 2. Clone the code and serve pages locally as follows:
 	```bash
-	git clone git@github.com:ibm-cloud-architecture/kubernetes-multicloud-management.git
+	git clone https://github.com/ibm-cloud-architecture/kubernetes-multicloud-management.git
 	cd kubernetes-multicloud-management
 	mkdocs serve
 	```
@@ -42,8 +42,8 @@ cd kubernetes-multicloud-management
 	```bash
 	fabio	git@github.com:fabiogomezdiaz/kubernetes-multicloud-management.git (fetch)
 	fabio	git@github.com:fabiogomezdiaz/kubernetes-multicloud-management.git (push)
-	origin	git@github.com:ibm-cloud-architecture/kubernetes-multicloud-management.git (fetch)
-	origin	git@github.com:ibm-cloud-architecture/kubernetes-multicloud-management.git (push)
+	origin	https://github.com/ibm-cloud-architecture/kubernetes-multicloud-management.git (fetch)
+	origin	https://github.com/ibm-cloud-architecture/kubernetes-multicloud-management.git (push)
 	```
 	* To deploy the MkDocs pages to the `fabio` repo, you will need to run the command as `mkdocs gh-deploy -r fabio`
 4. Open `https://${GITHUB_USERNAME}.github.io/kubernetes-multicloud-management/` to see

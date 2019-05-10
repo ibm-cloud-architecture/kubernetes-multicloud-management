@@ -73,7 +73,7 @@ If the above was done correctly, you have successfully setup the first cluster a
 Since ICP version 3.1, you are required to create `Image Policies` that allow you to pull Docker images from specific Docker registries (`gcr.io` in our case). To do so, let's start by cloning the project's git repository:
 ```bash
 # Clone the Reference Architecture Repository
-git clone git@github.com:ibm-cloud-architecture/kubernetes-multicloud-management.git
+git clone https://github.com/ibm-cloud-architecture/kubernetes-multicloud-management.git
 
 # Go to the project's folder
 cd kubernetes-multicloud-management
@@ -287,7 +287,7 @@ On the **Pipeline** section of the Pipeline Configuration view do the following:
   * Select `Pipeline script from SCM` on the **Definition** field.
    Select `Git` on the **SCM** field
   * Enter `https://github.com/ibm-cloud-architecture/kubernetes-multicloud-management` in the **Repositories -> Repository URL** field.
-    + If using `SSH` to clone the repository, enter `git@github.com:ibm-cloud-architecture/kubernetes-multicloud-management.git` instead.
+    + If using `SSH` to clone the repository, enter `https://github.com/ibm-cloud-architecture/kubernetes-multicloud-management.git` instead.
     + Also, if using `SSH`, in the **Credentials** field select the `SSH Credentials` that you created earlier.
   * Enter `*/master` in the **Branches to build -> Branch Specifier** field.
   * Enter `demos/jenkins/Jenkinsfile` in the **Script Path** field.

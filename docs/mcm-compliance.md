@@ -309,7 +309,7 @@ Let's proceed with the `Compliance` object creation by running the following com
 cloudctl login -a https://${MCM_HUB_CLUSTER_MASTER_IP}:8443 -u ${USERNAME} -p ${PASSWORD} -n mcm --skip-ssl-validation;
 
 # Clone the Reference Architecture Repository
-git clone git@github.com:ibm-cloud-architecture/kubernetes-multicloud-management.git
+git clone https://github.com/ibm-cloud-architecture/kubernetes-multicloud-management.git
 
 # Go to the project's folder
 cd kubernetes-multicloud-management
