@@ -172,13 +172,13 @@ Let's look at the `gbapp-frontend` PlacementPolicy resource from the Helm Chart 
 apiVersion: mcm.ibm.com/v1alpha1
 kind: PlacementPolicy
 metadata:
-  name: {{ template "guestbookapplication.fullname" . }}-frontend
+  name: {{ template "guestbookapplication.fullname" . }}
   labels:
     app: {{ template "guestbookapplication.name" . }}
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
-    name: {{ template "guestbookapplication.fullname" . }}-frontend
+    name: {{ template "guestbookapplication.fullname" . }}
     servicekind: CacheService
 spec:
   clusterReplicas: {{ .Values.replicaCount }}
@@ -203,28 +203,34 @@ Where:
     + To learn about `Compliance` resources, checkout the [Create Multi-cluster Compliance Policies Chapter](mcm-compliance.md).
 
 ### Placement Binding Resource
-Just like how a Kubernetes `Role` requires `RoleBinding` to attach it to a specific `ServiceAccount`, a `PlacementPolicy` requires another resource that binds its rules to specific resources. This MCM resources is the `PlacementBinding`, which can bind the `PlacementPolicy` rules to specific Deployables. Let's look at the `gbapp-frontend` PlacementPolicy resource from the Helm Chart below:
+Just like how a Kubernetes `Role` requires `RoleBinding` to attach it to a specific `ServiceAccount`, a `PlacementPolicy` requires another resource that binds its rules to specific resources. This MCM resource is the `PlacementBinding`, which can bind the `PlacementPolicy` rules to specific Deployables. Let's look at the `gbapp` PlacementBinding resource from the Helm Chart below:
 
 ```yaml
 apiVersion: mcm.ibm.com/v1alpha1
 kind: PlacementBinding
 metadata:
-  name: {{ template "guestbookapplication.fullname" . }}-frontend
+  name: {{ template "guestbookapplication.fullname" . }}
   labels:
     app: {{ template "guestbookapplication.name" . }}
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
-    name: {{ template "guestbookapplication.fullname" . }}-frontend
+    name: {{ template "guestbookapplication.fullname" . }}
     servicekind: CacheService
 placementRef:
   apiGroup: mcm.ibm.com
   kind: PlacementPolicy
-  name: {{ template "guestbookapplication.fullname" . }}-frontend
+  name: {{ template "guestbookapplication.fullname" . }}
 subjects:
 - apiGroup: mcm.ibm.com
   kind: Deployable
   name: {{ template "guestbookapplication.fullname" . }}-frontend
+- apiGroup: mcm.ibm.com
+  kind: Deployable
+  name: {{ template "guestbookapplication.fullname" . }}-redismaster
+- apiGroup: mcm.ibm.com
+  kind: Deployable
+  name: {{ template "guestbookapplication.fullname" . }}-redisslave
 ```
 
 Where:
@@ -233,7 +239,7 @@ Where:
   * **kind**: Specifies that this is an `PlacementBinding` resource type.
   * **metadata**: Contains the resource name and some labels.
   * **placementRef.name**: Specifies the `PlacementPolicy` name to bind.
-  * **subjects[0].name**: Specifies the `Deployable` name to bind the `PlacementPolicy` to.
+  * **subjects**: A list of objects (i.e. `Deployables`) to bind the `PlacementPolicy` to.
 
 ### MCM Application Helm Chart
 The above YAML resources mostly cover supporting the `frontend` Helm Chart. To see how we put together an MCM Application Helm Chart that deploys all of the 3 Guestbook Helm Charts, checkout the source code at the link below:
