@@ -1,1 +1,1 @@
-1Application GuestBook is deployed
+Application GuestBook is deployed

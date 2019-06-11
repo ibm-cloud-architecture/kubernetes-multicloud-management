@@ -1,13 +1,13 @@
 apiVersion: mcm.ibm.com/v1alpha1
 kind: PlacementPolicy
 metadata:
-  name: {{ template "guestbookapplication.fullname" . }}-frontend
+  name: {{ template "guestbookapplication.fullname" . }}
   labels:
     app: {{ template "guestbookapplication.name" . }}
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
-    name: {{ template "guestbookapplication.fullname" . }}-frontend
+    name: {{ template "guestbookapplication.fullname" . }}
     servicekind: CacheService
 spec:
   clusterReplicas: {{ .Values.replicaCount }}
